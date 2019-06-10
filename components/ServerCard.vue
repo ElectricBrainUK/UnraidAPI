@@ -7,14 +7,33 @@
                 Name
             </v-card-title>
             IP: {{ip}} <br>
-            VMs: <br>
-            <div v-for="vm in server.vm.details"
-                 v-bind:key="vm"
-            style="display: inline-block;">
-                <!--{{vm.parent.children[0].children[0].children[0].tags.id}}-->
-                <img class="left" :src="'http://' + ip + vm.parent.children[0].children[0].children[0].children[0].tags.src"/>
-                <p>{{vm.parent.children[0].children[0].children[1].children[0].contents}}</p>
-            </div>
+            <v-expansion-panel v-if="server.vm">
+                VMs: <br>
+                <v-expansion-panel-content v-for="vm in server.vm.details"
+                     v-bind:key="vm.id"
+                     style="display: inline-block;">
+                    <template v-slot:header>
+                        <div style="width: 50%;">{{vm.name}}</div>
+                        <v-chip v-bind:class="{success: vm.status === 'started', error: vm.status === 'stopped', warning: vm.status === 'paused'}" style="width: 20px;" right>{{vm.status}}</v-chip>
+                    </template>
+                    <img class="left"
+                    :src="'http://' + ip + vm.icon"/>
+                    <v-chip>{{vm.id}}</v-chip>
+                    <v-chip>Cores: {{vm.coreCount}}</v-chip>
+                    <v-chip>RAM: {{vm.ramAllocation}}</v-chip>
+                    <v-chip>HDD: {{vm.hddAllocation.total}}</v-chip>
+                    <v-chip>Primary GPU: {{vm.primaryGPU}}</v-chip>
+                    <v-expansion-panel>Disks:
+                        <v-expansion-panel-content v-for="(row, rowIndex) in vm.hddAllocation.all" v-bind:key="rowIndex">
+                            <template v-slot:header>
+                                <div>{{rowIndex}}</div>
+                            </template>
+                            <v-chip v-for="(detail, name) in row" v-bind:key="name">{{name}}: {{detail}}</v-chip>
+                            <br>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
         </v-card>
     </v-flex>
 </template>

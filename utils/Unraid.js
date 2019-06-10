@@ -2,7 +2,9 @@ import axios from "axios";
 import fs from "fs";
 
 function getUnraidDetails(servers) {
-  getVMs(servers);
+  // getVMs(servers);
+  console.log(simplifyResponse(servers['192.168.1.100'].vm.details));
+  console.log(simplifyResponse(servers['192.168.1.231'].vm.details));
 }
 
 function getVMs(servers) {
@@ -152,21 +154,49 @@ function hasChildren(remaining) {
 
 function processVMResponse(response) {
   let object = [];
+  groupVmDetails(response, object);
+  simplifyResponse(object);
+  return object;
+}
+
+function groupVmDetails(response, object) {
   response.forEach(row => {
-    if (row.tags['parent-id']) {
-      if (!object[row.tags['parent-id']]) {
-        object[row.tags['parent-id']] = {};
+    if (row.tags["parent-id"]) {
+      if (!object[row.tags["parent-id"]]) {
+        object[row.tags["parent-id"]] = {};
       }
-      object[row.tags['parent-id']].parent = row;
-    } else if (row.tags['child-id']) {
-      if (!object[row.tags['child-id']]) {
-        object[row.tags['child-id']] = {};
+      object[row.tags["parent-id"]].parent = row;
+    } else if (row.tags["child-id"]) {
+      if (!object[row.tags["child-id"]]) {
+        object[row.tags["child-id"]] = {};
       }
-      object[row.tags['child-id']].child = row;
+      object[row.tags["child-id"]].child = row;
     }
   });
-  console.log(object);
-  return object;
+}
+
+function simplifyResponse(object) {
+  object.forEach((vm, index) => {
+    let newVMObject = {};
+    newVMObject.name = vm.parent.children[0].children[0].children[1].children[0].contents;
+    newVMObject.id = vm.parent.children[0].children[0].children[0].tags.id;
+    newVMObject.status = vm.parent.children[0].children[0].children[1].children[1].children[1].contents;
+    newVMObject.icon = vm.parent.children[0].children[0].children[0].children[0].tags.src;
+    newVMObject.coreCount = vm.parent.children[2].children[0].contents;
+    newVMObject.ramAllocation = vm.parent.children[3].contents;
+    newVMObject.hddAllocation = {};
+    newVMObject.hddAllocation.all = [];
+    newVMObject.hddAllocation.total = vm.parent.children[4].contents;
+    vm.child.children[0].children[0].children[1].children.forEach(driveDetails => {
+      let detailsArr = driveDetails.children.map(drive => {
+        return drive.contents;
+      });
+      let details = {path: detailsArr[0], interface: detailsArr[1], allocated: detailsArr[2], used: detailsArr[3]};
+      newVMObject.hddAllocation.all.push(details);
+    });
+    newVMObject.primaryGPU = vm.parent.children[5].contents;
+    object[index] = newVMObject;
+  });
 }
 
 export {
