@@ -1,8 +1,40 @@
 import axios from "axios";
 import fs from "fs";
+import http from "http";
 
 function getUnraidDetails(servers) {
+  getServerDetails(servers);
   getVMs(servers);
+
+}
+
+function getServerDetails(servers) {
+  Object.keys(servers).forEach(async ip => {
+    servers[ip].serverDetails = await scrapeHTML(ip, servers);
+
+    updateFile(servers, ip, "serverDetails");
+  });
+}
+
+function scrapeHTML(ip, servers) {
+  return axios({
+    method: "get",
+    url: "http://" + ip + "/Dashboard",
+    headers: {
+      "Authorization": "Basic " + servers[ip].authToken
+    }
+  }).then((response) => {
+    return {
+      title: extractValue(response.data, "title>", "/"),
+      cpu: extractValue(response.data, "cpu_view'><td></td><td colspan='3'>", "<"),
+      memory: extractValue(response.data, "Memory<br><span>", "<"),
+      motherboard: extractValue(response.data, "<tr class='mb_view'><td></td><td colspan='3'>", "<"),
+      diskSpace: extractValue(response.data, "title='Go to disk settings'><i class='fa fa-fw fa-cog chevron mt0'></i></a>\n" +
+        "<span class='info'>", "<")
+    };
+  }).catch(e => {
+    console.log(e);
+  });
 }
 
 function getVMs(servers) {
@@ -21,26 +53,26 @@ function getVMs(servers) {
       servers[ip].vm = {};
       servers[ip].vm.details = processVMResponse(details);
       servers[ip].vm.extras = extras;
-      updateFile(servers, ip, 'vm');
+      updateFile(servers, ip, "vm");
     }).catch(e => {
       console.log(e);
-    })
+    });
   });
 }
 
 function updateFile(servers, ip, tag) {
   let oldServers = {};
   try {
-    let rawdata = fs.readFileSync('config/servers.json');
+    let rawdata = fs.readFileSync("config/servers.json");
     oldServers = JSON.parse(rawdata);
   } catch (e) {
-    console.log(e)
+    console.log(e);
   } finally {
     oldServers[ip][tag] = servers[ip][tag];
-    fs.writeFileSync('config/servers.json', JSON.stringify(oldServers));
+    fs.writeFileSync("config/servers.json", JSON.stringify(oldServers));
   }
 
-  fs.writeFileSync('config/servers.json', JSON.stringify(servers));
+  fs.writeFileSync("config/servers.json", JSON.stringify(servers));
 }
 
 function parseHTML(html) {
@@ -50,7 +82,7 @@ function parseHTML(html) {
     html = result.remaining;
     parsedHtml.push(result.contains);
     while (isAnyClosingTag(html)) {
-      html = html.substring(html.indexOf('>') + 1);
+      html = html.substring(html.indexOf(">") + 1);
     }
   }
   return parsedHtml;
@@ -76,7 +108,7 @@ function parseTag(tag, remaining) {
     remaining = contentCheck.remaining;
     object = contentCheck.object;
     while (hasChildren(remaining)) {
-      if (remaining.indexOf('<img') === 0) {
+      if (remaining.indexOf("<img") === 0) {
         let img = {};
         processTags(remaining.substring(remaining.indexOf("<"), remaining.indexOf(">") + 1), img);
         result.contains.push(img);
@@ -141,7 +173,7 @@ function checkContents(remaining, object) {
     }
     remaining = remaining.substring(remaining.indexOf("<"));
   }
-  return {remaining, object};
+  return { remaining, object };
 }
 
 function hasContents(remaining) {
@@ -191,7 +223,7 @@ function simplifyResponse(object) {
       let detailsArr = driveDetails.children.map(drive => {
         return drive.contents;
       });
-      let details = {path: detailsArr[0], interface: detailsArr[1], allocated: detailsArr[2], used: detailsArr[3]};
+      let details = { path: detailsArr[0], interface: detailsArr[1], allocated: detailsArr[2], used: detailsArr[3] };
       newVMObject.hddAllocation.all.push(details);
     });
     newVMObject.primaryGPU = vm.parent.children[5].contents;
@@ -203,3 +235,46 @@ function simplifyResponse(object) {
 export {
   getUnraidDetails
 };
+
+export function getCSRFToken(server, auth) {
+  return axios({
+    method: "get",
+    url: "http://" + server + "/Dashboard",
+    headers: {
+      "Authorization": "Basic " + auth
+    }
+  }).then(response => {
+    return extractValue(response.data, "csrf_token=", "'");
+  }).catch(e => {
+    console.log(e);
+  });
+}
+
+function extractValue(data, value, terminator) {
+  let start = data.substring(data.toString().indexOf(value) + value.length);
+  return start.substring(0, start.indexOf(terminator));
+}
+
+export function changeVMState(id, action, server, auth, token) {
+  return axios({
+    method: "POST",
+    url: "http://" + server + "/plugins/dynamix.vm.manager/include/VMajax.php",
+    headers: {
+      "Authorization": "Basic " + auth,
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    data: "uuid=" + id + "&action=" + action + "&csrf_token=" + token,
+    httpAgent: new http.Agent({ keepAlive: true })
+  }).then((response) => {
+    if (response.data.state === "running") {
+      response.data.state = "started";
+    }
+    if (response.data.state === "shutoff") {
+      response.data.state = "stopped";
+    }
+    return response.data;
+  }).catch(e => {
+    console.log(e);
+  });
+}

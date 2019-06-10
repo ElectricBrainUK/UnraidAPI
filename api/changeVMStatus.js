@@ -1,6 +1,5 @@
 import fs from "fs";
-import axios from "axios";
-import http from "http";
+import { changeVMState, getCSRFToken } from "../utils/Unraid";
 
 export default function(req, res, next) {
   let body = [];
@@ -21,40 +20,3 @@ export default function(req, res, next) {
   });
 };
 
-function getCSRFToken(server, auth) {
-  return axios({
-    method: "get",
-    url: "http://" + server + "/plugins/preclear.disk/Preclear.php?action=get_csrf_token",
-    headers: {
-      "Authorization": "Basic " + auth
-    }
-  }).then(response => {
-    return response.data.csrf_token;
-  }).catch(e => {
-    console.log(e);
-  });
-}
-
-function changeVMState(id, action, server, auth, token) {
-  return axios({
-    method: "POST",
-    url: "http://" + server + "/plugins/dynamix.vm.manager/include/VMajax.php",
-    headers: {
-      "Authorization": "Basic " + auth,
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      "X-Requested-With": "XMLHttpRequest"
-    },
-    data: "uuid=" +  id + "&action=" + action + "&csrf_token=" + token,
-    httpAgent: new http.Agent({ keepAlive: true }),
-  }).then((response) => {
-    if (response.data.state === 'running') {
-      response.data.state = 'started';
-    }
-    if (response.data.state === 'shutoff') {
-      response.data.state = 'stopped';
-    }
-    return response.data;
-  }).catch(e => {
-    console.log(e);
-  });
-}

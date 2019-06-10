@@ -69,7 +69,6 @@
           },
           url: "/api/login"
         }).then((response) => {
-          console.log(response);
           this.loginMessage = response.data.message;
         });
       }

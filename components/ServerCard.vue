@@ -6,9 +6,14 @@
   >
     <v-card>
       <v-card-title class="headline">
-        Name
+        {{ server.serverDetails ? server.serverDetails.title : 'Server' }}
       </v-card-title>
-      IP: {{ ip }} <br>
+      <v-card-text>
+        <v-chip>IP: {{ ip }}</v-chip>
+        <v-chip v-for="(detail, key) in server.serverDetails" v-bind:key="key">
+          {{ key.charAt(0).toUpperCase() + key.slice(1) }}: {{ detail }}
+        </v-chip>
+      </v-card-text>
       <v-expansion-panel>
         <v-expansion-panel-content v-if="server.vm">
           <template v-slot:header>
@@ -98,7 +103,7 @@
                 class="left"
                 :src="'http://' + ip + vm.icon"
               >
-              <edit-vm-card :vm="vm"/>
+              <edit-vm-card :vm="vm" />
               <v-chip>{{ vm.id }}</v-chip>
               <v-chip>Cores: {{ vm.coreCount }}</v-chip>
               <v-chip>RAM: {{ vm.ramAllocation }}</v-chip>
@@ -124,6 +129,12 @@
               </v-expansion-panel>
             </v-expansion-panel-content>
           </v-expansion-panel>
+        </v-expansion-panel-content>
+        <v-expansion-panel-content>
+          <template v-slot:header>
+            Terminal
+          </template>
+          <iframe style="width: 100%; height: 500px;" :src="'http://' + ip + '/webterminal/'"></iframe>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-card>
