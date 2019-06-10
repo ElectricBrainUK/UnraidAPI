@@ -45,6 +45,7 @@
           url: "api/getServers"
         }).then((response) => {
           this.servers = response.data.servers;
+          setTimeout(() => this.getServers(), 30000);
         });
       }
     }

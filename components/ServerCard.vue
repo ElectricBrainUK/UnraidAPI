@@ -82,8 +82,16 @@
                   :class="{success: vm.status === 'started', error: vm.status === 'stopped', warning: vm.status === 'paused'}"
                   style="width: 20px;"
                   right
+                  justify-center
                 >
-                  {{ vm.status }}
+                  <v-progress-circular
+                    v-if="vm.isBusy"
+                    indeterminate
+                    style="width: 20px;"
+                  />
+                  <div v-if="!vm.isBusy">
+                    {{ vm.status }}
+                  </div>
                 </v-chip>
               </template>
               <img
@@ -128,13 +136,13 @@
 
   export default {
     name: "ServerCardVue",
+    components: {
+      EditVmCard
+    },
     props: [
       "server",
       "ip"
     ],
-    components: {
-      EditVmCard
-    },
     methods: {
       startVM(vm) {
         if (vm.status === "paused") {
@@ -163,11 +171,16 @@
             server: this.ip
           }
         }).then((response) => {
-          this.server.vm.details[vm.id].isBusy = false;
-          if (response && response.data && response.data.message && response.data.message.success) {
-            this.server.vm.details[vm.id].status = response.data.message.state;
-          } else if (response && response.data && response.data.message && response.data.message.error) {
-            alert(response.data.message.error);
+          if (response) {
+            this.server.vm.details[vm.id].isBusy = false;
+            if (response.data && response.data.message && response.data.message.success) {
+              this.server.vm.details[vm.id].status = response.data.message.state;
+            } else if (response && response.data && response.data.message && response.data.message.error) {
+              if (response.data.message.error === "Requested operation is not valid: domain is not running") {
+                this.server.vm.details[vm.id].status = "stopped";
+              }
+              alert(response.data.message.error);
+            }
           }
         });
       }

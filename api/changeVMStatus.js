@@ -50,6 +50,9 @@ function changeVMState(id, action, server, auth, token) {
     if (response.data.state === 'running') {
       response.data.state = 'started';
     }
+    if (response.data.state === 'shutoff') {
+      response.data.state = 'stopped';
+    }
     return response.data;
   }).catch(e => {
     console.log(e);
