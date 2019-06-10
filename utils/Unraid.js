@@ -2,9 +2,7 @@ import axios from "axios";
 import fs from "fs";
 
 function getUnraidDetails(servers) {
-  // getVMs(servers);
-  console.log(simplifyResponse(servers['192.168.1.100'].vm.details));
-  console.log(simplifyResponse(servers['192.168.1.231'].vm.details));
+  getVMs(servers);
 }
 
 function getVMs(servers) {
@@ -24,7 +22,9 @@ function getVMs(servers) {
       servers[ip].vm.details = processVMResponse(details);
       servers[ip].vm.extras = extras;
       updateFile(servers, ip, 'vm');
-    });
+    }).catch(e => {
+      console.log(e);
+    })
   });
 }
 
@@ -155,8 +155,7 @@ function hasChildren(remaining) {
 function processVMResponse(response) {
   let object = [];
   groupVmDetails(response, object);
-  simplifyResponse(object);
-  return object;
+  return simplifyResponse(object);
 }
 
 function groupVmDetails(response, object) {
@@ -176,10 +175,11 @@ function groupVmDetails(response, object) {
 }
 
 function simplifyResponse(object) {
+  let temp = {};
   object.forEach((vm, index) => {
     let newVMObject = {};
     newVMObject.name = vm.parent.children[0].children[0].children[1].children[0].contents;
-    newVMObject.id = vm.parent.children[0].children[0].children[0].tags.id;
+    newVMObject.id = vm.parent.children[0].children[0].children[0].tags.id.replace("vm-", "");
     newVMObject.status = vm.parent.children[0].children[0].children[1].children[1].children[1].contents;
     newVMObject.icon = vm.parent.children[0].children[0].children[0].children[0].tags.src;
     newVMObject.coreCount = vm.parent.children[2].children[0].contents;
@@ -195,8 +195,9 @@ function simplifyResponse(object) {
       newVMObject.hddAllocation.all.push(details);
     });
     newVMObject.primaryGPU = vm.parent.children[5].contents;
-    object[index] = newVMObject;
+    temp[newVMObject.id] = newVMObject;
   });
+  return temp;
 }
 
 export {

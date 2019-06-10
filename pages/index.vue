@@ -9,7 +9,7 @@
       pa-3
       mb-2
     >
-      <setup-card />
+      <setup-card/>
       <server-card
         v-for="(server, ip) in servers"
         :key="ip"
@@ -45,7 +45,6 @@
           url: "api/getServers"
         }).then((response) => {
           this.servers = response.data.servers;
-          console.log(JSON.stringify(this.servers))
         });
       }
     }

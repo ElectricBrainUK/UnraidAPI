@@ -1,6 +1,8 @@
 <template>
   <v-flex
-    xs6
+    xs12
+    sm6
+    md6
   >
     <v-card>
       <v-card-title class="headline">
