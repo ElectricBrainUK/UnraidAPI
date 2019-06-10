@@ -9,10 +9,11 @@
             IP: {{ip}} <br>
             VMs: <br>
             <div v-for="vm in server.vm.details"
-                 v-bind:key="vm">
-                {{vm.parent.children[0].children[0].children[0].tags.id}}
-                <img :src="'http://' + ip + vm.parent.children[0].children[0].children[0].children[0].tags.src"/>
-                {{vm.parent.children[0].children[0].children[1].children[0].contents}}
+                 v-bind:key="vm"
+            style="display: inline-block;">
+                <!--{{vm.parent.children[0].children[0].children[0].tags.id}}-->
+                <img class="left" :src="'http://' + ip + vm.parent.children[0].children[0].children[0].children[0].tags.src"/>
+                <p>{{vm.parent.children[0].children[0].children[1].children[0].contents}}</p>
             </div>
         </v-card>
     </v-flex>
