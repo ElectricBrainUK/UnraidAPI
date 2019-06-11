@@ -18,9 +18,18 @@ export default function(req, res, next) {
 };
 
 async function attachUSB(data) {
-  console.log('-----------');
-  console.log(data);
   let servers = await gatherDetailsFromEditVM(data.server, data.id);
-  console.log('-----------');
-  console.log(servers[data.server].vm.details[data.id].edit);
+
+  Object.keys(servers[data.server].vm.details).forEach(vmId => {
+    let vm = servers[data.server].vm.details[vmId];
+    if (vm.edit && vm.edit.pcis) {
+      vm.edit.usbs.forEach(usbDevice => {
+        if (usbDevice.id === data.usbId && vmId !== data.id) {
+          console.log(usbDevice); //todo this is attached to another vm, need to detach
+        }
+      });
+    }
+  });
+
+  //todo: attach the usb
 }

@@ -235,7 +235,7 @@ function groupVmDetails(response, object) {
 
 async function simplifyResponse(object, ip) {
   let temp = {};
-  object.forEach((vm, index) => {
+  object.forEach(async (vm, index) => {
     let newVMObject = {};
     newVMObject.name = vm.parent.children[0].children[0].children[1].children[0].contents;
     newVMObject.id = vm.parent.children[0].children[0].children[0].tags.id.replace("vm-", "");
