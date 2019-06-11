@@ -5,7 +5,34 @@ import http from "http";
 function getUnraidDetails(servers) {
   getServerDetails(servers);
   getVMs(servers);
+  getUSBDetails(servers);
+}
 
+function getUSBDetails(servers) {
+  Object.keys(servers).forEach(ip => {
+    if (servers[ip].vm) {
+      axios({
+        method: "get",
+        url: "http://" + ip + "/VMs/UpdateVM?uuid=" + servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,
+        headers: {
+          "Authorization": "Basic " + servers[ip].authToken
+        }
+      }).then(response => {
+        servers[ip].usbDetails = [];
+        while (response.data.toString().includes("<label for=\"usb")) {
+          let row = extractValue(response.data, "<label for=\"usb", "</label>");
+          servers[ip].usbDetails.push({
+            id: extractValue(row, "value=\"", "\""),
+            name: extractValue(row, "/> ", " (")
+          });
+          response.data = response.data.replace("<label for=\"usb", "");
+        }
+        updateFile(servers, ip, "usbDetails");
+      }).catch(e => {
+        console.log(e);
+      });
+    }
+  });
 }
 
 function getServerDetails(servers) {

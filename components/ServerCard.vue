@@ -130,6 +130,14 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panel-content>
+        <v-expansion-panel-content v-if="server.usbDetails">
+          <template v-slot:header>
+            USBs
+          </template>
+          <v-chip v-for="(detail, key) in server.usbDetails" v-bind:key="key">
+            {{ detail.name }}
+          </v-chip>
+        </v-expansion-panel-content>
         <v-expansion-panel-content>
           <template v-slot:header>
             Terminal
