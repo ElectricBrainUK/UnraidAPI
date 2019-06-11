@@ -2,7 +2,8 @@ const colors = require('vuetify/es5/util/colors').default
 const URLS = {
   LOGIN: '/api/login',
   GET_SERVERS: '/api/getServers',
-  VM_STATUS: '/api/vmStatus'
+  VM_STATUS: '/api/vmStatus',
+  USB_ATTACH: '/api/usbAttach'
 };
 
 module.exports = {
@@ -63,7 +64,8 @@ module.exports = {
     // Will register file from project api directory to handle /api/* requires
     {path: URLS.LOGIN, handler: '~/api/login.js'},
     {path: URLS.GET_SERVERS, handler: '~/api/getServers.js'},
-    {path: URLS.VM_STATUS, handler: '~/api/changeVMStatus.js'}
+    {path: URLS.VM_STATUS, handler: '~/api/changeVMStatus.js'},
+    {path: URLS.USB_ATTACH, handler: '~/api/usbAttach.js'}
   ],
   /*
    ** vuetify module configuration

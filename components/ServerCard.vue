@@ -140,12 +140,16 @@
           <template v-slot:header>
             USBs
           </template>
-          <v-chip
+          <div
             v-for="(detail, key) in server.usbDetails"
             :key="key"
           >
-            {{ detail.name }}
-          </v-chip>
+            <usb-detail
+              :detail="detail"
+              :server="server"
+              :ip="ip"
+            />
+          </div>
         </v-expansion-panel-content>
         <v-expansion-panel-content v-if="false">
           <template v-slot:header>
@@ -165,11 +169,13 @@
 <script>
   import axios from "axios";
   import EditVmCard from "./EditVmCard";
+  import UsbDetail from "./UsbDetail";
 
   export default {
     name: "ServerCardVue",
     components: {
-      EditVmCard
+      EditVmCard,
+      UsbDetail
     },
     props: [
       "server",

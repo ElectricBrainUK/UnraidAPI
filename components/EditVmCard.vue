@@ -46,7 +46,12 @@
     name: "EditVmCard",
     props: [
       "vm"
-    ]
+    ],
+    data() {
+      return {
+        dialog: false
+      }
+    }
   };
 </script>
 

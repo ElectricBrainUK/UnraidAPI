@@ -72,13 +72,13 @@ function getVMs(servers) {
       headers: {
         "Authorization": "Basic " + servers[ip].authToken
       }
-    }).then((response) => {
+    }).then(async (response) => {
       let parts = response.data.toString().split("\u0000");
       let htmlDetails = JSON.stringify(parts[0]);
       let details = parseHTML(htmlDetails);
       let extras = parts[1];
       servers[ip].vm = {};
-      servers[ip].vm.details = processVMResponse(details);
+      servers[ip].vm.details = await processVMResponse(details, ip);
       servers[ip].vm.extras = extras;
       updateFile(servers, ip, "vm");
     }).catch(e => {
@@ -211,10 +211,10 @@ function hasChildren(remaining) {
   return remaining.indexOf("<") === 0 && remaining.indexOf("</") !== 0;
 }
 
-function processVMResponse(response) {
+function processVMResponse(response, ip) {
   let object = [];
   groupVmDetails(response, object);
-  return simplifyResponse(object);
+  return simplifyResponse(object, ip);
 }
 
 function groupVmDetails(response, object) {
@@ -233,7 +233,7 @@ function groupVmDetails(response, object) {
   });
 }
 
-function simplifyResponse(object) {
+async function simplifyResponse(object, ip) {
   let temp = {};
   object.forEach((vm, index) => {
     let newVMObject = {};
@@ -254,6 +254,7 @@ function simplifyResponse(object) {
       newVMObject.hddAllocation.all.push(details);
     });
     newVMObject.primaryGPU = vm.parent.children[5].contents;
+    newVMObject.edit = await gatherDetailsFromEditVM(ip, newVMObject.id)
     temp[newVMObject.id] = newVMObject;
   });
   return temp;
@@ -306,48 +307,47 @@ export function changeVMState(id, action, server, auth, token) {
   });
 }
 
-export function gatherDetailsFromEditVM(data) {
+export function gatherDetailsFromEditVM(ip, id) {
   let rawdata = fs.readFileSync("config/servers.json");
   let servers = JSON.parse(rawdata);
 
   return axios({
     method: "get",
-    url: "http://" + data.server + "/VMs/UpdateVM?uuid=" + data.id,
+    url: "http://" + ip + "/VMs/UpdateVM?uuid=" + id,
     headers: {
-      "Authorization": "Basic " + servers[data.server].authToken
+      "Authorization": "Basic " + servers[ip].authToken
     }
   }).then(response => {
-    servers[data.server].vm.details[id].edit = {
+    servers[ip].vm.details[id].edit = {
       template_os: extractValue(response.data, "id=\"template_os\" value=\"", "\""),
       domain_persistent: extractValue(response.data, "domain[persistent]\" value=\"", "\""),
       domain_clock: extractValue(response.data, "domain[clock]\" id=\"domain_clock\" value=\"", "\""),
       domain_arch: extractValue(response.data, "domain[arch]\" value=\"", "\""),
       domain_oldname: extractValue(response.data, "domain[oldname]\" id=\"domain_oldname\" value=\"", "\""),
       domain_name: extractValue(response.data, "placeholder=\"e.g. My Workstation\" value=\"", "\""),
-      domain_desc: extractValue(row, "placeholder=\"description of virtual machine (optional)\" value=\"", "\""),
-      domain_ovmf: extractValue(row, "name=\"domain[ovmf]\" value=\"", "\""),
-      media_cdrom: extractValue(row, "name=\"media[cdrom]\" class=\"cdrom\" value=\"", "\""),
-      media_drivers: extractValue(row, "name=\"media[drivers]\" class=\"cdrom\" value=\"", "\""),
-      gpu_bios: extractValue(row, "=\"^[^.].*\" data-pickroot=\"/\" value=\"", "\""),
-      nic_0_mac: extractValue(row, "name=\"nic[0][mac]\" class=\"narrow\" value=\"", "\""),
-      domain_desc: extractValue(row, "placeholder=\"description of virtual machine (optional)\" value=\"", "\""),
-      domain_desc: extractValue(row, "placeholder=\"description of virtual machine (optional)\" value=\"", "\"")
+      domain_desc: extractValue(response.data, "placeholder=\"description of virtual machine (optional)\" value=\"", "\""),
+      domain_ovmf: extractValue(response.data, "name=\"domain[ovmf]\" value=\"", "\""),
+      media_cdrom: extractValue(response.data, "name=\"media[cdrom]\" class=\"cdrom\" value=\"", "\""),
+      media_drivers: extractValue(response.data, "name=\"media[drivers]\" class=\"cdrom\" value=\"", "\""),
+      gpu_bios: extractValue(response.data, "=\"^[^.].*\" data-pickroot=\"/\" value=\"", "\""),
+      nic_0_mac: extractValue(response.data, "name=\"nic[0][mac]\" class=\"narrow\" value=\"", "\""),
     };
 
-    servers[data.server].vm.details[id].edit.vcpus = [];
+    servers[ip].vm.details[id].edit.vcpus = [];
     while (response.data.includes("for='vcpu")) {
       let row = extractValue(response.data, "<label for='vcpu", "</label>");
       if (row.includes("checked")) {
-        servers[data.server].vm.details[id].edit.vcpus.push(extractValue(row, "value='", "'"));
+        servers[ip].vm.details[id].edit.vcpus.push(extractValue(row, "value='", "'"));
       }
       response.data = response.data.replace("for='vcpu", "");
     }
 
-    servers[data.server].vm.details[id].edit.disks = [];
+    servers[ip].vm.details[id].edit.disks = [];
     while (response.data.includes("id=\"disk_")) {
-      let diskpath = extractValue(response.data, "value=\"", "\"");
+      let row = extractValue(response.data, "id=\"disk_", ">");
+      let diskpath = extractValue(row, "value=\"", "\"");
       if (diskpath) {
-        servers[data.server].vm.details[id].edit.disks.push(diskpath);
+        servers[ip].vm.details[id].edit.disks.push(diskpath);
       }
       response.data = response.data.replace("id=\"disk_", "");
     }
@@ -355,28 +355,28 @@ export function gatherDetailsFromEditVM(data) {
     response.data.replace('<script type="text/html" id="tmplShare">\n' +
       '                                                                                <table class="domain_os other">\n' +
       '                                                                                    <tr class="advanced">\n' +
-      '                                                                                        <td>Unraid Share:</td>', '');
-    servers[data.server].vm.details[id].edit.shares = [];
+    '                                                                                        <td>Unraid Share:</td>', '');
+    servers[ip].vm.details[id].edit.shares = [];
     while (response.data.includes("<td>Unraid Share:</td>")) {
       let sourceRow = extractValue(response.data, "<td>Unraid Share:</td>", "</td>");
       let targetRow = extractValue(response.data, "<td>Unraid Mount tag:</td>", "</td>");
-      servers[data.server].vm.details[id].edit.shares.push({
+      servers[ip].vm.details[id].edit.shares.push({
         source: extractValue(sourceRow, "value=\"", "\""),
         target: extractValue(targetRow, "value=\"", "\"")
       });
       response.data = response.data.replace("<td>Unraid Share:</td>", "");
     }
 
-    servers[data.server].vm.details[id].edit.usbs = [];
-    servers[data.server].usbDetails.forEach(usbDrive => {
+    servers[ip].vm.details[id].edit.usbs = [];
+    servers[ip].usbDetails.forEach(usbDrive => {
       let driveCheck = extractValue(response.data, "value=\"" + usbDrive.id + "\"", "/>");
       if (driveCheck.includes('checked')) {
         usbDrive.checked = true;
       }
-      servers[data.server].vm.details[id].edit.usbs.push(usbDrive);
+      servers[ip].vm.details[id].edit.usbs.push(usbDrive);
     });
 
-    servers[data.server].vm.details[id].edit.pcis = [];
+    servers[ip].vm.details[id].edit.pcis = [];
     while (response.data.includes(" name=\"pci[]\" id")) {
       let row = extractValue(response.data, " name=\"pci[]\" id", "/>");
       let device = {};
@@ -384,7 +384,7 @@ export function gatherDetailsFromEditVM(data) {
         device.checked = true;
       }
       device.id = extractValue(row, "value=\"", "\"");
-      servers[data.server].vm.details[id].edit.pcis.push(device);
+      servers[ip].vm.details[id].edit.pcis.push(device);
 
       response.data = response.data.replace(" name=\"pci[]\" id", "")
     }
@@ -398,7 +398,9 @@ export function gatherDetailsFromEditVM(data) {
         gpu.checked = true;
       }
       gpu.id = row.substring(0, row.indexOf("'"));
-      pcis.push(gpu);
+      servers[ip].vm.details[id].edit.pcis.push(gpu);
+
+      gpuInfo = gpuInfo.replace('<option value=\'', '');
     }
 
     let soundInfo = extractValue(response.data, "<td>Sound Card:</td>", "</td>");
@@ -410,10 +412,13 @@ export function gatherDetailsFromEditVM(data) {
         soundCard.checked = true;
       }
       soundCard.id = row.substring(0, row.indexOf("'"));
-      pcis.push(soundCard);
+      servers[ip].vm.details[id].edit.pcis.push(soundCard);
+
+      soundInfo = soundInfo.replace('<option value=\'', '');
     }
 
     updateFile(servers, ip, "vm");
+    return servers;
   }).catch(e => {
     console.log(e);
   });
