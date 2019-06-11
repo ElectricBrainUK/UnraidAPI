@@ -372,13 +372,22 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
     }
 
     vmObject.edit.usbs = [];
-    servers[ip].usbDetails.forEach(usbDrive => {
-      let driveCheck = extractValue(response.data, "value=\"" + usbDrive.id + "\"", "/>");
-      if (driveCheck.includes('checked')) {
-        usbDrive.checked = true;
+    let usbInfo = extractValue(response.data, "<td>USB Devices:</td>", "</td>");
+    console.log(usbInfo);
+    while (usbInfo.includes('value=\"')) {
+      let row = extractValue(usbInfo, "value=\"", " (");
+      console.log(row);
+      let usb = {};
+      if (row.includes('checked')) {
+        usb.checked = true;
       }
-      vmObject.edit.usbs.push(usbDrive);
-    });
+      usb.id = row.substring(0, row.indexOf("\""));
+      usb.name = row.substring(row.indexOf("/") + 3);
+      vmObject.edit.usbs.push(usb);
+      console.log(usb);
+
+      usbInfo = usbInfo.replace('value=\"', '');
+    }
 
     vmObject.edit.pcis = [];
     while (response.data.includes(" name=\"pci[]\" id")) {
