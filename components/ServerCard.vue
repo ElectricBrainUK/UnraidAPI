@@ -6,15 +6,21 @@
   >
     <v-card>
       <v-card-title class="headline">
-        {{ server.serverDetails ? server.serverDetails.title : 'Server' }}
+        {{ server.serverDetails ? server.serverDetails.title : "Server" }}
       </v-card-title>
-      <v-card-text>
-        <v-chip>IP: {{ ip }}</v-chip>
-        <v-chip v-for="(detail, key) in server.serverDetails" v-bind:key="key">
-          {{ key.charAt(0).toUpperCase() + key.slice(1) }}: {{ detail }}
-        </v-chip>
-      </v-card-text>
       <v-expansion-panel>
+        <v-expansion-panel-content v-if="server.vm">
+          <template v-slot:header>
+            Details
+          </template>
+          <v-chip>IP: {{ ip }}</v-chip>
+          <v-chip
+            v-for="(detail, key) in server.serverDetails"
+            :key="key"
+          >
+            {{ key.charAt(0).toUpperCase() + key.slice(1) }}: {{ detail }}
+          </v-chip>
+        </v-expansion-panel-content>
         <v-expansion-panel-content v-if="server.vm">
           <template v-slot:header>
             VMs:
@@ -134,15 +140,22 @@
           <template v-slot:header>
             USBs
           </template>
-          <v-chip v-for="(detail, key) in server.usbDetails" v-bind:key="key">
+          <v-chip
+            v-for="(detail, key) in server.usbDetails"
+            :key="key"
+          >
             {{ detail.name }}
           </v-chip>
         </v-expansion-panel-content>
-        <v-expansion-panel-content>
+        <v-expansion-panel-content v-if="false">
           <template v-slot:header>
             Terminal
           </template>
-          <iframe style="width: 100%; height: 500px;" :src="'http://' + ip + '/webterminal/'"></iframe>
+          <iframe
+            style="width: 100%;"
+            height="500px"
+            :src="'http://' + ip + '/webterminal/'"
+          />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-card>
