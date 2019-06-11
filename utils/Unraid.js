@@ -318,6 +318,52 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
   if (!vmObject) {
     vmObject = servers[ip].vm.details[id];
   }
+  // this is create
+  // domain%5Btype%5D: kvm
+  // template%5Bname%5D: Windows+10
+  // template%5Bicon%5D: windows.png
+  // template%5Bos%5D: windows10
+  // domain%5Bpersistent%5D: 1
+  // domain%5Buuid%5D: 577e3fcb-1202-2bde-f4c1-96ce25cc9ccf
+  // domain%5Bclock%5D: localtime
+  // domain%5Barch%5D: x86_64
+  // domain%5Boldname%5D: Windows+10
+  // domain%5Bname%5D: Windows+10
+  // domain%5Bdesc%5D:
+  // domain%5Bcpumode%5D: host-passthrough
+  // domain%5Bvcpu%5D%5B%5D: 0
+  // domain%5Bmem%5D: 2097152
+  // domain%5Bmaxmem%5D: 2097152
+  // domain%5Bmachine%5D: pc-i440fx-3.1
+  // domain%5Bovmf%5D: 1
+  // domain%5Bhyperv%5D: 1
+  // domain%5Busbmode%5D: usb2
+  // media%5Bcdrom%5D:
+  // media%5Bcdrombus%5D: ide
+  // media%5Bdrivers%5D: %2Fmnt%2Fuser%2Fisos%2Fvirtio-win-0.1.160-1.iso
+  // media%5Bdriversbus%5D: ide
+  // disk%5B0%5D%5Bselect%5D: auto
+  // disk%5B0%5D%5Bimage%5D: %2Fmnt%2Fuser%2Fdomains%2FWindows+10%2Fvdisk1.img
+  // disk%5B0%5D%5Bsize%5D: 30G
+  // disk%5B0%5D%5Bdriver%5D: raw
+  // disk%5B0%5D%5Bbus%5D: virtio
+  // shares%5B0%5D%5Bsource%5D:
+  // shares%5B0%5D%5Btarget%5D:
+  // gpu%5B0%5D%5Bid%5D: vnc
+  // gpu%5B0%5D%5Bmodel%5D: qxl
+  // domain%5Bpassword%5D:
+  // gpu%5B0%5D%5Bkeymap%5D: en-us
+  // gpu%5B0%5D%5Brom%5D:
+  // audio%5B0%5D%5Bid%5D:
+  // nic%5B0%5D%5Bmac%5D: 52%3A54%3A00%3A44%3A64%3Aca
+  // nic%5B0%5D%5Bnetwork%5D: br0
+  // domain%5Bstartnow%5D: 1
+  // createvm: 1
+  // domain%5Bxmlstartnow%5D: 1
+  // createvm: 1
+  // csrf_token: 6827A9C70485C4
+  // csrf_token: 6827A9C70485C4
+  //this is edit
   // domain%5Btype%5D: kvm
   // template%5Bname%5D: Windows+10
   // template%5Bicon%5D: windows.png
