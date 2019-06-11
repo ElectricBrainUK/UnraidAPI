@@ -10,7 +10,7 @@ function getUnraidDetails(servers) {
 
 function getUSBDetails(servers) {
   Object.keys(servers).forEach(ip => {
-    if (servers[ip].vm) {
+    if (servers[ip].vm && servers[ip].vm.details && servers[ip].vm.details.length > 0) {
       axios({
         method: "get",
         url: "http://" + ip + "/VMs/UpdateVM?uuid=" + servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,
@@ -235,7 +235,8 @@ function groupVmDetails(response, object) {
 
 async function simplifyResponse(object, ip) {
   let temp = {};
-  object.forEach(async (vm, index) => {
+  for (let i = 0; i < object.length; i++) {
+    let vm = object[i];
     let newVMObject = {};
     newVMObject.name = vm.parent.children[0].children[0].children[1].children[0].contents;
     newVMObject.id = vm.parent.children[0].children[0].children[0].tags.id.replace("vm-", "");
@@ -254,9 +255,9 @@ async function simplifyResponse(object, ip) {
       newVMObject.hddAllocation.all.push(details);
     });
     newVMObject.primaryGPU = vm.parent.children[5].contents;
-    newVMObject.edit = await gatherDetailsFromEditVM(ip, newVMObject.id)
+    newVMObject = await gatherDetailsFromEditVM(ip, newVMObject.id, newVMObject);
     temp[newVMObject.id] = newVMObject;
-  });
+  }
   return temp;
 }
 
@@ -307,9 +308,12 @@ export function changeVMState(id, action, server, auth, token) {
   });
 }
 
-export function gatherDetailsFromEditVM(ip, id) {
+export function gatherDetailsFromEditVM(ip, id, vmObject) {
   let rawdata = fs.readFileSync("config/servers.json");
   let servers = JSON.parse(rawdata);
+  if (!vmObject) {
+    vmObject = servers[ip].vm.details[id];
+  }
 
   return axios({
     method: "get",
@@ -318,7 +322,7 @@ export function gatherDetailsFromEditVM(ip, id) {
       "Authorization": "Basic " + servers[ip].authToken
     }
   }).then(response => {
-    servers[ip].vm.details[id].edit = {
+    vmObject.edit = {
       template_os: extractValue(response.data, "id=\"template_os\" value=\"", "\""),
       domain_persistent: extractValue(response.data, "domain[persistent]\" value=\"", "\""),
       domain_clock: extractValue(response.data, "domain[clock]\" id=\"domain_clock\" value=\"", "\""),
@@ -333,21 +337,21 @@ export function gatherDetailsFromEditVM(ip, id) {
       nic_0_mac: extractValue(response.data, "name=\"nic[0][mac]\" class=\"narrow\" value=\"", "\""),
     };
 
-    servers[ip].vm.details[id].edit.vcpus = [];
+    vmObject.edit.vcpus = [];
     while (response.data.includes("for='vcpu")) {
       let row = extractValue(response.data, "<label for='vcpu", "</label>");
       if (row.includes("checked")) {
-        servers[ip].vm.details[id].edit.vcpus.push(extractValue(row, "value='", "'"));
+        vmObject.edit.vcpus.push(extractValue(row, "value='", "'"));
       }
       response.data = response.data.replace("for='vcpu", "");
     }
 
-    servers[ip].vm.details[id].edit.disks = [];
+    vmObject.edit.disks = [];
     while (response.data.includes("id=\"disk_")) {
       let row = extractValue(response.data, "id=\"disk_", ">");
       let diskpath = extractValue(row, "value=\"", "\"");
       if (diskpath) {
-        servers[ip].vm.details[id].edit.disks.push(diskpath);
+        vmObject.edit.disks.push(diskpath);
       }
       response.data = response.data.replace("id=\"disk_", "");
     }
@@ -356,27 +360,27 @@ export function gatherDetailsFromEditVM(ip, id) {
       '                                                                                <table class="domain_os other">\n' +
       '                                                                                    <tr class="advanced">\n' +
     '                                                                                        <td>Unraid Share:</td>', '');
-    servers[ip].vm.details[id].edit.shares = [];
+    vmObject.edit.shares = [];
     while (response.data.includes("<td>Unraid Share:</td>")) {
       let sourceRow = extractValue(response.data, "<td>Unraid Share:</td>", "</td>");
       let targetRow = extractValue(response.data, "<td>Unraid Mount tag:</td>", "</td>");
-      servers[ip].vm.details[id].edit.shares.push({
+      vmObject.edit.shares.push({
         source: extractValue(sourceRow, "value=\"", "\""),
         target: extractValue(targetRow, "value=\"", "\"")
       });
       response.data = response.data.replace("<td>Unraid Share:</td>", "");
     }
 
-    servers[ip].vm.details[id].edit.usbs = [];
+    vmObject.edit.usbs = [];
     servers[ip].usbDetails.forEach(usbDrive => {
       let driveCheck = extractValue(response.data, "value=\"" + usbDrive.id + "\"", "/>");
       if (driveCheck.includes('checked')) {
         usbDrive.checked = true;
       }
-      servers[ip].vm.details[id].edit.usbs.push(usbDrive);
+      vmObject.edit.usbs.push(usbDrive);
     });
 
-    servers[ip].vm.details[id].edit.pcis = [];
+    vmObject.edit.pcis = [];
     while (response.data.includes(" name=\"pci[]\" id")) {
       let row = extractValue(response.data, " name=\"pci[]\" id", "/>");
       let device = {};
@@ -384,7 +388,7 @@ export function gatherDetailsFromEditVM(ip, id) {
         device.checked = true;
       }
       device.id = extractValue(row, "value=\"", "\"");
-      servers[ip].vm.details[id].edit.pcis.push(device);
+      vmObject.edit.pcis.push(device);
 
       response.data = response.data.replace(" name=\"pci[]\" id", "")
     }
@@ -398,7 +402,7 @@ export function gatherDetailsFromEditVM(ip, id) {
         gpu.checked = true;
       }
       gpu.id = row.substring(0, row.indexOf("'"));
-      servers[ip].vm.details[id].edit.pcis.push(gpu);
+      vmObject.edit.pcis.push(gpu);
 
       gpuInfo = gpuInfo.replace('<option value=\'', '');
     }
@@ -412,14 +416,14 @@ export function gatherDetailsFromEditVM(ip, id) {
         soundCard.checked = true;
       }
       soundCard.id = row.substring(0, row.indexOf("'"));
-      servers[ip].vm.details[id].edit.pcis.push(soundCard);
+      vmObject.edit.pcis.push(soundCard);
 
       soundInfo = soundInfo.replace('<option value=\'', '');
     }
 
-    updateFile(servers, ip, "vm");
-    return servers;
+    return vmObject;
   }).catch(e => {
     console.log(e);
+    return vmObject;
   });
 }
