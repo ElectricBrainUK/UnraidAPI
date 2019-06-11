@@ -6,7 +6,7 @@
     <template v-slot:activator="{ on }">
       <v-chip
         v-on="on"
-        style="overflow: hidden; max-width: 95%;"
+        style="overflow: hidden; max-width: 95%; min-width: 20px;"
       >
           {{ detail.name }}
       </v-chip>

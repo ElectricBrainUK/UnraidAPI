@@ -2,7 +2,7 @@
   <v-flex
     xs12
     sm6
-    md6
+    md4
   >
     <v-card>
       <v-card-title class="headline">
