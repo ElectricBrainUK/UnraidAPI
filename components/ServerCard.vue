@@ -109,7 +109,7 @@
                 class="left"
                 :src="'http://' + ip + vm.icon"
               >
-              <edit-vm-card :vm="vm" />
+              <edit-vm-card :vm="vm"/>
               <v-chip>{{ vm.id }}</v-chip>
               <v-chip>Cores: {{ vm.coreCount }}</v-chip>
               <v-chip>RAM: {{ vm.ramAllocation }}</v-chip>
@@ -131,6 +131,16 @@
                     {{ name }}: {{ detail }}
                   </v-chip>
                   <br>
+                </v-expansion-panel-content>
+                <v-expansion-panel-content>
+                  <template v-slot:header>
+                    USBs:
+                  </template>
+                  <div
+                    v-for="usb in vm.edit.usbs"
+                    :key="usb.id">
+                    <usb-detail v-if="usb.checked" :detail="usb" :server="server" :ip="ip"/>
+                  </div>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panel-content>
