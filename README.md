@@ -1,4 +1,4 @@
-# undraidapi
+# unraidapi
 
 > A new UI and API for controlling multiple unraid instances
 

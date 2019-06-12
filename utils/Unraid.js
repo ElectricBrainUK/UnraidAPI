@@ -461,9 +461,10 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
       let diskselect = extractReverseValue(extractValue(response.data, "<select name=\"disk[" + disk + "][select]\"", "selected>"), "'", "value='");
       let diskdriver = extractReverseValue(extractValue(response.data, "<select name=\"disk[" + disk + "][driver]\"", "selected>"), "'", "value='");
       let diskbus = extractReverseValue(extractValue(response.data, "<select name=\"disk[" + disk + "][bus]\"", "selected>"), "'", "value='");
+      let disksize = extractValue(response.data, "name=\"disk[" + disk + "][size]\" value=\"", "\"");
       let diskpath = extractValue(row, "value=\"", "\"");
       if (diskpath) {
-        vmObject.edit.disks.push({ select: diskselect, image: diskpath, driver: diskdriver, bus: diskbus });
+        vmObject.edit.disks.push({ select: diskselect, image: diskpath, driver: diskdriver, bus: diskbus, size: disksize });
       }
       response.data = response.data.replace("id=\"disk_", "");
     }
