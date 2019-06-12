@@ -142,6 +142,59 @@
                     <usb-detail v-if="usb.checked" :detail="usb" :server="server" :ip="ip"/>
                   </div>
                 </v-expansion-panel-content>
+                <v-expansion-panel-content v-if="vm.edit.pcis">
+                  <template v-slot:header>
+                    PCI Devices
+                  </template>
+                  <v-expansion-panel>
+                    <v-expansion-panel-content v-if="vm.edit.pcis">
+                      <template v-slot:header>
+                        GPUs
+                      </template>
+                      <div
+                        v-for="(detail, key) in vm.edit.pcis"
+                        :key="key"
+                      >
+                        <usb-detail
+                          v-if="detail.gpu && detail.checked"
+                          :detail="detail"
+                          :server="server"
+                          :ip="ip"
+                        />
+                      </div>
+                    </v-expansion-panel-content><v-expansion-panel-content v-if="vm.edit.pcis">
+                    <template v-slot:header>
+                      Sound
+                    </template>
+                    <div
+                      v-for="(detail, key) in vm.edit.pcis"
+                      :key="key"
+                    >
+                      <usb-detail
+                        v-if="detail.sound && detail.checked"
+                        :detail="detail"
+                        :server="server"
+                        :ip="ip"
+                      />
+                    </div>
+                  </v-expansion-panel-content><v-expansion-panel-content v-if="vm.edit.pcis">
+                    <template v-slot:header>
+                      Other
+                    </template>
+                    <div
+                      v-for="(detail, key) in vm.edit.pcis"
+                      :key="key"
+                    >
+                      <usb-detail
+                        v-if="!detail.sound && !detail.gpu && detail.checked"
+                        :detail="detail"
+                        :server="server"
+                        :ip="ip"
+                      />
+                    </div>
+                  </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panel-content>
           </v-expansion-panel>
