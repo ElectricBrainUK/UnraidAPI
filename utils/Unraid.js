@@ -6,6 +6,18 @@ function getUnraidDetails(servers) {
   getServerDetails(servers);
   getVMs(servers);
   getUSBDetails(servers);
+  getPCIDetails();
+}
+
+function getPCIDetails() {
+  let rawdata = fs.readFileSync("config/servers.json");
+  let servers = JSON.parse(rawdata);
+  Object.keys(servers).forEach(ip => {
+    if (servers[ip].vm && servers[ip].vm.details) {
+      servers[ip].pciDetails = servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].edit.pcis;
+    }
+    updateFile(servers, ip, "pciDetails");
+  });
 }
 
 function getUSBDetails(servers) {
@@ -98,8 +110,6 @@ function updateFile(servers, ip, tag) {
     oldServers[ip][tag] = servers[ip][tag];
     fs.writeFileSync("config/servers.json", JSON.stringify(oldServers));
   }
-
-  fs.writeFileSync("config/servers.json", JSON.stringify(servers));
 }
 
 function parseHTML(html) {
@@ -464,7 +474,13 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
       let disksize = extractValue(response.data, "name=\"disk[" + disk + "][size]\" value=\"", "\"");
       let diskpath = extractValue(row, "value=\"", "\"");
       if (diskpath) {
-        vmObject.edit.disks.push({ select: diskselect, image: diskpath, driver: diskdriver, bus: diskbus, size: disksize });
+        vmObject.edit.disks.push({
+          select: diskselect,
+          image: diskpath,
+          driver: diskdriver,
+          bus: diskbus,
+          size: disksize
+        });
       }
       response.data = response.data.replace("id=\"disk_", "");
     }
@@ -520,6 +536,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
         let gpu = {};
         gpu.gpu = true;
         gpu.id = row.substring(0, row.indexOf("'"));
+        gpu.name = extractValue(gpuInfo, "selected>", "</option>");
         if (row.includes("selected")) {
           gpu.checked = true;
           gpu.position = gpuNo;
@@ -556,6 +573,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
       let row = extractValue(soundInfo, "<option value='", ">");
       let soundCard = {};
       soundCard.sound = true;
+      soundCard.name = extractValue(soundInfo, "selected>", "</option>");
       if (row.includes("selected")) {
         soundCard.checked = true;
       }

@@ -161,6 +161,59 @@
             />
           </div>
         </v-expansion-panel-content>
+        <v-expansion-panel-content v-if="server.pciDetails">
+          <template v-slot:header>
+            PCI Devices
+          </template>
+          <v-expansion-panel>
+            <v-expansion-panel-content v-if="server.pciDetails">
+              <template v-slot:header>
+                GPUs
+              </template>
+              <div
+                v-for="(detail, key) in server.pciDetails"
+                :key="key"
+              >
+                <usb-detail
+                  v-if="gpu"
+                  :detail="detail"
+                  :server="server"
+                  :ip="ip"
+                />
+              </div>
+            </v-expansion-panel-content><v-expansion-panel-content v-if="server.pciDetails">
+            <template v-slot:header>
+              Sound
+            </template>
+            <div
+              v-for="(detail, key) in server.pciDetails"
+              :key="key"
+            >
+              <usb-detail
+                v-if="detail.sound"
+                :detail="detail"
+                :server="server"
+                :ip="ip"
+              />
+            </div>
+          </v-expansion-panel-content><v-expansion-panel-content v-if="server.pciDetails">
+            <template v-slot:header>
+              Other
+            </template>
+            <div
+              v-for="(detail, key) in server.pciDetails"
+              :key="key"
+            >
+              <usb-detail
+                v-if="!sound && !gpu"
+                :detail="detail"
+                :server="server"
+                :ip="ip"
+              />
+            </div>
+          </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panel-content>
         <v-expansion-panel-content v-if="false">
           <template v-slot:header>
             Terminal
