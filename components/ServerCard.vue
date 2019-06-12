@@ -175,7 +175,7 @@
                 :key="key"
               >
                 <usb-detail
-                  v-if="gpu"
+                  v-if="detail.gpu"
                   :detail="detail"
                   :server="server"
                   :ip="ip"
@@ -205,7 +205,7 @@
               :key="key"
             >
               <usb-detail
-                v-if="!sound && !gpu"
+                v-if="!detail.sound && !detail.gpu"
                 :detail="detail"
                 :server="server"
                 :ip="ip"

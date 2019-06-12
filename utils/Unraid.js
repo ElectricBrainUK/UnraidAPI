@@ -519,6 +519,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
     while (response.data.includes(" name=\"pci[]\" id")) {
       let row = extractValue(response.data, " name=\"pci[]\" id", "/>");
       let device = {};
+      device.name = extractValue(extractValue(response.data, " name=\"pci[]\" id", "/label>"), ">", "<");
       if (row.includes("checked")) {
         device.checked = true;
       }
@@ -536,7 +537,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
         let gpu = {};
         gpu.gpu = true;
         gpu.id = row.substring(0, row.indexOf("'"));
-        gpu.name = extractValue(gpuInfo, "selected>", "</option>");
+        gpu.name = extractValue(extractValue(gpuInfo, "<option value='", "/option>"), ">", "<");
         if (row.includes("selected")) {
           gpu.checked = true;
           gpu.position = gpuNo;
@@ -573,7 +574,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
       let row = extractValue(soundInfo, "<option value='", ">");
       let soundCard = {};
       soundCard.sound = true;
-      soundCard.name = extractValue(soundInfo, "selected>", "</option>");
+      soundCard.name = extractValue(extractValue(soundInfo, "<option value='", "/option>"), ">", "<");
       if (row.includes("selected")) {
         soundCard.checked = true;
       }
