@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="Add docker config">
-      <change afterPath="$PROJECT_DIR$/app/api/pciAttach.js" afterDir="false" />
+    <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/pages/docs.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/4b52460e4684d5cc9f59.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/dist/client/4b52460e4684d5cc9f59.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/2acd5ca078b309bb2668.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/dist/server/2acd5ca078b309bb2668.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/usbAttach.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/usbAttach.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServerCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServerCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/UsbDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/UsbDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.nuxt/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/components/nuxt-error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/components/nuxt-error.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/230f2b388e3d9d4a7e31.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/2c06513f640094a7efa4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/4b52460e4684d5cc9f59.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/6d42f5dd654fbd519365.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/909c52b5360dd71db2c6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/LICENSES" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/b7c5d1105155c3a38b24.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_120.9mld2VBMsQ$.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_144.9mld2VBMsQ$.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_152.9mld2VBMsQ$.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_192.9mld2VBMsQ$.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_384.9mld2VBMsQ$.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_512.9mld2VBMsQ$.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_64.9mld2VBMsQ$.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/manifest.249a0285.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/workbox.4c4f5ca6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/2acd5ca078b309bb2668.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/2acd5ca078b309bb2668.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/client.manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/f69746dbd300ccf43436.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/f69746dbd300ccf43436.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/index.spa.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/index.ssr.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/server.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/server.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/server.manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/loading.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/loading.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/sw.plugin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/sw.template.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.nuxt/views/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/views/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/SetupCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/SetupCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config/servers.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/servers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/layouts/default.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.blob" beforeDir="false" afterPath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.blob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/4d8398d399e6c181.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/b5a025fe91927c29.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pages/inspire.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Unraid.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,11 +64,54 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="543">
+              <caret line="214" column="34" selection-start-line="214" selection-start-column="34" selection-end-line="214" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-744" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="5" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/pages/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="535">
+              <caret line="44" column="16" selection-start-line="44" selection-start-column="16" selection-end-line="44" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/SetupCard.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="469">
+              <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="71" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1700">
-              <caret line="604" column="7" selection-start-line="604" selection-start-column="7" selection-end-line="604" selection-end-column="7" />
+            <state relative-caret-position="-3594">
+              <caret line="411" column="22" selection-start-line="411" selection-start-column="22" selection-end-line="411" selection-end-column="22" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -35,42 +120,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/api/usbAttach.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="38" column="18" lean-forward="true" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#72#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#73#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/components/UsbDetail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
-              <caret line="86" column="34" lean-forward="true" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="162" column="36" selection-start-line="162" selection-start-column="36" selection-end-line="162" selection-end-column="36" />
+            <state relative-caret-position="452">
+              <caret line="85" column="18" selection-start-line="85" selection-start-column="18" selection-end-line="89" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -87,9 +140,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>usbd</find>
-      <find>usbde</find>
-      <find>usbdeta</find>
       <find>servers</find>
       <find>edit</find>
       <find>dialog</find>
@@ -117,6 +167,9 @@
       <find>template_</find>
       <find>usb</find>
       <find>usb-</find>
+      <find>console.log(e)</find>
+      <find>insp</find>
+      <find>label</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -161,12 +214,16 @@
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/app/.dockerignore" />
         <option value="$PROJECT_DIR$/app/Dockerfile" />
-        <option value="$PROJECT_DIR$/app/package.json" />
-        <option value="$PROJECT_DIR$/app/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/app/api/usbAttach.js" />
-        <option value="$PROJECT_DIR$/app/api/pciAttach.js" />
         <option value="$PROJECT_DIR$/app/components/ServerCard.vue" />
         <option value="$PROJECT_DIR$/app/components/UsbDetail.vue" />
+        <option value="$PROJECT_DIR$/app/api/pciAttach.js" />
+        <option value="$PROJECT_DIR$/app/package.json" />
+        <option value="$PROJECT_DIR$/app/utils/Unraid.js" />
+        <option value="$PROJECT_DIR$/app/pages/inspire.vue" />
+        <option value="$PROJECT_DIR$/app/layouts/default.vue" />
+        <option value="$PROJECT_DIR$/app/components/SetupCard.vue" />
+        <option value="$PROJECT_DIR$/app/pages/docs.vue" />
       </list>
     </option>
   </component>
@@ -215,7 +272,19 @@
               <item name="unraidapi" type="b2602c69:ProjectViewProjectNode" />
               <item name="unraidapi" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="layouts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="unraidapi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="unraidapi" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="unraidapi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="unraidapi" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="unraidapi" type="b2602c69:ProjectViewProjectNode" />
@@ -286,21 +355,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.app/Dockerfile">
-    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
-      <deployment type="dockerfile">
-        <settings>
-          <option name="buildCliOptions" value="" />
-          <option name="command" value="" />
-          <option name="containerName" value="" />
-          <option name="entrypoint" value="" />
-          <option name="imageTag" value="" />
-          <option name="commandLineOptions" value="" />
-          <option name="sourceFilePath" value="Dockerfile" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="npm.dev">
     <configuration name="app/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -356,12 +411,33 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/app/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/app/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.start" />
         <item itemvalue="Docker.docker-compose.yml.nuxt: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="npm.build" />
-        <item itemvalue="Docker.Dockerfile" />
       </list>
     </recent_temporary>
   </component>
@@ -376,7 +452,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560091620576</updated>
       <workItem from="1560091623342" duration="95035000" />
-      <workItem from="1560461574706" duration="12522000" />
+      <workItem from="1560461574706" duration="18190000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1560125430445</created>
@@ -532,17 +608,31 @@
       <option name="project" value="LOCAL" />
       <updated>1560505598513</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Add pci controls">
+      <created>1560511238845</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1560511238845</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Add power controls for pci devices">
+      <created>1560511490843</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1560511490843</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107557000" />
+    <option name="totallyTimeSpent" value="113225000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24947146" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -619,7 +709,9 @@
     <MESSAGE value="Fix bug" />
     <MESSAGE value="Add per vm details" />
     <MESSAGE value="Add docker config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add docker config" />
+    <MESSAGE value="Add pci controls" />
+    <MESSAGE value="Add power controls for pci devices" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add power controls for pci devices" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pages/inspire.vue" />
@@ -779,11 +871,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1017" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/jest.config.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -808,20 +895,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/package.json">
+    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/api/usbAttach.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="198">
+          <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/index.vue">
+    <entry file="file://$PROJECT_DIR$/app/api/changeVMStatus.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-372" />
+        <state relative-caret-position="210">
+          <caret line="14" column="19" selection-start-line="14" selection-end-line="15" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#73#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
@@ -830,46 +942,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
+    <entry file="file://$PROJECT_DIR$/app/test/Logo.spec.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
-            <element signature="e#0#73#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/api/usbAttach.js">
+    <entry file="file://$PROJECT_DIR$/app/layouts/default.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="38" column="18" lean-forward="true" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#72#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="228">
+          <caret line="64" column="20" selection-start-line="64" selection-start-column="20" selection-end-line="64" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-744" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="44" column="16" selection-start-line="44" selection-start-column="16" selection-end-line="44" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="5" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/SetupCard.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="71" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1700">
-          <caret line="604" column="7" selection-start-line="604" selection-start-column="7" selection-end-line="604" selection-end-column="7" />
+        <state relative-caret-position="-3594">
+          <caret line="411" column="22" selection-start-line="411" selection-start-column="22" selection-end-line="411" selection-end-column="22" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
+    <entry file="file://$PROJECT_DIR$/app/components/UsbDetail.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="162" column="36" selection-start-line="162" selection-start-column="36" selection-end-line="162" selection-end-column="36" />
+        <state relative-caret-position="452">
+          <caret line="85" column="18" selection-start-line="85" selection-start-column="18" selection-end-line="89" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/UsbDetail.vue">
+    <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="86" column="34" lean-forward="true" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="34" />
+        <state relative-caret-position="543">
+          <caret line="214" column="34" selection-start-line="214" selection-start-column="34" selection-end-line="214" selection-end-column="34" />
         </state>
       </provider>
     </entry>

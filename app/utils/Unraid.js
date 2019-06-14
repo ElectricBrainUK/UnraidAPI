@@ -41,7 +41,7 @@ function getUSBDetails(servers) {
         }
         updateFile(servers, ip, "usbDetails");
       }).catch(e => {
-        console.log(e);
+        console.log(e.statusText);
       });
     }
   });
@@ -72,7 +72,7 @@ function scrapeHTML(ip, servers) {
         "<span class='info'>", "<")
     };
   }).catch(e => {
-    console.log(e);
+    console.log(e.statusText);
   });
 }
 
@@ -94,7 +94,7 @@ function getVMs(servers) {
       servers[ip].vm.extras = extras;
       updateFile(servers, ip, "vm");
     }).catch(e => {
-      console.log(e);
+      console.log(e.statusText);
     });
   });
 }
@@ -285,7 +285,7 @@ export function getCSRFToken(server, auth) {
   }).then(response => {
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
-    console.log(e);
+    console.log(e.statusText);
   });
 }
 
@@ -318,7 +318,7 @@ export function changeVMState(id, action, server, auth, token) {
     }
     return response.data;
   }).catch(e => {
-    console.log(e);
+    console.log(e.statusText);
   });
 }
 
@@ -597,7 +597,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
     }
     return vmObject;
   }).catch(e => {
-    console.log(e);
+    console.log(e.statusText);
     return vmObject;
   });
 }
@@ -616,7 +616,7 @@ export async function requestAttach(ip, id, auth, vmObject) {
   }).then((response) => {
     return response.data;
   }).catch(e => {
-    console.log(e);
+    console.log(e.statusText);
   });
 }
 
