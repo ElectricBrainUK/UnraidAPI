@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="usbDialogue"
+    v-model="dialogue"
     width="500"
   >
     <template v-slot:activator="{ on }">
@@ -22,7 +22,7 @@
 
       <v-card-text>
         <v-select
-          v-model="usbVMSelector"
+          v-model="vMSelector"
           :items="Object.keys(server.vm.details).map(id => server.vm.details[id])"
           item-text="name"
           item-value="id"
@@ -36,7 +36,7 @@
         <v-btn
           color="primary"
           flat
-          @click="requestUSBMove"
+          @click="requestMove"
         >
           Confirm
         </v-btn>
@@ -57,26 +57,44 @@
     ],
     data() {
       return {
-        usbVMSelector: false,
-        usbDialogue: false
+        vMSelector: false,
+        dialogue: false,
+        pci: false
       };
     },
     methods: {
-      requestUSBMove() {
-        axios({
-          method: "post",
-          url: "api/usbAttach",
-          data: {
-            id: this.usbVMSelector,
-            usbId: this.detail.id,
-            server: this.ip
-          }
-        }).then((response) => {
-          this.usbDialogue = false;
-          if (response) {
-            console.log(response);
-          }
-        });
+      requestMove() {
+        if (!this.pci) {
+          axios({
+            method: "post",
+            url: "api/usbAttach",
+            data: {
+              id: this.vMSelector,
+              usbId: this.detail.id,
+              server: this.ip
+            }
+          }).then((response) => {
+            this.dialogue = false;
+            if (response) {
+              console.log(response);
+            }
+          });
+        } else {
+          axios({
+            method: "post",
+            url: "api/pciAttach",
+            data: {
+              id: this.vMSelector,
+              pciId: this.detail.id,
+              server: this.ip
+            }
+          }).then((response) => {
+            this.dialogue = false;
+            if (response) {
+              console.log(response);
+            }
+          });
+        }
       }
     }
   };

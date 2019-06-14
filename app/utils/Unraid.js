@@ -601,3 +601,96 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
     return vmObject;
   });
 }
+
+export async function requestAttach(ip, id, auth, vmObject) {
+  return axios({
+    method: "POST",
+    url: "http://" + ip + "/plugins/dynamix.vm.manager/templates/Custom.form.php",
+    headers: {
+      "Authorization": "Basic " + auth,
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    data: await buildForm(ip, auth, id, vmObject),
+    httpAgent: new http.Agent({ keepAlive: true })
+  }).then((response) => {
+    return response.data;
+  }).catch(e => {
+    console.log(e);
+  });
+}
+
+async function buildForm(ip, auth, id, vmObject) {
+  let staticPart =
+    "template%5Bos%5D=" + vmObject.template_os +
+    "template%5Bname%5D=" + vmObject.template_name +
+    "template%5Bicon%5D=" + vmObject.template_icon +
+    "&domain%5Bpersistent%5D=" + vmObject.domain_persistent +
+    "&domain%5Btype%5D=" + vmObject.domain_type +
+    "&domain%5Bautostart%5D=" + 1 +
+    "&domain%5Buuid%5D=" + id +
+    "&domain%5Bclock%5D=" + vmObject.domain_clock +
+    "&domain%5Boldname%5D=" + vmObject.domain_oldname +
+    "&domain%5Bname%5D=" + vmObject.domain_name +
+    "&domain%5Bclock%5D=" + vmObject.domain_clock +
+    "&domain%5Barch%5D=" + vmObject.domain_arch +
+    "&domain%5Bdesc%5D=" + vmObject.domain_desc +
+    "&domain%5Bcpumode%5D=" + vmObject.domain_cpumode +
+    "&domain%5Bovmf%5D=" + vmObject.domain_ovmf +
+    "&domain%5Bmem%5D=" + vmObject.domain_mem +
+    "&domain%5Bmaxmem%5D=" + vmObject.domain_maxmem +
+    "&domain%5Bmachine%5D=" + vmObject.domain_machine +
+    "&domain%5Bhyperv%5D=" + vmObject.domain_hyperv +
+    "&domain%5Busbmode%5D=" + vmObject.domain_usbmode +
+    "&media%5Bcdrom%5D=" + vmObject.media_cdrom +
+    "&media%5Bcdrombus%5D=" + vmObject.media_cdrombus +
+    "&media%5Bdrivers%5D=" + vmObject.media_drivers +
+    "&media%5Bdriversbus%5D=" + vmObject.media_driversbus +
+    "&updatevm=" + 1 +
+    "&domain%5Bpassword%5D=" +
+    "&csrf_token=" + await getCSRFToken(ip, auth);
+
+  vmObject.vcpus.forEach(cpu => {
+    staticPart += "&domain%5Bvcpu%5D%5B%5D=" + cpu;
+  });
+
+  vmObject.disks.forEach((disk, index) => {
+    staticPart += "&disk%5B" + index + "%5D%5Bimage%5D=" + disk.image;
+    staticPart += "&disk%5B" + index + "%5D%5Bselect%5D=" + disk.select;
+    staticPart += "&disk%5B" + index + "%5D%5Bsize%5D=" + disk.size;
+    staticPart += "&disk%5B" + index + "%5D%5Bdriver%5D=" + disk.driver;
+    staticPart += "&disk%5B" + index + "%5D%5Bbus%5D=" + disk.bus;
+  });
+
+  vmObject.shares.forEach((share, index) => {
+    staticPart += "&shares%5B" + index + "%5D%5Bsource%5D=" + share.source;
+    staticPart += "&shares%5B" + index + "%5D%5Btarget%5D=" + share.target;
+  });
+
+  let audioDevices = 0;
+  let gpus = 0;
+  vmObject.pcis.forEach(pciDevice => {
+    if (pciDevice.gpu && pciDevice.checked) {
+      staticPart += "&gpu%5B" + gpus + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
+      staticPart += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI(pciDevice.model);
+      staticPart += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + encodeURI(pciDevice.keymap);
+      staticPart += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + encodeURI(pciDevice.bios);
+      gpus++;
+    } else if (pciDevice.audio && pciDevice.checked) {
+      staticPart += "&audio%5B" + audioDevices + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
+      audioDevices++;
+    }
+    staticPart += "&pci%5B%5D=" + encodeURI(pciDevice.id) + (pciDevice.checked ? '' : '%23remove');
+  });
+
+  vmObject.usbs.forEach(usbDevice => {
+    staticPart += "&usb%5B%5D=" + encodeURI(usbDevice.id) + (usbDevice.checked ? '' : '%23remove');
+  });
+
+  vmObject.nics.forEach((nicDevice, index) => {
+    staticPart += "&nic%5B" + index + "%5D%5Bmac%5D=" + nicDevice.mac;
+    staticPart += "&nic%5B" + index + "%5D%5Bnetwork%5D=" + nicDevice.network;
+  });
+
+  return staticPart;
+}

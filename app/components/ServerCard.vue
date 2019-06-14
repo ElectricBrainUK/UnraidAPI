@@ -160,6 +160,7 @@
                           :detail="detail"
                           :server="server"
                           :ip="ip"
+                          :pci="true"
                         />
                       </div>
                     </v-expansion-panel-content><v-expansion-panel-content v-if="vm.edit.pcis">
