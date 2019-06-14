@@ -1,4 +1,4 @@
-import { gatherDetailsFromEditVM, requestAttach } from "../utils/Unraid";
+import { changeVMState, gatherDetailsFromEditVM, getCSRFToken, requestAttach } from "../utils/Unraid";
 import fs from "fs";
 
 export default function(req, res, next) {
@@ -27,28 +27,35 @@ async function attachPCI(data) {
     let vm = servers[data.server].vm.details[vmId];
     if (vm.edit && vm.edit.pcis && vm.status === "started") {
       vm.edit.pcis.forEach(pciDevice => {
-        if (pciDevice.id.split('.')[0] === data.pciId.split('.')[0] && vmId !== data.id && pciDevice.checked) {
-          attached.push({pciId: pciDevice.id, vmId, vm});
+        if (pciDevice.id.split(".")[0] === data.pciId.split(".")[0] && vmId !== data.id && pciDevice.checked) {
+          attached.push({ pciId: pciDevice.id, vmId, vm });
         }
       });
     }
   });
 
+  let auth = servers[data.server].authToken;
+  let token = await getCSRFToken(data.server, auth);
   if (attached) {
     for (let i = 0; i < attached.length; i++) {
       removePCICheck(attached.vm.edit, attached.pciId);
+      await changeVMState(attached.vmId, "domain-stop", data.server, auth, token);
       await requestAttach(data.server, attached.vmId, servers[data.server].authToken, attached.vm.edit);
+      await changeVMState(attached.vmId, "domain-start", data.server, auth, token);
     }
   }
 
   addPCICheck(vmObject.edit, data.pciId);
-  return requestAttach(data.server, data.id, servers[data.server].authToken, vmObject.edit);
+  await changeVMState(data.id, "domain-stop", data.server, auth, token);
+  let result = requestAttach(data.server, data.id, servers[data.server].authToken, vmObject.edit);
+  await changeVMState(data.id, "domain-start", data.server, auth, token);
+  return result;
 }
 
 function removePCICheck(details, id) {
-  details.pcis.filter(pciDevice => pciDevice.id.split('.')[0] === id.split('.')[0]).map(device => device.checked = false);
+  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = false);
 }
 
 function addPCICheck(details, id) {
-  details.pcis.filter(pciDevice => pciDevice.id.split('.')[0] === id.split('.')[0]).map(device => device.checked = true);
+  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = true);
 }
