@@ -1,1 +1,3 @@
-/config
+app/config
+app/.nuxt
+.nuxt

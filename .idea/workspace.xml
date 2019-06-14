@@ -2,56 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/pages/docs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.git-ignore" beforeDir="false" afterPath="$PROJECT_DIR$/.git-ignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/components/nuxt-error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/components/nuxt-error.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/230f2b388e3d9d4a7e31.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/2c06513f640094a7efa4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/4b52460e4684d5cc9f59.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/6d42f5dd654fbd519365.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/909c52b5360dd71db2c6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/LICENSES" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/b7c5d1105155c3a38b24.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_120.9mld2VBMsQ$.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_144.9mld2VBMsQ$.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_152.9mld2VBMsQ$.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_192.9mld2VBMsQ$.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_384.9mld2VBMsQ$.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_512.9mld2VBMsQ$.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/icons/icon_64.9mld2VBMsQ$.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/manifest.249a0285.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/client/workbox.4c4f5ca6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/2acd5ca078b309bb2668.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/2acd5ca078b309bb2668.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/client.manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/f69746dbd300ccf43436.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/f69746dbd300ccf43436.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/index.spa.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/index.ssr.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/server.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/dist/server/server.manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/loading.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/loading.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/sw.plugin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/sw.template.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.nuxt/views/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/views/error.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/SetupCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/SetupCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/servers.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/servers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/layouts/default.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.blob" beforeDir="false" afterPath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.blob" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/4d8398d399e6c181.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/b5a025fe91927c29.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/pages/inspire.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Unraid.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -65,9 +17,18 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.git-ignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
+            <state relative-caret-position="212">
               <caret line="214" column="34" selection-start-line="214" selection-start-column="34" selection-end-line="214" selection-end-column="34" />
             </state>
           </provider>
@@ -201,7 +162,6 @@
         <option value="$PROJECT_DIR$/components/UsbDetail.vue" />
         <option value="$PROJECT_DIR$/components/SetupCard.vue" />
         <option value="$PROJECT_DIR$/layouts/default.vue" />
-        <option value="$PROJECT_DIR$/.git-ignore" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/package-lock.json" />
         <option value="$PROJECT_DIR$/.nuxt/App.js" />
@@ -224,6 +184,7 @@
         <option value="$PROJECT_DIR$/app/layouts/default.vue" />
         <option value="$PROJECT_DIR$/app/components/SetupCard.vue" />
         <option value="$PROJECT_DIR$/app/pages/docs.vue" />
+        <option value="$PROJECT_DIR$/.git-ignore" />
       </list>
     </option>
   </component>
@@ -452,7 +413,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560091620576</updated>
       <workItem from="1560091623342" duration="95035000" />
-      <workItem from="1560461574706" duration="18190000" />
+      <workItem from="1560461574706" duration="18313000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1560125430445</created>
@@ -622,11 +583,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560511490843</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Add documentation">
+      <created>1560517913092</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1560517913092</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113225000" />
+    <option name="totallyTimeSpent" value="113348000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -645,7 +613,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.4947146" weight="0.32891566" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49753347" weight="0.32891566" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49753347" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5017618" side_tool="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49541932" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -711,7 +679,8 @@
     <MESSAGE value="Add docker config" />
     <MESSAGE value="Add pci controls" />
     <MESSAGE value="Add power controls for pci devices" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add power controls for pci devices" />
+    <MESSAGE value="Add documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add documentation" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pages/inspire.vue" />
@@ -857,13 +826,6 @@
     <entry file="file://$PROJECT_DIR$/config/servers.json" />
     <entry file="file://$PROJECT_DIR$/components/ServerCard.vue" />
     <entry file="file://$PROJECT_DIR$/package.json" />
-    <entry file="file://$PROJECT_DIR$/.git-ignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" selection-start-column="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nginx/default.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1003,8 +965,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
+        <state relative-caret-position="212">
           <caret line="214" column="34" selection-start-line="214" selection-start-column="34" selection-end-line="214" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.git-ignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
         </state>
       </provider>
     </entry>
