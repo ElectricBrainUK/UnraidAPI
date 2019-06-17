@@ -3,7 +3,8 @@ const URLS = {
   LOGIN: '/api/login',
   GET_SERVERS: '/api/getServers',
   VM_STATUS: '/api/vmStatus',
-  USB_ATTACH: '/api/usbAttach'
+  USB_ATTACH: '/api/usbAttach',
+  PCI_ATTACH: '/api/pciAttach'
 };
 
 module.exports = {
@@ -65,7 +66,8 @@ module.exports = {
     {path: URLS.LOGIN, handler: '~/api/login.js'},
     {path: URLS.GET_SERVERS, handler: '~/api/getServers.js'},
     {path: URLS.VM_STATUS, handler: '~/api/changeVMStatus.js'},
-    {path: URLS.USB_ATTACH, handler: '~/api/usbAttach.js'}
+    {path: URLS.USB_ATTACH, handler: '~/api/usbAttach.js'},
+    {path: URLS.PCI_ATTACH, handler: '~/api/pciAttach.js'}
   ],
   /*
    ** vuetify module configuration

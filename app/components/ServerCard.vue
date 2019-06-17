@@ -51,7 +51,7 @@
                     <v-btn
                       v-if="vm.status === 'started'"
                       :disabled="vm.isBusy"
-                      color="warning"
+                      color="info"
                       fab
                       small
                       dark
@@ -59,6 +59,19 @@
                     >
                       <v-icon style="font-size: 28px;">
                         pause_circle_outline
+                      </v-icon>
+                    </v-btn>
+                    <v-btn
+                      v-if="vm.status === 'started'"
+                      :disabled="vm.isBusy"
+                      color="warning"
+                      fab
+                      small
+                      dark
+                      @click="restartVM(vm)"
+                    >
+                      <v-icon style="font-size: 28px;">
+                        autorenew
                       </v-icon>
                     </v-btn>
                     <v-btn
@@ -176,6 +189,7 @@
                         :detail="detail"
                         :server="server"
                         :ip="ip"
+                        :pci="true"
                       />
                     </div>
                   </v-expansion-panel-content><v-expansion-panel-content v-if="vm.edit.pcis">
@@ -191,6 +205,7 @@
                         :detail="detail"
                         :server="server"
                         :ip="ip"
+                        :pci="true"
                       />
                     </div>
                   </v-expansion-panel-content>
@@ -233,6 +248,7 @@
                   :detail="detail"
                   :server="server"
                   :ip="ip"
+                  :pci="true"
                 />
               </div>
             </v-expansion-panel-content><v-expansion-panel-content v-if="server.pciDetails">
@@ -248,6 +264,7 @@
                 :detail="detail"
                 :server="server"
                 :ip="ip"
+                :pci="true"
               />
             </div>
           </v-expansion-panel-content><v-expansion-panel-content v-if="server.pciDetails">
@@ -263,6 +280,7 @@
                 :detail="detail"
                 :server="server"
                 :ip="ip"
+                :pci="true"
               />
             </div>
           </v-expansion-panel-content>
@@ -305,6 +323,9 @@
         } else {
           this.changeVMStatus(vm, "domain-start");
         }
+      },
+      restartVM(vm) {
+        this.changeVMStatus(vm, "domain-restart");
       },
       pauseVM(vm) {
         this.changeVMStatus(vm, "domain-pause");

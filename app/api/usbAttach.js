@@ -25,7 +25,7 @@ async function attachUSB(data) {
 
   Object.keys(servers[data.server].vm.details).forEach(vmId => {
     let vm = servers[data.server].vm.details[vmId];
-    if (vm.edit && vm.edit.pcis && vm.status === "started") {
+    if (vm.edit && vm.edit.usbs && vm.status === "started") {
       vm.edit.usbs.forEach(usbDevice => {
         if (usbDevice.id === data.usbId && vmId !== data.id && usbDevice.checked) {
           attached = {usbId: usbDevice.id, vmId, vm};
@@ -34,7 +34,7 @@ async function attachUSB(data) {
     }
   });
 
-  if (attached) {
+  if (attached.vm) {
     removeUSBCheck(attached.vm.edit, attached.usbId);
     await requestAttach(data.server, attached.vmId, servers[data.server].authToken, attached.vm.edit);
   }

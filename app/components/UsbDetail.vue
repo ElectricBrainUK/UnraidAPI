@@ -53,13 +53,13 @@
     props: [
       'detail',
       'server',
-      'ip'
+      'ip',
+      'pci'
     ],
     data() {
       return {
         vMSelector: false,
-        dialogue: false,
-        pci: false
+        dialogue: false
       };
     },
     methods: {
