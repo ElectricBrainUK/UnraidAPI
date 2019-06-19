@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/pciAttach.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/pciAttach.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Unraid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/stream-http/lib/response.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/stream-http/lib/response.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/unfetch/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/unfetch/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -72,8 +74,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="277" column="16" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
+            <state relative-caret-position="369">
+              <caret line="618" column="28" selection-start-line="618" selection-start-column="28" selection-end-line="618" selection-end-column="28" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -102,8 +104,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="453">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
             </state>
           </provider>
         </entry>
@@ -120,10 +122,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dialog</find>
-      <find>data()</find>
-      <find>props</find>
-      <find>data.server</find>
       <find>simplifyResponse</find>
       <find>processVMResponse</find>
       <find>servers[ip].vm.details[id]</find>
@@ -150,7 +148,14 @@
       <find>pci</find>
       <find>edit</find>
       <find>dom</find>
+      <find>e.statusText</find>
+      <find>jakes</find>
+      <find>c</find>
+      <find>09:00</find>
     </findStrings>
+    <replaceStrings>
+      <replace>&quot;Failed with status code: &quot; + e.statusText</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -202,8 +207,8 @@
         <option value="$PROJECT_DIR$/app/components/UsbDetail.vue" />
         <option value="$PROJECT_DIR$/app/api/usbAttach.js" />
         <option value="$PROJECT_DIR$/app/nuxt.config.js" />
-        <option value="$PROJECT_DIR$/app/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/app/components/ServerCard.vue" />
+        <option value="$PROJECT_DIR$/app/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/app/api/pciAttach.js" />
       </list>
     </option>
@@ -433,7 +438,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560091620576</updated>
       <workItem from="1560091623342" duration="95035000" />
-      <workItem from="1560461574706" duration="23488000" />
+      <workItem from="1560461574706" duration="25737000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1560125430445</created>
@@ -624,14 +629,22 @@
       <option name="project" value="LOCAL" />
       <updated>1560790565254</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Bug fix for pci attach">
+      <created>1560950756822</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1560950756822</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118523000" />
+    <option name="totallyTimeSpent" value="120772000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -640,13 +653,13 @@
       <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4982382" weight="0.32891566" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989429" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989429" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.4947146" weight="0.32891566" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.49753347" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49753347" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5017618" side_tool="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49541932" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -689,7 +702,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial commit" />
     <MESSAGE value="Clean up" />
     <MESSAGE value="Add some bits and pieces" />
     <MESSAGE value="Add real controls" />
@@ -714,7 +726,8 @@
     <MESSAGE value="Add power controls for pci devices" />
     <MESSAGE value="Add documentation" />
     <MESSAGE value="Bug fixes and restart button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes and restart button" />
+    <MESSAGE value="Bug fix for pci attach" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fix for pci attach" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pages/inspire.vue" />
@@ -976,13 +989,6 @@
     <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
@@ -993,10 +999,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="277" column="16" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
+        <state relative-caret-position="369">
+          <caret line="618" column="28" selection-start-line="618" selection-start-column="28" selection-end-line="618" selection-end-column="28" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -1005,8 +1018,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="453">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
         </state>
       </provider>
     </entry>
