@@ -38,10 +38,11 @@ async function attachPCI(data) {
   let token = await getCSRFToken(data.server, auth);
   if (attached) {
     for (let i = 0; i < attached.length; i++) {
-      removePCICheck(attached.vm.edit, attached.pciId);
-      await changeVMState(attached.vmId, "domain-stop", data.server, auth, token);
-      await requestAttach(data.server, attached.vmId, servers[data.server].authToken, attached.vm.edit);
-      await changeVMState(attached.vmId, "domain-start", data.server, auth, token);
+      let vmWithPciDevice = attached[i];
+      removePCICheck(vmWithPciDevice.vm.edit, vmWithPciDevice.pciId);
+      await changeVMState(vmWithPciDevice.vmId, "domain-stop", data.server, auth, token);
+      await requestAttach(data.server, vmWithPciDevice.vmId, servers[data.server].authToken, vmWithPciDevice.vm.edit);
+      await changeVMState(vmWithPciDevice.vmId, "domain-start", data.server, auth, token);
     }
   }
 

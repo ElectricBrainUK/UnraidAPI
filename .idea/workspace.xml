@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/usbAttach.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/usbAttach.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServerCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServerCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/UsbDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/UsbDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/nuxt.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/pciAttach.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/pciAttach.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -38,6 +35,11 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
@@ -55,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="66" column="36" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
+            <state relative-caret-position="660">
+              <caret line="326" column="6" selection-start-line="326" selection-start-column="6" selection-end-line="326" selection-end-column="6" />
               <folding>
                 <element signature="n#style#0;n#v-icon#0;n#v-btn#2;n#div#0;n#div#0;n#template#0;n#v-expansion-panel-content#0;n#v-expansion-panel#0;n#v-expansion-panel-content#1;n#v-expansion-panel#0;n#v-card#0;n#v-flex#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -68,19 +70,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/SetupCard.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
-              <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="71" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="300" column="16" selection-start-line="300" selection-start-column="16" selection-end-line="300" selection-end-column="16" />
+            <state relative-caret-position="161">
+              <caret line="277" column="16" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -101,16 +94,16 @@
         <entry file="file://$PROJECT_DIR$/app/api/usbAttach.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
-              <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+              <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="45" column="3" lean-forward="true" selection-start-line="45" selection-start-column="3" selection-end-line="45" selection-end-column="3" />
+            <state relative-caret-position="228">
+              <caret line="50" selection-start-line="50" selection-end-line="50" />
             </state>
           </provider>
         </entry>
@@ -210,8 +203,8 @@
         <option value="$PROJECT_DIR$/app/api/usbAttach.js" />
         <option value="$PROJECT_DIR$/app/nuxt.config.js" />
         <option value="$PROJECT_DIR$/app/utils/Unraid.js" />
-        <option value="$PROJECT_DIR$/app/api/pciAttach.js" />
         <option value="$PROJECT_DIR$/app/components/ServerCard.vue" />
+        <option value="$PROJECT_DIR$/app/api/pciAttach.js" />
       </list>
     </option>
   </component>
@@ -440,7 +433,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560091620576</updated>
       <workItem from="1560091623342" duration="95035000" />
-      <workItem from="1560461574706" duration="21744000" />
+      <workItem from="1560461574706" duration="23488000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1560125430445</created>
@@ -624,17 +617,23 @@
       <option name="project" value="LOCAL" />
       <updated>1560518009695</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Bug fixes and restart button">
+      <created>1560790565254</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1560790565254</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116779000" />
+    <option name="totallyTimeSpent" value="118523000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -646,8 +645,8 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.4947146" visible="true" weight="0.32891566" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49753347" weight="0.32891566" />
+      <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.4947146" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.49753347" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5017618" side_tool="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49541932" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -714,7 +713,8 @@
     <MESSAGE value="Add pci controls" />
     <MESSAGE value="Add power controls for pci devices" />
     <MESSAGE value="Add documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add documentation" />
+    <MESSAGE value="Bug fixes and restart button" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes and restart button" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pages/inspire.vue" />
@@ -891,9 +891,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/api/changeVMStatus.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -969,6 +966,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/api/usbAttach.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -976,10 +983,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="326" column="6" selection-start-line="326" selection-start-column="6" selection-end-line="326" selection-end-column="6" />
+          <folding>
+            <element signature="n#style#0;n#v-icon#0;n#v-btn#2;n#div#0;n#div#0;n#template#0;n#v-expansion-panel-content#0;n#v-expansion-panel#0;n#v-expansion-panel-content#1;n#v-expansion-panel#0;n#v-card#0;n#v-flex#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="300" column="16" selection-start-line="300" selection-start-column="16" selection-end-line="300" selection-end-column="16" />
+        <state relative-caret-position="161">
+          <caret line="277" column="16" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -988,25 +1005,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="45" column="3" lean-forward="true" selection-start-line="45" selection-start-column="3" selection-end-line="45" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/api/usbAttach.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="66" column="36" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
-          <folding>
-            <element signature="n#style#0;n#v-icon#0;n#v-btn#2;n#div#0;n#div#0;n#template#0;n#v-expansion-panel-content#0;n#v-expansion-panel#0;n#v-expansion-panel-content#1;n#v-expansion-panel#0;n#v-card#0;n#v-flex#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="228">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
         </state>
       </provider>
     </entry>
