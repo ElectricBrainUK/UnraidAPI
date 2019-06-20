@@ -694,3 +694,11 @@ async function buildForm(ip, auth, id, vmObject) {
 
   return staticPart;
 }
+
+export function removePCICheck(details, id) {
+  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = false);
+}
+
+export function addPCICheck(details, id) {
+  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = true);
+}

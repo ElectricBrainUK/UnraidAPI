@@ -5,7 +5,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="13">
+          <list size="19">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -19,6 +19,12 @@
             <item index="10" class="java.lang.String" itemvalue="v-btn" />
             <item index="11" class="java.lang.String" itemvalue="v-icon" />
             <item index="12" class="java.lang.String" itemvalue="v-text-field" />
+            <item index="13" class="java.lang.String" itemvalue="v-expansion-panel" />
+            <item index="14" class="java.lang.String" itemvalue="v-expansion-panel-content" />
+            <item index="15" class="java.lang.String" itemvalue="v-progress-circular" />
+            <item index="16" class="java.lang.String" itemvalue="v-chip" />
+            <item index="17" class="java.lang.String" itemvalue="v-select" />
+            <item index="18" class="java.lang.String" itemvalue="v-divider" />
           </list>
         </value>
       </option>

@@ -227,6 +227,31 @@
           </v-card-text>
         </v-card>
       </v-flex>
+      <v-flex text-xs-left
+              grow
+      >
+        <v-card>
+          <v-card-title>
+            GPU Swap
+          </v-card-title>
+          <v-card-text>
+            Request
+            <v-text-field
+              value="POST: api/gpuSwap"
+              solo
+              readonly
+              light
+            ></v-text-field>
+            Data
+            <v-textarea
+              value="{ id1: Virtual Machine 1 ID, id2: Virtual Machine 2 ID, server: Server IP Address }"
+              solo
+              readonly
+              light
+            ></v-textarea>
+          </v-card-text>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>

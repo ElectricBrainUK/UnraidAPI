@@ -1,4 +1,11 @@
-import { changeVMState, gatherDetailsFromEditVM, getCSRFToken, requestAttach } from "../utils/Unraid";
+import {
+  addPCICheck,
+  changeVMState,
+  gatherDetailsFromEditVM,
+  getCSRFToken,
+  removePCICheck,
+  requestAttach
+} from "../utils/Unraid";
 import fs from "fs";
 
 export default function(req, res, next) {
@@ -48,15 +55,7 @@ async function attachPCI(data) {
 
   addPCICheck(vmObject.edit, data.pciId);
   await changeVMState(data.id, "domain-stop", data.server, auth, token);
-  let result = requestAttach(data.server, data.id, servers[data.server].authToken, vmObject.edit);
+  let result = await requestAttach(data.server, data.id, servers[data.server].authToken, vmObject.edit);
   await changeVMState(data.id, "domain-start", data.server, auth, token);
   return result;
-}
-
-function removePCICheck(details, id) {
-  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = false);
-}
-
-function addPCICheck(details, id) {
-  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = true);
 }

@@ -111,8 +111,7 @@
                   <v-progress-circular
                     v-if="vm.isBusy"
                     indeterminate
-                    style="width: 20px;"
-                  />
+                    style="width: 20px;"></v-progress-circular>
                   <div v-if="!vm.isBusy">
                     {{ vm.status }}
                   </div>
@@ -176,39 +175,41 @@
                           :pci="true"
                         />
                       </div>
-                    </v-expansion-panel-content><v-expansion-panel-content v-if="vm.edit.pcis">
-                    <template v-slot:header>
-                      Sound
-                    </template>
-                    <div
-                      v-for="(detail, key) in vm.edit.pcis"
-                      :key="key"
-                    >
-                      <usb-detail
-                        v-if="detail.sound && detail.checked"
-                        :detail="detail"
-                        :server="server"
-                        :ip="ip"
-                        :pci="true"
-                      />
-                    </div>
-                  </v-expansion-panel-content><v-expansion-panel-content v-if="vm.edit.pcis">
-                    <template v-slot:header>
-                      Other
-                    </template>
-                    <div
-                      v-for="(detail, key) in vm.edit.pcis"
-                      :key="key"
-                    >
-                      <usb-detail
-                        v-if="!detail.sound && !detail.gpu && detail.checked"
-                        :detail="detail"
-                        :server="server"
-                        :ip="ip"
-                        :pci="true"
-                      />
-                    </div>
-                  </v-expansion-panel-content>
+                    </v-expansion-panel-content>
+                    <v-expansion-panel-content v-if="vm.edit.pcis">
+                      <template v-slot:header>
+                        Sound
+                      </template>
+                      <div
+                        v-for="(detail, key) in vm.edit.pcis"
+                        :key="key"
+                      >
+                        <usb-detail
+                          v-if="detail.sound && detail.checked"
+                          :detail="detail"
+                          :server="server"
+                          :ip="ip"
+                          :pci="true"
+                        />
+                      </div>
+                    </v-expansion-panel-content>
+                    <v-expansion-panel-content v-if="vm.edit.pcis">
+                      <template v-slot:header>
+                        Other
+                      </template>
+                      <div
+                        v-for="(detail, key) in vm.edit.pcis"
+                        :key="key"
+                      >
+                        <usb-detail
+                          v-if="!detail.sound && !detail.gpu && detail.checked"
+                          :detail="detail"
+                          :server="server"
+                          :ip="ip"
+                          :pci="true"
+                        />
+                      </div>
+                    </v-expansion-panel-content>
                   </v-expansion-panel>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -251,40 +252,48 @@
                   :pci="true"
                 />
               </div>
-            </v-expansion-panel-content><v-expansion-panel-content v-if="server.pciDetails">
-            <template v-slot:header>
-              Sound
-            </template>
-            <div
-              v-for="(detail, key) in server.pciDetails"
-              :key="key"
-            >
-              <usb-detail
-                v-if="detail.sound"
-                :detail="detail"
-                :server="server"
-                :ip="ip"
-                :pci="true"
-              />
-            </div>
-          </v-expansion-panel-content><v-expansion-panel-content v-if="server.pciDetails">
-            <template v-slot:header>
-              Other
-            </template>
-            <div
-              v-for="(detail, key) in server.pciDetails"
-              :key="key"
-            >
-              <usb-detail
-                v-if="!detail.sound && !detail.gpu"
-                :detail="detail"
-                :server="server"
-                :ip="ip"
-                :pci="true"
-              />
-            </div>
-          </v-expansion-panel-content>
+            </v-expansion-panel-content>
+            <v-expansion-panel-content v-if="server.pciDetails">
+              <template v-slot:header>
+                Sound
+              </template>
+              <div
+                v-for="(detail, key) in server.pciDetails"
+                :key="key"
+              >
+                <usb-detail
+                  v-if="detail.sound"
+                  :detail="detail"
+                  :server="server"
+                  :ip="ip"
+                  :pci="true"
+                />
+              </div>
+            </v-expansion-panel-content>
+            <v-expansion-panel-content v-if="server.pciDetails">
+              <template v-slot:header>
+                Other
+              </template>
+              <div
+                v-for="(detail, key) in server.pciDetails"
+                :key="key"
+              >
+                <usb-detail
+                  v-if="!detail.sound && !detail.gpu"
+                  :detail="detail"
+                  :server="server"
+                  :ip="ip"
+                  :pci="true"
+                />
+              </div>
+            </v-expansion-panel-content>
           </v-expansion-panel>
+        </v-expansion-panel-content>
+        <v-expansion-panel-content v-if="server.vm">
+          <template v-slot:header>
+            Utils
+          </template>
+          <gpu-swap :server="server" :ip="ip"></gpu-swap>
         </v-expansion-panel-content>
         <v-expansion-panel-content v-if="false">
           <template v-slot:header>
@@ -293,8 +302,7 @@
           <iframe
             style="width: 100%;"
             height="500px"
-            :src="'http://' + ip + '/webterminal/'"
-          />
+            :src="'http://' + ip + '/webterminal/'"></iframe>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-card>
@@ -305,10 +313,12 @@
   import axios from "axios";
   import EditVmCard from "./EditVmCard";
   import UsbDetail from "./UsbDetail";
+  import GpuSwap from "./GpuSwap";
 
   export default {
     name: "ServerCardVue",
     components: {
+      GpuSwap,
       EditVmCard,
       UsbDetail
     },
