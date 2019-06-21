@@ -55,7 +55,9 @@ async function attachPCI(data) {
     for (let i = 0; i < attached.length; i++) {
       let vmWithPciDevice = attached[i];
       removePCICheck(vmWithPciDevice.vm.edit, vmWithPciDevice.pciId);
-      await changeVMState(vmWithPciDevice.vmId, "domain-stop", data.server, auth, token);
+      if (!stopped[vmWithPciDevice.vmId]) {
+        await changeVMState(vmWithPciDevice.vmId, "domain-stop", data.server, auth, token);
+      }
       await requestAttach(data.server, vmWithPciDevice.vmId, servers[data.server].authToken, vmWithPciDevice.vm.edit);
       stopped[vmWithPciDevice.vmId] = true;
     }
