@@ -85,7 +85,7 @@
             url: "api/pciAttach",
             data: {
               id: this.vMSelector,
-              pciId: this.detail.id,
+              pciIds: [this.detail.id],
               server: this.ip
             }
           }).then((response) => {

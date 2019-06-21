@@ -219,7 +219,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ id: Virtual Machine ID, pciId: PCI Identifier (address), server: Server IP Address }"
+              value="{ id: Virtual Machine ID, pciIds: Array of PCI Identifiers (address), server: Server IP Address }"
               solo
               readonly
               light
