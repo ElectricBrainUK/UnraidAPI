@@ -702,3 +702,7 @@ export function removePCICheck(details, id) {
 export function addPCICheck(details, id) {
   details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = true);
 }
+
+export function flipPCICheck(details, id) {
+  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = !device.checked);
+}

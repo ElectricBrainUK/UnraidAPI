@@ -1,6 +1,6 @@
 import {
   addPCICheck,
-  changeVMState,
+  changeVMState, flipPCICheck,
   gatherDetailsFromEditVM,
   getCSRFToken,
   removePCICheck,
@@ -40,6 +40,13 @@ async function gpuSwap(data) {
   removePCICheck(vm2.edit, vm2PrimaryGPU.id);
   addPCICheck(vm1.edit, vm2PrimaryGPU.id);
   addPCICheck(vm2.edit, vm1PrimaryGPU.id);
+
+  if (data.pciIds) {
+    data.pciIds.forEach(pciId => {
+      flipPCICheck(vm1.edit, pciId);
+      flipPCICheck(vm2.edit, pciId);
+    });
+  }
 
   await Promise.all([
     changeVMState(data.id1, "domain-stop", data.server, auth, token),

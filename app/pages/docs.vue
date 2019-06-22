@@ -244,7 +244,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ id1: Virtual Machine 1 ID, id2: Virtual Machine 2 ID, server: Server IP Address }"
+              value="{ id1: Virtual Machine 1 ID, id2: Virtual Machine 2 ID, server: Server IP Address, pciIds: (Optional) List of pci ids to move as well (must be attached to one of these vms) }"
               solo
               readonly
               light
