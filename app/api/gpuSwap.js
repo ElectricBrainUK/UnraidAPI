@@ -4,7 +4,7 @@ import {
   gatherDetailsFromEditVM,
   getCSRFToken,
   removePCICheck,
-  requestAttach
+  requestChange
 } from "../utils/Unraid";
 import fs from "fs";
 
@@ -52,8 +52,8 @@ async function gpuSwap(data) {
     changeVMState(data.id1, "domain-stop", data.server, auth, token),
     changeVMState(data.id2, "domain-stop", data.server, auth, token)]);
 
-  let result1 = await requestAttach(data.server, data.id1, servers[data.server].authToken, vm1.edit);
-  let result2 = await requestAttach(data.server, data.id2, servers[data.server].authToken, vm2.edit);
+  let result1 = await requestChange(data.server, data.id1, servers[data.server].authToken, vm1.edit);
+  let result2 = await requestChange(data.server, data.id2, servers[data.server].authToken, vm2.edit);
 
   await Promise.all([
     changeVMState(data.id1, "domain-start", data.server, auth, token),

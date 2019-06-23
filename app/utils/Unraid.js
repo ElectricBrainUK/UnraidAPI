@@ -602,7 +602,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
   });
 }
 
-export async function requestAttach(ip, id, auth, vmObject) {
+export async function requestChange(ip, id, auth, vmObject) {
   return axios({
     method: "POST",
     url: "http://" + ip + "/plugins/dynamix.vm.manager/templates/Custom.form.php",

@@ -1,4 +1,4 @@
-import { gatherDetailsFromEditVM, requestAttach } from "../utils/Unraid";
+import { gatherDetailsFromEditVM, requestChange } from "../utils/Unraid";
 import fs from "fs";
 
 export default function(req, res, next) {
@@ -36,11 +36,11 @@ async function attachUSB(data) {
 
   if (attached.vm) {
     removeUSBCheck(attached.vm.edit, attached.usbId);
-    await requestAttach(data.server, attached.vmId, servers[data.server].authToken, attached.vm.edit);
+    await requestChange(data.server, attached.vmId, servers[data.server].authToken, attached.vm.edit);
   }
 
   addUSBCheck(vmObject.edit, data.usbId);
-  return requestAttach(data.server, data.id, servers[data.server].authToken, vmObject.edit);
+  return requestChange(data.server, data.id, servers[data.server].authToken, vmObject.edit);
 }
 
 function removeUSBCheck(details, id) {

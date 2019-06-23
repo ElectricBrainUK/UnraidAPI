@@ -4,7 +4,7 @@ import {
   gatherDetailsFromEditVM,
   getCSRFToken,
   removePCICheck,
-  requestAttach
+  requestChange
 } from "../utils/Unraid";
 import fs from "fs";
 
@@ -58,7 +58,7 @@ async function attachPCI(data) {
       if (!stopped[vmWithPciDevice.vmId]) {
         await changeVMState(vmWithPciDevice.vmId, "domain-stop", data.server, auth, token);
       }
-      await requestAttach(data.server, vmWithPciDevice.vmId, servers[data.server].authToken, vmWithPciDevice.vm.edit);
+      await requestChange(data.server, vmWithPciDevice.vmId, servers[data.server].authToken, vmWithPciDevice.vm.edit);
       stopped[vmWithPciDevice.vmId] = true;
     }
   }
@@ -66,7 +66,7 @@ async function attachPCI(data) {
   await Promise.all(Object.keys(stopped).map(stoppedVMId => changeVMState(stoppedVMId, "domain-start", data.server, auth, token)));
 
   await changeVMState(data.id, "domain-stop", data.server, auth, token);
-  let result = await requestAttach(data.server, data.id, servers[data.server].authToken, vmObject.edit);
+  let result = await requestChange(data.server, data.id, servers[data.server].authToken, vmObject.edit);
   await changeVMState(data.id, "domain-start", data.server, auth, token);
   return result;
 }
