@@ -642,7 +642,7 @@ async function buildForm(ip, auth, id, vmObject) {
     "&domain%5Bmachine%5D=" + vmObject.domain_machine +
     "&domain%5Bhyperv%5D=" + vmObject.domain_hyperv +
     "&domain%5Busbmode%5D=" + vmObject.domain_usbmode +
-    "&media%5Bcdrom%5D=" + vmObject.media_cdrom +
+    "&media%5Bcdrom%5D=" + vmObject.media_cdrom + //todo is encodeURI needed for these 4?
     "&media%5Bcdrombus%5D=" + vmObject.media_cdrombus +
     "&media%5Bdrivers%5D=" + vmObject.media_drivers +
     "&media%5Bdriversbus%5D=" + vmObject.media_driversbus +

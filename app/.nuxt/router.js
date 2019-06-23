@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 
 const _b5833d4a = () => interopDefault(import('../pages/docs.vue' /* webpackChunkName: "pages/docs" */))
+const _161a483b = () => interopDefault(import('../pages/EditDetail.vue' /* webpackChunkName: "pages/EditDetail" */))
 const _be117d3c = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 Vue.use(Router)
@@ -83,6 +84,10 @@ export function createRouter() {
       path: "/docs",
       component: _b5833d4a,
       name: "docs"
+    }, {
+      path: "/EditDetail",
+      component: _161a483b,
+      name: "EditDetail"
     }, {
       path: "/",
       component: _be117d3c,
