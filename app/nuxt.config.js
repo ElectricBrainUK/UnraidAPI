@@ -5,7 +5,9 @@ const URLS = {
   VM_STATUS: '/api/vmStatus',
   USB_ATTACH: '/api/usbAttach',
   PCI_ATTACH: '/api/pciAttach',
-  GPU_SWAP: '/api/gpuSwap'
+  GPU_SWAP: '/api/gpuSwap',
+  VM_EDIT: '/api/editVM',
+  VM_CREATE: '/api/createVM'
 };
 
 module.exports = {
@@ -69,7 +71,9 @@ module.exports = {
     {path: URLS.VM_STATUS, handler: '~/api/changeVMStatus.js'},
     {path: URLS.USB_ATTACH, handler: '~/api/usbAttach.js'},
     {path: URLS.PCI_ATTACH, handler: '~/api/pciAttach.js'},
-    {path: URLS.GPU_SWAP, handler: '~/api/gpuSwap.js'}
+    {path: URLS.GPU_SWAP, handler: '~/api/gpuSwap.js'},
+    {path: URLS.VM_EDIT, handler: '~/api/editVM.js'},
+    {path: URLS.VM_CREATE, handler: '~/api/createVM.js'}
   ],
   /*
    ** vuetify module configuration

@@ -274,10 +274,6 @@
               readonly
               light
             ></v-textarea>
-            // shares%5B0%5D%5Bsource%5D:
-            // shares%5B0%5D%5Btarget%5D:
-            // nic%5B0%5D%5Bmac%5D: 52%3A54%3A00%3A87%3A19%3Ac2
-            // nic%5B0%5D%5Bnetwork%5D: br0
             Edit Options (all optional)
             <v-container
               fluid
@@ -355,11 +351,31 @@
           </v-card-text>
         </v-card>
       </v-flex>
+      <v-flex text-xs-left
+              grow
+      >
+        <v-card>
+          <v-card-title>
+            VM Create
+          </v-card-title>
+          <v-card-text>
+            Request
+            <v-text-field
+              value="POST: api/createVM"
+              solo
+              readonly
+              light
+            ></v-text-field>
+            Same fields as edit but with the extra
+            <EditDetail title="domain_startnow" default-value="1" text-content="Whether to start the VM after creation"/>
+          </v-card-text>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 <script>
-  import EditDetail from "./EditDetail";
+  import EditDetail from "../components/documentation/EditDetail";
 
   export default {
     components: { EditDetail }

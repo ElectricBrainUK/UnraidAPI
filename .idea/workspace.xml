@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/api/editVM.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/pages/EditDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/createVM.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/.nuxt/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/.nuxt/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/nuxt.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pages/EditDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/documentation/EditDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/pages/docs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/pages/docs.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Unraid.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,24 +20,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/GpuSwap.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/api/pciAttach.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -78,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12">
-              <caret line="664" column="45" lean-forward="true" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
+            <state relative-caret-position="1361">
+              <caret line="664" column="45" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -90,7 +71,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/api/editVM.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
+            <state relative-caret-position="364">
               <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
               <folding>
                 <element signature="e#0#102#0" expanded="true" />
@@ -100,19 +81,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
+        <entry file="file://$PROJECT_DIR$/app/api/createVM.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="347" column="92" selection-start-line="347" selection-start-column="92" selection-end-line="347" selection-end-column="92" />
+            <state relative-caret-position="185">
+              <caret line="32" column="118" selection-start-line="32" selection-start-column="118" selection-end-line="32" selection-end-column="118" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/pages/EditDetail.vue">
+        <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1929">
+              <caret line="378" lean-forward="true" selection-start-line="378" selection-end-line="378" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="75" column="51" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/documentation/EditDetail.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
-              <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -129,8 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>console.log</find>
-      <find>log</find>
       <find>checked</find>
       <find>undrai</find>
       <find>undr</find>
@@ -159,6 +156,8 @@
       <find>props</find>
       <find>&quot; + disk.</find>
       <find>title=&quot;image&quot;</find>
+      <find>gpu[0][</find>
+      <find>uuid</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;Failed with status code: &quot; + e.statusText</replace>
@@ -170,7 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.eslintrc.json" />
         <option value="$PROJECT_DIR$/components/Logo.vue" />
         <option value="$PROJECT_DIR$/store/index.js" />
         <option value="$PROJECT_DIR$/api/login.js" />
@@ -211,7 +209,6 @@
         <option value="$PROJECT_DIR$/app/components/SetupCard.vue" />
         <option value="$PROJECT_DIR$/.git-ignore" />
         <option value="$PROJECT_DIR$/app/api/usbAttach.js" />
-        <option value="$PROJECT_DIR$/app/nuxt.config.js" />
         <option value="$PROJECT_DIR$/app/components/ServerCard.vue" />
         <option value="$PROJECT_DIR$/app/components/GpuSwap.vue" />
         <option value="$PROJECT_DIR$/app/components/UsbDetail.vue" />
@@ -221,6 +218,8 @@
         <option value="$PROJECT_DIR$/app/pages/EditDetail.vue" />
         <option value="$PROJECT_DIR$/app/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/app/pages/docs.vue" />
+        <option value="$PROJECT_DIR$/app/nuxt.config.js" />
+        <option value="$PROJECT_DIR$/app/api/createVM.js" />
       </list>
     </option>
   </component>
@@ -330,12 +329,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/api" />
       <recent name="$PROJECT_DIR$/config" />
     </key>
     <key name="es6.move.members.recent.items">
       <recent name="$PROJECT_DIR$/utils/Unraid.js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/components/documentation" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -449,7 +450,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560091620576</updated>
       <workItem from="1560091623342" duration="95035000" />
-      <workItem from="1560461574706" duration="35496000" />
+      <workItem from="1560461574706" duration="36475000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1560125430445</created>
@@ -689,17 +690,24 @@
       <option name="project" value="LOCAL" />
       <updated>1561290908355</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Add vm edit">
+      <created>1561295439955</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1561295439955</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130531000" />
+    <option name="totallyTimeSpent" value="131510000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -713,7 +721,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.4947146" weight="0.32891566" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49753347" visible="true" weight="0.32891566" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.5024665" side_tool="true" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5024665" side_tool="true" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49541932" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -755,7 +763,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Get details from usb edit in order to start usb hotswap" />
     <MESSAGE value="Add other bits for usb details" />
     <MESSAGE value="Bug fixes and more towards usb attach/detach" />
     <MESSAGE value="Add attach" />
@@ -780,16 +787,10 @@
     <MESSAGE value="Add check to see if vm already stopped" />
     <MESSAGE value="Add optional array of pci ids to gpu swap" />
     <MESSAGE value="Rename function more appropriately" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename function more appropriately" />
+    <MESSAGE value="Add vm edit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add vm edit" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.nuxt/axios.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="116" column="48" lean-forward="true" selection-start-line="116" selection-start-column="48" selection-end-line="116" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.js" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -1007,13 +1008,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="20" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/components/ServerCard.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1122">
@@ -1079,16 +1073,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/EditDetail.vue">
+    <entry file="file://$PROJECT_DIR$/app/components/documentation/EditDetail.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1929">
+          <caret line="378" lean-forward="true" selection-start-line="378" selection-end-line="378" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="75" column="51" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/api/editVM.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
+        <state relative-caret-position="364">
           <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
           <folding>
             <element signature="e#0#102#0" expanded="true" />
@@ -1098,18 +1106,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12">
-          <caret line="664" column="45" lean-forward="true" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
+        <state relative-caret-position="1361">
+          <caret line="664" column="45" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/docs.vue">
+    <entry file="file://$PROJECT_DIR$/app/api/createVM.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="347" column="92" selection-start-line="347" selection-start-column="92" selection-end-line="347" selection-end-column="92" />
+        <state relative-caret-position="185">
+          <caret line="32" column="118" selection-start-line="32" selection-start-column="118" selection-end-line="32" selection-end-column="118" />
         </state>
       </provider>
     </entry>
