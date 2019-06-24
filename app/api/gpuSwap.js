@@ -41,6 +41,10 @@ async function gpuSwap(data) {
   addPCICheck(vm1.edit, vm2PrimaryGPU.id);
   addPCICheck(vm2.edit, vm1PrimaryGPU.id);
 
+  let temp = Object.assign("", vm1.edit.pcis.filter(device => device.id === vm2PrimaryGPU.id)[0].bios);
+  vm1.edit.pcis.filter(device => device.id === vm2PrimaryGPU.id)[0].bios = Object.assign("", vm2.edit.pcis.filter(device => device.id === vm1PrimaryGPU.id)[0].bios);
+  vm2.edit.pcis.filter(device => device.id === vm1PrimaryGPU.id)[0].bios = temp;
+
   if (data.pciIds) {
     data.pciIds.forEach(pciId => {
       flipPCICheck(vm1.edit, pciId);
