@@ -557,7 +557,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
           gpu.keymap = extractReverseValue(extractValue(gpuModel, "<select name=\"gpu[" + gpuNo + "][keymap]\"", "selected>"), "'", "value='");
         }
 
-        gpu.bios = extractReverseValue(extractValue(response.data, "<td>Graphics ROM BIOS:</td>", " name=\"gpu["), "\"", "value='");
+        gpu.bios = extractReverseValue(extractValue(response.data, "<td>Graphics ROM BIOS:</td>", " name=\"gpu["), "\"", "value=\"");
 
         if (gpuNo === 0) {
           vmObject.edit.pcis.push(gpu);
@@ -602,7 +602,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject) {
   });
 }
 
-export async function requestChange(ip, id, auth, vmObject) {
+export async function requestChange(ip, id, auth, vmObject, create) {
   return axios({
     method: "POST",
     url: "http://" + ip + "/plugins/dynamix.vm.manager/templates/Custom.form.php",
@@ -611,7 +611,7 @@ export async function requestChange(ip, id, auth, vmObject) {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       "X-Requested-With": "XMLHttpRequest"
     },
-    data: await buildForm(ip, auth, id, vmObject),
+    data: await buildForm(ip, auth, id, vmObject, create),
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
     return response.data;
@@ -620,7 +620,7 @@ export async function requestChange(ip, id, auth, vmObject) {
   });
 }
 
-async function buildForm(ip, auth, id, vmObject) {
+async function buildForm(ip, auth, id, vmObject, create) {
   let staticPart =
     "template%5Bos%5D=" + vmObject.template_os +
     "template%5Bname%5D=" + vmObject.template_name +
@@ -646,7 +646,7 @@ async function buildForm(ip, auth, id, vmObject) {
     "&media%5Bcdrombus%5D=" + vmObject.media_cdrombus +
     "&media%5Bdrivers%5D=" + vmObject.media_drivers +
     "&media%5Bdriversbus%5D=" + vmObject.media_driversbus +
-    "&updatevm=" + 1 +
+    (create ? ("&createvm=" + 1) : ("&updatevm=" + 1)) +
     "&domain%5Bpassword%5D=" +
     "&csrf_token=" + await getCSRFToken(ip, auth);
 
@@ -670,21 +670,26 @@ async function buildForm(ip, auth, id, vmObject) {
   let audioDevices = 0;
   let gpus = 0;
   vmObject.pcis.forEach(pciDevice => {
+    if (pciDevice.id === "vnc" || !pciDevice.id) {
+      return;
+    }
+
     if (pciDevice.gpu && pciDevice.checked) {
       staticPart += "&gpu%5B" + gpus + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
-      staticPart += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI(pciDevice.model);
+      staticPart += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI("qxl");
       staticPart += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + encodeURI(pciDevice.keymap);
       staticPart += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + encodeURI(pciDevice.bios);
       gpus++;
     } else if (pciDevice.audio && pciDevice.checked) {
       staticPart += "&audio%5B" + audioDevices + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
       audioDevices++;
+    } else {
+      staticPart += "&pci%5B%5D=" + encodeURI(pciDevice.id) + (pciDevice.checked ? "" : "%23remove");
     }
-    staticPart += "&pci%5B%5D=" + encodeURI(pciDevice.id) + (pciDevice.checked ? '' : '%23remove');
   });
 
   vmObject.usbs.forEach(usbDevice => {
-    staticPart += "&usb%5B%5D=" + encodeURI(usbDevice.id) + (usbDevice.checked ? '' : '%23remove');
+    staticPart += "&usb%5B%5D=" + encodeURI(usbDevice.id) + (usbDevice.checked ? "" : "%23remove");
   });
 
   vmObject.nics.forEach((nicDevice, index) => {

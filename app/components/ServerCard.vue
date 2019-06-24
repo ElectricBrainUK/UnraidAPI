@@ -144,7 +144,7 @@
                   </v-chip>
                   <br>
                 </v-expansion-panel-content>
-                <v-expansion-panel-content>
+                <v-expansion-panel-content v-if="vm.edit">
                   <template v-slot:header>
                     USBs:
                   </template>
@@ -154,7 +154,7 @@
                     <usb-detail v-if="usb.checked" :detail="usb" :server="server" :ip="ip"/>
                   </div>
                 </v-expansion-panel-content>
-                <v-expansion-panel-content v-if="vm.edit.pcis">
+                <v-expansion-panel-content v-if="vm.edit">
                   <template v-slot:header>
                     PCI Devices
                   </template>

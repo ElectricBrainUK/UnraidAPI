@@ -41,7 +41,7 @@ async function editVM(data) {
   let token = await getCSRFToken(data.server, auth);
 
   await changeVMState(data.id, "domain-stop", data.server, auth, token);
-  let result = await requestChange(data.server, data.id, servers[data.server].authToken, defaultVMObject.edit);//todo set to create not edit
+  let result = await requestChange(data.server, data.id, servers[data.server].authToken, defaultVMObject.edit, create);
   await changeVMState(data.id, "domain-start", data.server, auth, token);
   return result;
 }
