@@ -28,13 +28,20 @@
           item-text="name"
           item-value="id"
           label="VM 1"></v-select>
-        <v-select
-          v-if="server.pciDetails"
-          v-model="pciSelector"
-          :items="server.pciDetails"
-          item-text="name"
-          item-value="id"
-          label="PCI Device"></v-select>
+        <div
+          v-for="id in pciIds"
+          v-bind:key="id">
+          <v-select
+            v-if="server.pciDetails"
+            v-model="pciSelectors[id]"
+            :items="server.pciDetails"
+            item-text="name"
+            item-value="id"
+            label="PCI Device"></v-select>
+        </div>
+        <v-btn v-if="server.pciDetails" color="black" block dark v-on:click="pciIds.push(pciIds[-1] + 1)">
+          <v-icon>add</v-icon>
+        </v-btn>
         <v-select
           v-model="vMSelector2"
           :items="Object.keys(server.vm.details).map(id => server.vm.details[id])"
@@ -65,15 +72,16 @@
   export default {
     name: "GpuSwap",
     props: [
-      'server',
-      'ip',
+      "server",
+      "ip"
     ],
     data() {
       return {
         vMSelector1: false,
         vMSelector2: false,
-        pciSelector: false,
-        dialogue: false
+        pciSelectors: [],
+        dialogue: false,
+        pciIds: [0]
       };
     },
     methods: {
@@ -84,7 +92,7 @@
           data: {
             id1: this.vMSelector1,
             id2: this.vMSelector2,
-            pciIds: [this.pciSelector],
+            pciIds: this.pciSelectors,
             server: this.ip
           }
         }).then((response) => {
