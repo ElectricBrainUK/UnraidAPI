@@ -29,6 +29,13 @@
           item-value="id"
           label="VM 1"></v-select>
         <v-select
+          v-if="server.pciDetails"
+          v-model="pciSelector"
+          :items="server.pciDetails"
+          item-text="name"
+          item-value="id"
+          label="PCI Device"></v-select>
+        <v-select
           v-model="vMSelector2"
           :items="Object.keys(server.vm.details).map(id => server.vm.details[id])"
           item-text="name"
@@ -65,6 +72,7 @@
       return {
         vMSelector1: false,
         vMSelector2: false,
+        pciSelector: false,
         dialogue: false
       };
     },
@@ -76,6 +84,7 @@
           data: {
             id1: this.vMSelector1,
             id2: this.vMSelector2,
+            pciIds: [this.pciSelector],
             server: this.ip
           }
         }).then((response) => {
