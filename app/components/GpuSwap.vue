@@ -39,7 +39,7 @@
             item-value="id"
             label="PCI Device"></v-select>
         </div>
-        <v-btn v-if="server.pciDetails" color="black" block dark v-on:click="pciIds.push(pciIds[-1] + 1)">
+        <v-btn v-if="server.pciDetails" color="grey" block dark v-on:click="pciIds.push(pciIds.length)">
           <v-icon>add</v-icon>
         </v-btn>
         <v-select
@@ -86,6 +86,7 @@
     },
     methods: {
       swapGPUs() {
+      console.log(this.pciIds);
         axios({
           method: "post",
           url: "api/gpuSwap",
