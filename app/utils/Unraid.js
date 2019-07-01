@@ -2,10 +2,10 @@ import axios from "axios";
 import fs from "fs";
 import http from "http";
 
-function getUnraidDetails(servers) {
-  getServerDetails(servers);
-  getVMs(servers);
-  getUSBDetails(servers);
+function getUnraidDetails(servers, serverAuth) {
+  getServerDetails(servers, serverAuth);
+  getVMs(servers, serverAuth);
+  getUSBDetails(servers, serverAuth);
   getPCIDetails();
 }
 
@@ -20,14 +20,17 @@ function getPCIDetails() {
   });
 }
 
-function getUSBDetails(servers) {
+function getUSBDetails(servers, serverAuth) {
   Object.keys(servers).forEach(ip => {
+    if (!serverAuth[ip]) {
+      return;
+    }
     if (servers[ip].vm && servers[ip].vm.details && servers[ip].vm.details.length > 0) {
       axios({
         method: "get",
         url: "http://" + ip + "/VMs/UpdateVM?uuid=" + servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,
         headers: {
-          "Authorization": "Basic " + servers[ip].authToken
+          "Authorization": "Basic " + serverAuth[ip]
         }
       }).then(response => {
         servers[ip].usbDetails = [];
@@ -47,20 +50,23 @@ function getUSBDetails(servers) {
   });
 }
 
-function getServerDetails(servers) {
+function getServerDetails(servers, serverAuth) {
   Object.keys(servers).forEach(async ip => {
-    servers[ip].serverDetails = await scrapeHTML(ip, servers);
+    if (!serverAuth[ip]) {
+      return;
+    }
+    servers[ip].serverDetails = await scrapeHTML(ip, serverAuth);
 
     updateFile(servers, ip, "serverDetails");
   });
 }
 
-function scrapeHTML(ip, servers) {
+function scrapeHTML(ip, serverAuth) {
   return axios({
     method: "get",
     url: "http://" + ip + "/Dashboard",
     headers: {
-      "Authorization": "Basic " + servers[ip].authToken
+      "Authorization": "Basic " + serverAuth[ip]
     }
   }).then((response) => {
     return {
@@ -76,13 +82,16 @@ function scrapeHTML(ip, servers) {
   });
 }
 
-function getVMs(servers) {
+function getVMs(servers, serverAuth) {
   Object.keys(servers).forEach(ip => {
+    if (!serverAuth[ip]) {
+      return;
+    }
     axios({
       method: "get",
       url: "http://" + ip + "/plugins/dynamix.vm.manager/include/VMMachines.php",
       headers: {
-        "Authorization": "Basic " + servers[ip].authToken
+        "Authorization": "Basic " + serverAuth[ip]
       }
     }).then(async (response) => {
       let parts = response.data.toString().split("\u0000");
@@ -90,7 +99,7 @@ function getVMs(servers) {
       let details = parseHTML(htmlDetails);
       let extras = parts[1];
       servers[ip].vm = {};
-      servers[ip].vm.details = await processVMResponse(details, ip);
+      servers[ip].vm.details = await processVMResponse(details, ip, serverAuth[ip]);
       servers[ip].vm.extras = extras;
       updateFile(servers, ip, "vm");
     }).catch(e => {
@@ -221,10 +230,10 @@ function hasChildren(remaining) {
   return remaining.indexOf("<") === 0 && remaining.indexOf("</") !== 0;
 }
 
-function processVMResponse(response, ip) {
+function processVMResponse(response, ip, auth) {
   let object = [];
   groupVmDetails(response, object);
-  return simplifyResponse(object, ip);
+  return simplifyResponse(object, ip, auth);
 }
 
 function groupVmDetails(response, object) {
@@ -243,7 +252,7 @@ function groupVmDetails(response, object) {
   });
 }
 
-async function simplifyResponse(object, ip) {
+async function simplifyResponse(object, ip, auth) {
   let temp = {};
   for (let i = 0; i < object.length; i++) {
     let vm = object[i];
@@ -265,7 +274,7 @@ async function simplifyResponse(object, ip) {
       newVMObject.hddAllocation.all.push(details);
     });
     newVMObject.primaryGPU = vm.parent.children[5].contents;
-    newVMObject = await gatherDetailsFromEditVM(ip, newVMObject.id, newVMObject);
+    newVMObject = await gatherDetailsFromEditVM(ip, newVMObject.id, newVMObject, auth);
     temp[newVMObject.id] = newVMObject;
   }
   return temp;
@@ -322,111 +331,17 @@ export function changeVMState(id, action, server, auth, token) {
   });
 }
 
-export function gatherDetailsFromEditVM(ip, id, vmObject) {
+export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
   let rawdata = fs.readFileSync("config/servers.json");
   let servers = JSON.parse(rawdata);
   if (!vmObject) {
     vmObject = servers[ip].vm.details[id];
   }
-  // this is create
-  // domain%5Btype%5D: kvm
-  // template%5Bname%5D: Windows+10
-  // template%5Bicon%5D: windows.png
-  // template%5Bos%5D: windows10
-  // domain%5Bpersistent%5D: 1
-  // domain%5Buuid%5D: 577e3fcb-1202-2bde-f4c1-96ce25cc9ccf
-  // domain%5Bclock%5D: localtime
-  // domain%5Barch%5D: x86_64
-  // domain%5Boldname%5D: Windows+10
-  // domain%5Bname%5D: Windows+10
-  // domain%5Bdesc%5D:
-  // domain%5Bcpumode%5D: host-passthrough
-  // domain%5Bvcpu%5D%5B%5D: 0
-  // domain%5Bmem%5D: 2097152
-  // domain%5Bmaxmem%5D: 2097152
-  // domain%5Bmachine%5D: pc-i440fx-3.1
-  // domain%5Bovmf%5D: 1
-  // domain%5Bhyperv%5D: 1
-  // domain%5Busbmode%5D: usb2
-  // media%5Bcdrom%5D:
-  // media%5Bcdrombus%5D: ide
-  // media%5Bdrivers%5D: %2Fmnt%2Fuser%2Fisos%2Fvirtio-win-0.1.160-1.iso
-  // media%5Bdriversbus%5D: ide
-  // disk%5B0%5D%5Bselect%5D: auto
-  // disk%5B0%5D%5Bimage%5D: %2Fmnt%2Fuser%2Fdomains%2FWindows+10%2Fvdisk1.img
-  // disk%5B0%5D%5Bsize%5D: 30G
-  // disk%5B0%5D%5Bdriver%5D: raw
-  // disk%5B0%5D%5Bbus%5D: virtio
-  // shares%5B0%5D%5Bsource%5D:
-  // shares%5B0%5D%5Btarget%5D:
-  // gpu%5B0%5D%5Bid%5D: vnc
-  // gpu%5B0%5D%5Bmodel%5D: qxl
-  // domain%5Bpassword%5D:
-  // gpu%5B0%5D%5Bkeymap%5D: en-us
-  // gpu%5B0%5D%5Brom%5D:
-  // audio%5B0%5D%5Bid%5D:
-  // nic%5B0%5D%5Bmac%5D: 52%3A54%3A00%3A44%3A64%3Aca
-  // nic%5B0%5D%5Bnetwork%5D: br0
-  // domain%5Bstartnow%5D: 1
-  // createvm: 1
-  // domain%5Bxmlstartnow%5D: 1
-  // createvm: 1
-  // csrf_token: 6827A9C70485C4
-  // csrf_token: 6827A9C70485C4
-  //this is edit
-  // domain%5Btype%5D: kvm
-  // template%5Bname%5D: Windows+10
-  // template%5Bicon%5D: windows.png
-  // template%5Bos%5D: windows10
-  // domain%5Bpersistent%5D: 1
-  // domain%5Buuid%5D: c3e72935-6073-cdd4-72ff-1d5ef21f6a45
-  // domain%5Bclock%5D: localtime
-  // domain%5Barch%5D: x86_64
-  // domain%5Boldname%5D: Windows+10
-  // domain%5Bname%5D: Windows+10
-  // domain%5Bdesc%5D: Test
-  // domain%5Bcpumode%5D: host-passthrough
-  // domain%5Bvcpu%5D%5B%5D: 0
-  // domain%5Bvcpu%5D%5B%5D: 12
-  // domain%5Bvcpu%5D%5B%5D: 1
-  // domain%5Bvcpu%5D%5B%5D: 13
-  // domain%5Bmem%5D: 4194304
-  // domain%5Bmaxmem%5D: 4194304
-  // domain%5Bmachine%5D: pc-i440fx-3.1
-  // domain%5Bovmf%5D: 1
-  // domain%5Bhyperv%5D: 1
-  // domain%5Busbmode%5D: usb2
-  // media%5Bcdrom%5D: %2Fmnt%2Fuser%2Fdomains%2Fwindows-10-oct2018.iso
-  // media%5Bcdrombus%5D: sata
-  // media%5Bdrivers%5D: %2Fmnt%2Fuser%2Fisos%2Fvirtio-win-0.1.160-1.iso
-  // media%5Bdriversbus%5D: sata
-  // disk%5B0%5D%5Bselect%5D: auto
-  // disk%5B0%5D%5Bimage%5D: %2Fmnt%2Fuser%2Fdomains%2FWindows+10%2Fvdisk1.img
-  // disk%5B0%5D%5Bsize%5D:
-  // disk%5B0%5D%5Bdriver%5D: raw
-  // disk%5B0%5D%5Bbus%5D: sata
-  // shares%5B0%5D%5Bsource%5D:
-  // shares%5B0%5D%5Btarget%5D:
-  // gpu%5B0%5D%5Bid%5D: vnc
-  // gpu%5B0%5D%5Bmodel%5D: qxl
-  // domain%5Bpassword%5D: test
-  // gpu%5B0%5D%5Bkeymap%5D: en-us
-  // gpu%5B0%5D%5Brom%5D:
-  // audio%5B0%5D%5Bid%5D:
-  // nic%5B0%5D%5Bmac%5D: 52%3A54%3A00%3A87%3A19%3Ac2
-  // nic%5B0%5D%5Bnetwork%5D: br0
-  // usb%5B%5D: 0624%3A0248%23remove
-  // usb%5B%5D: 1a2c%3A4c5e%23remove
-  // updatevm: 1
-  // updatevm: 1
-  // csrf_token: 6827A9C70485C4
-  // pci%5B%5D: 08%3A03.0%23remove
-  // csrf_token: 6827A9C70485C4
   return axios({
     method: "get",
     url: "http://" + ip + "/VMs/UpdateVM?uuid=" + id,
     headers: {
-      "Authorization": "Basic " + servers[ip].authToken
+      "Authorization": "Basic " + auth
     }
   }).then(response => {
     vmObject.edit = {

@@ -10,10 +10,8 @@ export default function(req, res, next) {
   }).on("end", async () => {
     data = JSON.parse(Buffer.concat(body).toString());
     if (data) {
-      let servers = JSON.parse(fs.readFileSync("config/servers.json"));
-      let auth = servers[data.server].authToken;
-      let token = await getCSRFToken(data.server, auth);
-      response.message = await changeVMState(data.id, data.action, data.server, auth, token);
+      let token = await getCSRFToken(data.server, data.auth);
+      response.message = await changeVMState(data.id, data.action, data.server, data.auth, token);
       response.status = 200;
       res.send(response);
     }

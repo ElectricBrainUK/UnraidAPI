@@ -25,13 +25,10 @@ export default function(req, res, next) {
 };
 
 async function gpuSwap(data) {
-  let vm1 = await gatherDetailsFromEditVM(data.server, data.id1);
-  let vm2 = await gatherDetailsFromEditVM(data.server, data.id2);
-  let rawdata = fs.readFileSync("config/servers.json");
-  let servers = JSON.parse(rawdata);
+  let vm1 = await gatherDetailsFromEditVM(data.server, data.id1, undefined, data.auth);
+  let vm2 = await gatherDetailsFromEditVM(data.server, data.id2, undefined, data.auth);
 
-  let auth = servers[data.server].authToken;
-  let token = await getCSRFToken(data.server, auth);
+  let token = await getCSRFToken(data.server, data.auth);
 
   let vm1PrimaryGPU = vm1.edit.pcis.filter(device => device.gpu && device.checked)[0];
   let vm2PrimaryGPU = vm2.edit.pcis.filter(device => device.gpu && device.checked)[0];
@@ -53,15 +50,15 @@ async function gpuSwap(data) {
   }
 
   await Promise.all([
-    changeVMState(data.id1, "domain-stop", data.server, auth, token),
-    changeVMState(data.id2, "domain-stop", data.server, auth, token)]);
+    changeVMState(data.id1, "domain-stop", data.server, data.auth, token),
+    changeVMState(data.id2, "domain-stop", data.server, data.auth, token)]);
 
-  let result1 = await requestChange(data.server, data.id1, servers[data.server].authToken, vm1.edit);
-  let result2 = await requestChange(data.server, data.id2, servers[data.server].authToken, vm2.edit);
+  let result1 = await requestChange(data.server, data.id1, data.auth, vm1.edit);
+  let result2 = await requestChange(data.server, data.id2, data.auth, vm2.edit);
 
   await Promise.all([
-    changeVMState(data.id1, "domain-start", data.server, auth, token),
-    changeVMState(data.id2, "domain-start", data.server, auth, token)]);
+    changeVMState(data.id1, "domain-start", data.server, data.auth, token),
+    changeVMState(data.id2, "domain-start", data.server, data.auth, token)]);
 
   return { vm1: result1, vm2: result2 };
 }

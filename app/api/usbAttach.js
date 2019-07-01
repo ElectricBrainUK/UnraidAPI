@@ -18,7 +18,7 @@ export default function(req, res, next) {
 };
 
 async function attachUSB(data) {
-  let vmObject = await gatherDetailsFromEditVM(data.server, data.id);
+  let vmObject = await gatherDetailsFromEditVM(data.server, data.id, undefined, data.auth);
   let rawdata = fs.readFileSync("config/servers.json");
   let servers = JSON.parse(rawdata);
   let attached = {};
@@ -36,11 +36,11 @@ async function attachUSB(data) {
 
   if (attached.vm) {
     removeUSBCheck(attached.vm.edit, attached.usbId);
-    await requestChange(data.server, attached.vmId, servers[data.server].authToken, attached.vm.edit);
+    await requestChange(data.server, attached.vmId, data.auth, attached.vm.edit);
   }
 
   addUSBCheck(vmObject.edit, data.usbId);
-  return requestChange(data.server, data.id, servers[data.server].authToken, vmObject.edit);
+  return requestChange(data.server, data.id, data.auth, vmObject.edit);
 }
 
 function removeUSBCheck(details, id) {

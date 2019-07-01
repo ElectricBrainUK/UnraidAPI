@@ -16,18 +16,17 @@ export default function(req, res, next) {
   });
 };
 
-async function connectToServer(data) {
+async function connectToServer() {
   let response = {};
   let servers = {};
   try {
-    let rawdata = fs.readFileSync('config/servers.json');
+    let rawdata = fs.readFileSync("config/servers.json");
     servers = JSON.parse(rawdata);
   } catch (e) {
-    console.log(e)
+    console.log(e);
   } finally {
-    servers[data.ip] = {authToken: data.authToken};
-    fs.writeFileSync('config/servers.json', JSON.stringify(servers));
-    response.message = 'Connected';
+    fs.writeFileSync("config/servers.json", JSON.stringify(servers));
+    response.message = "Connected";
   }
   return response;
-};
+}

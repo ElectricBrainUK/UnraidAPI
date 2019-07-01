@@ -1,5 +1,4 @@
-import { changeVMState, gatherDetailsFromEditVM, getCSRFToken, requestChange } from "../utils/Unraid";
-import fs from "fs";
+import { changeVMState, getCSRFToken, requestChange } from "../utils/Unraid";
 
 const defaultVM = {
   gpus: [
@@ -35,13 +34,10 @@ async function editVM(data) {
     defaultVMObject.edit[key] = data.edit[key];
   });
 
-  let rawdata = fs.readFileSync("config/servers.json");
-  let servers = JSON.parse(rawdata);
-  let auth = servers[data.server].authToken;
-  let token = await getCSRFToken(data.server, auth);
+  let token = await getCSRFToken(data.server, data.auth);
 
-  await changeVMState(data.id, "domain-stop", data.server, auth, token);
-  let result = await requestChange(data.server, data.id, servers[data.server].authToken, defaultVMObject.edit, create);
-  await changeVMState(data.id, "domain-start", data.server, auth, token);
+  await changeVMState(data.id, "domain-stop", data.server, data.auth, token);
+  let result = await requestChange(data.server, data.id, data.auth, defaultVMObject.edit, create);
+  await changeVMState(data.id, "domain-start", data.server, data.auth, token);
   return result;
 }
