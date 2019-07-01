@@ -293,7 +293,7 @@
           <template v-slot:header>
             Utils
           </template>
-          <gpu-swap :server="server" :ip="ip"></gpu-swap>
+          <gpu-swap :server="server" :ip="ip" :check-for-server-password="checkForServerPassword"></gpu-swap>
         </v-expansion-panel-content>
         <v-expansion-panel-content v-if="false">
           <template v-slot:header>
@@ -306,6 +306,34 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-card>
+
+    <v-layout row justify-center>
+      <v-dialog v-model="userPasswordPrompt" persistent max-width="600px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">User Profile</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <v-text-field v-model="user" label="User" placeholder="User"></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="password" label="Password*" type="password" required></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <small>*indicates required field</small>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="dialog = false">Cancel</v-btn>
+            <v-btn color="blue darken-1" flat @click="submit">Confirm</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </v-flex>
 </template>
 
@@ -314,6 +342,7 @@
   import EditVmCard from "./EditVmCard";
   import UsbDetail from "./UsbDetail";
   import GpuSwap from "./GpuSwap";
+  import { Base64 } from "js-base64";
 
   export default {
     name: "ServerCardVue",
@@ -326,6 +355,16 @@
       "server",
       "ip"
     ],
+    data() {
+      return {
+        authentication: {},
+        userPasswordPrompt: false,
+        user: '',
+        password: '',
+        resolve: false,
+        reject: false
+      };
+    },
     methods: {
       startVM(vm) {
         if (vm.status === "paused") {
@@ -346,7 +385,8 @@
       forceStopVM(vm) {
         this.changeVMStatus(vm, "domain-destroy");
       },
-      changeVMStatus(vm, action) {
+      async changeVMStatus(vm, action) {
+        let auth = await this.checkForServerPassword(this.ip);
         this.server.vm.details[vm.id].isBusy = true;
         axios({
           method: "post",
@@ -354,7 +394,8 @@
           data: {
             id: vm.id,
             action: action,
-            server: this.ip
+            server: this.ip,
+            auth
           }
         }).then((response) => {
           if (response) {
@@ -369,6 +410,25 @@
             }
           }
         });
+      },
+      checkForServerPassword(ip) {
+        if (this.authentication[ip]) {
+          return this.authentication[ip];
+        }
+        this.userPasswordPrompt = true;
+
+        return new Promise((resolve, reject) => {
+          this.resolve = resolve;
+          this.reject = reject;
+        }).then(data => {
+          this.authentication[ip] = data;
+          return data;
+        });
+      },
+      submit() {
+        this.userPasswordPrompt = false;
+        this.user = this.user ? this.user : 'root';
+        this.resolve(Base64.encode(this.user.concat(":", this.password)));
       }
     }
   };

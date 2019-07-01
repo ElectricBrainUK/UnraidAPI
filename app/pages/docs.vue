@@ -10,24 +10,6 @@
       pa-3
       mb-3
       align-content-space-around justify-space-around fill-height>
-      <v-flex text-xs-left shrink>
-        <v-card>
-          <v-card-title>
-            API Documentation
-          </v-card-title>
-          <v-card-text>
-            For now this is not necessary but soon all requests (not just connect) will require the auth header
-            <v-text-field
-              value="Auth: Basic Base64(User:Password)"
-              solo
-              readonly
-              light
-              auto-grow
-              rows="1"
-            ></v-text-field>
-          </v-card-text>
-        </v-card>
-      </v-flex>
       <v-flex text-xs-left
               grow
       >
@@ -45,7 +27,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ ip: Server Ip Address, authToken: Auth: Basic Base64(User:Password) }"
+              value="{ ip: Server Ip Address, authToken: Base64(User:Password) }"
               solo
               readonly
               light
@@ -86,7 +68,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ id: Virtual Machine ID, action: action (see bellow), server: Server IP Address }"
+              value="{ id: Virtual Machine ID, action: action (see bellow), server: Server IP Address, auth: Base64(User:Password) }"
               solo
               readonly
               light
@@ -194,7 +176,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ id: Virtual Machine ID, usbId: USB Identifier (address), server: Server IP Address }"
+              value="{ id: Virtual Machine ID, usbId: USB Identifier (address), server: Server IP Address, auth: Base64(User:Password) }"
               solo
               readonly
               light
@@ -219,7 +201,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ id: Virtual Machine ID, pciIds: Array of PCI Identifiers (address), server: Server IP Address }"
+              value="{ id: Virtual Machine ID, pciIds: Array of PCI Identifiers (address), server: Server IP Address, auth: Base64(User:Password) }"
               solo
               readonly
               light
@@ -244,7 +226,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ id1: Virtual Machine 1 ID, id2: Virtual Machine 2 ID, server: Server IP Address, pciIds: (Optional) List of pci ids to move as well (must be attached to one of these vms) }"
+              value="{ id1: Virtual Machine 1 ID, id2: Virtual Machine 2 ID, server: Server IP Address, pciIds: (Optional) List of pci ids to move as well (must be attached to one of these vms), auth: Base64(User:Password) }"
               solo
               readonly
               light
@@ -269,7 +251,7 @@
             ></v-text-field>
             Data
             <v-textarea
-              value="{ id: Virtual Machine ID, server: Server IP Address, edit: Object containing fields to edit, options bellow }"
+              value="{ id: Virtual Machine ID, server: Server IP Address, edit: Object containing fields to edit, options bellow, auth: Base64(User:Password) }"
               solo
               readonly
               light

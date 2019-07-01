@@ -63,7 +63,8 @@
       };
     },
     methods: {
-      requestMove() {
+      async requestMove() {
+        let auth = await this.checkForServerPassword(this.ip);
         if (!this.pci) {
           axios({
             method: "post",
@@ -71,7 +72,8 @@
             data: {
               id: this.vMSelector,
               usbId: this.detail.id,
-              server: this.ip
+              server: this.ip,
+              auth
             }
           }).then((response) => {
             this.dialogue = false;
@@ -86,7 +88,8 @@
             data: {
               id: this.vMSelector,
               pciIds: [this.detail.id],
-              server: this.ip
+              server: this.ip,
+              auth
             }
           }).then((response) => {
             this.dialogue = false;

@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-dialog
     v-model="dialogue"
     width="500"
@@ -27,19 +27,28 @@
           :items="Object.keys(server.vm.details).map(id => server.vm.details[id])"
           item-text="name"
           item-value="id"
-          label="VM 1"></v-select>
+          label="VM 1"
+        />
         <div
           v-for="id in pciIds"
-          v-bind:key="id">
+          :key="id"
+        >
           <v-select
             v-if="server.pciDetails"
             v-model="pciSelectors[id]"
             :items="server.pciDetails"
             item-text="name"
             item-value="id"
-            label="PCI Device"></v-select>
+            label="PCI Device"
+          />
         </div>
-        <v-btn v-if="server.pciDetails" color="grey" block dark v-on:click="pciIds.push(pciIds.length)">
+        <v-btn
+          v-if="server.pciDetails"
+          color="grey"
+          block
+          dark
+          @click="pciIds.push(pciIds.length)"
+        >
           <v-icon>add</v-icon>
         </v-btn>
         <v-select
@@ -47,13 +56,14 @@
           :items="Object.keys(server.vm.details).map(id => server.vm.details[id])"
           item-text="name"
           item-value="id"
-          label="VM 2"></v-select>
+          label="VM 2"
+        />
       </v-card-text>
 
-      <v-divider/>
+      <v-divider />
 
       <v-card-actions>
-        <v-spacer/>
+        <v-spacer />
         <v-btn
           color="primary"
           flat
@@ -73,7 +83,8 @@
     name: "GpuSwap",
     props: [
       "server",
-      "ip"
+      "ip",
+      "checkForServerPassword"
     ],
     data() {
       return {
@@ -85,8 +96,8 @@
       };
     },
     methods: {
-      swapGPUs() {
-      console.log(this.pciIds);
+      async swapGPUs() {
+        let auth = await this.checkForServerPassword(this.ip);
         axios({
           method: "post",
           url: "api/gpuSwap",
@@ -94,7 +105,8 @@
             id1: this.vMSelector1,
             id2: this.vMSelector2,
             pciIds: this.pciSelectors,
-            server: this.ip
+            server: this.ip,
+            auth
           }
         }).then((response) => {
           this.dialogue = false;
