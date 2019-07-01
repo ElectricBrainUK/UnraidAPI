@@ -54,7 +54,8 @@
       'detail',
       'server',
       'ip',
-      'pci'
+      'pci',
+      'checkForServerPassword'
     ],
     data() {
       return {

@@ -111,7 +111,8 @@
                   <v-progress-circular
                     v-if="vm.isBusy"
                     indeterminate
-                    style="width: 20px;"></v-progress-circular>
+                    style="width: 20px;"
+                  />
                   <div v-if="!vm.isBusy">
                     {{ vm.status }}
                   </div>
@@ -121,7 +122,7 @@
                 class="left"
                 :src="'http://' + ip + vm.icon"
               >
-              <edit-vm-card :vm="vm"/>
+              <edit-vm-card :vm="vm" />
               <v-chip>{{ vm.id }}</v-chip>
               <v-chip>Cores: {{ vm.coreCount }}</v-chip>
               <v-chip>RAM: {{ vm.ramAllocation }}</v-chip>
@@ -150,8 +151,15 @@
                   </template>
                   <div
                     v-for="usb in vm.edit.usbs"
-                    :key="usb.id">
-                    <usb-detail v-if="usb.checked" :detail="usb" :server="server" :ip="ip"/>
+                    :key="usb.id"
+                  >
+                    <usb-detail
+                      v-if="usb.checked"
+                      :detail="usb"
+                      :server="server"
+                      :ip="ip"
+                      :check-for-server-password="checkForServerPassword"
+                    />
                   </div>
                 </v-expansion-panel-content>
                 <v-expansion-panel-content v-if="vm.edit">
@@ -173,6 +181,7 @@
                           :server="server"
                           :ip="ip"
                           :pci="true"
+                          :check-for-server-password="checkForServerPassword"
                         />
                       </div>
                     </v-expansion-panel-content>
@@ -190,6 +199,7 @@
                           :server="server"
                           :ip="ip"
                           :pci="true"
+                          :check-for-server-password="checkForServerPassword"
                         />
                       </div>
                     </v-expansion-panel-content>
@@ -207,6 +217,7 @@
                           :server="server"
                           :ip="ip"
                           :pci="true"
+                          :check-for-server-password="checkForServerPassword"
                         />
                       </div>
                     </v-expansion-panel-content>
@@ -228,6 +239,7 @@
               :detail="detail"
               :server="server"
               :ip="ip"
+              :checkForServerPassword=checkForServerPassword
             />
           </div>
         </v-expansion-panel-content>
@@ -250,6 +262,7 @@
                   :server="server"
                   :ip="ip"
                   :pci="true"
+                  :check-for-server-password="checkForServerPassword"
                 />
               </div>
             </v-expansion-panel-content>
@@ -267,6 +280,7 @@
                   :server="server"
                   :ip="ip"
                   :pci="true"
+                  :check-for-server-password="checkForServerPassword"
                 />
               </div>
             </v-expansion-panel-content>
@@ -284,6 +298,7 @@
                   :server="server"
                   :ip="ip"
                   :pci="true"
+                  :check-for-server-password="checkForServerPassword"
                 />
               </div>
             </v-expansion-panel-content>
@@ -293,7 +308,11 @@
           <template v-slot:header>
             Utils
           </template>
-          <gpu-swap :server="server" :ip="ip" :check-for-server-password="checkForServerPassword"></gpu-swap>
+          <gpu-swap
+            :server="server"
+            :ip="ip"
+            :check-for-server-password="checkForServerPassword"
+          />
         </v-expansion-panel-content>
         <v-expansion-panel-content v-if="false">
           <template v-slot:header>
@@ -302,7 +321,8 @@
           <iframe
             style="width: 100%;"
             height="500px"
-            :src="'http://' + ip + '/webterminal/'"></iframe>
+            :src="'http://' + ip + '/webterminal/'"
+          />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-card>
