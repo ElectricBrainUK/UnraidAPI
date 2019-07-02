@@ -159,6 +159,7 @@
                       :server="server"
                       :ip="ip"
                       :check-for-server-password="checkForServerPassword"
+                      :reattachable="true"
                     />
                   </div>
                 </v-expansion-panel-content>

@@ -5,10 +5,24 @@
   >
     <template v-slot:activator="{ on }">
       <v-chip
-        v-on="on"
         style="overflow: hidden; max-width: 95%; min-width: 20px;"
+        v-on="on"
       >
-          {{ detail.name }}
+        {{ detail.name }}
+        <div v-if="reattachable" text-xs-center>
+          <v-btn
+            color="primary"
+            fab
+            small
+            dark
+            style="height: 20px; width: 20px;"
+            @click="reattach"
+          >
+            <v-icon>
+              cached
+            </v-icon>
+          </v-btn>
+        </div>
       </v-chip>
     </template>
 
@@ -26,7 +40,8 @@
           :items="Object.keys(server.vm.details).map(id => server.vm.details[id])"
           item-text="name"
           item-value="id"
-          label="VM"></v-select>
+          label="VM"
+        />
       </v-card-text>
 
       <v-divider/>
@@ -51,11 +66,12 @@
   export default {
     name: "UsbDetail",
     props: [
-      'detail',
-      'server',
-      'ip',
-      'pci',
-      'checkForServerPassword'
+      "detail",
+      "server",
+      "ip",
+      "pci",
+      "checkForServerPassword",
+      "reattachable"
     ],
     data() {
       return {
@@ -91,6 +107,44 @@
               pciIds: [this.detail.id],
               server: this.ip,
               auth
+            }
+          }).then((response) => {
+            this.dialogue = false;
+            if (response) {
+              console.log(response);
+            }
+          });
+        }
+      },
+      async reattach() {
+        let auth = await this.checkForServerPassword(this.ip);
+        if (!this.pci) {
+          axios({
+            method: "post",
+            url: "api/usbAttach",
+            data: {
+              id: this.vMSelector,
+              usbId: this.detail.id,
+              server: this.ip,
+              auth,
+              option: "reattach"
+            }
+          }).then((response) => {
+            this.dialogue = false;
+            if (response) {
+              console.log(response);
+            }
+          });
+        } else {
+          axios({
+            method: "post",
+            url: "api/pciAttach",
+            data: {
+              id: this.vMSelector,
+              pciIds: [this.detail.id],
+              server: this.ip,
+              auth,
+              option: "reattach"
             }
           }).then((response) => {
             this.dialogue = false;

@@ -10,7 +10,11 @@ export default function(req, res, next) {
     data = JSON.parse(Buffer.concat(body).toString());
     if (data) {
       let response = {};
-      response.message = await attachUSB(data);
+      if (!data.option) {
+        response.message = await attachUSB(data);
+      } else if (data.option === 'reattach') {
+        response.message = await reattachUSB(data);
+      }
       response.status = 200;
       res.send(response);
     }
@@ -39,6 +43,15 @@ async function attachUSB(data) {
     await requestChange(data.server, attached.vmId, data.auth, attached.vm.edit);
   }
 
+  addUSBCheck(vmObject.edit, data.usbId);
+  return requestChange(data.server, data.id, data.auth, vmObject.edit);
+}
+
+async function reattachUSB(data) {
+  let vmObject = await gatherDetailsFromEditVM(data.server, data.id, undefined, data.auth);
+
+  removeUSBCheck(vmObject.edit, data.usbId);
+  await requestChange(data.server, data.id, data.auth, vmObject.edit);
   addUSBCheck(vmObject.edit, data.usbId);
   return requestChange(data.server, data.id, data.auth, vmObject.edit);
 }
