@@ -5,10 +5,24 @@
   >
     <template v-slot:activator="{ on }">
       <v-chip
-        style="overflow: hidden; max-width: 95%; min-width: 20px;"
+        style="overflow: auto; max-width: 95%; min-width: 20px;"
         v-on="on"
       >
         {{ detail.name }}
+        <div v-if="detachable" text-xs-center>
+          <v-btn
+            color="secondary"
+            fab
+            small
+            dark
+            style="height: 20px; width: 20px;"
+            @click="detach"
+          >
+            <v-icon>
+              eject
+            </v-icon>
+          </v-btn>
+        </div>
         <div v-if="reattachable" text-xs-center>
           <v-btn
             color="primary"
@@ -71,7 +85,8 @@
       "ip",
       "pci",
       "checkForServerPassword",
-      "reattachable"
+      "reattachable",
+      "detachable"
     ],
     data() {
       return {
@@ -116,7 +131,8 @@
           });
         }
       },
-      async reattach() {
+      async detach() {
+        this.dialogue = false;
         let auth = await this.checkForServerPassword(this.ip);
         if (!this.pci) {
           axios({
@@ -127,7 +143,7 @@
               usbId: this.detail.id,
               server: this.ip,
               auth,
-              option: "reattach"
+              option: 'detach'
             }
           }).then((response) => {
             this.dialogue = false;
@@ -142,6 +158,28 @@
             data: {
               id: this.vMSelector,
               pciIds: [this.detail.id],
+              server: this.ip,
+              auth,
+              option: 'detach'
+            }
+          }).then((response) => {
+            this.dialogue = false;
+            if (response) {
+              console.log(response);
+            }
+          });
+        }
+      },
+      async reattach() {
+        this.dialogue = false;
+        let auth = await this.checkForServerPassword(this.ip);
+        if (!this.pci) {
+          axios({
+            method: "post",
+            url: "api/usbAttach",
+            data: {
+              id: this.vMSelector,
+              usbId: this.detail.id,
               server: this.ip,
               auth,
               option: "reattach"

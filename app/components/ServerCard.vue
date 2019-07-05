@@ -160,6 +160,7 @@
                       :ip="ip"
                       :check-for-server-password="checkForServerPassword"
                       :reattachable="true"
+                      :detachable="true"
                     />
                   </div>
                 </v-expansion-panel-content>
@@ -183,6 +184,7 @@
                           :ip="ip"
                           :pci="true"
                           :check-for-server-password="checkForServerPassword"
+                          :detachable="true"
                         />
                       </div>
                     </v-expansion-panel-content>
@@ -201,6 +203,7 @@
                           :ip="ip"
                           :pci="true"
                           :check-for-server-password="checkForServerPassword"
+                          :detachable="true"
                         />
                       </div>
                     </v-expansion-panel-content>
@@ -219,6 +222,7 @@
                           :ip="ip"
                           :pci="true"
                           :check-for-server-password="checkForServerPassword"
+                          :detachable="true"
                         />
                       </div>
                     </v-expansion-panel-content>

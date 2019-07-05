@@ -14,6 +14,8 @@ export default function(req, res, next) {
         response.message = await attachUSB(data);
       } else if (data.option === 'reattach') {
         response.message = await reattachUSB(data);
+      } else if (data.option === 'detach') {
+        response.message = await detachUSB(data);
       }
       response.status = 200;
       res.send(response);
@@ -53,6 +55,13 @@ async function reattachUSB(data) {
   removeUSBCheck(vmObject.edit, data.usbId);
   await requestChange(data.server, data.id, data.auth, vmObject.edit);
   addUSBCheck(vmObject.edit, data.usbId);
+  return requestChange(data.server, data.id, data.auth, vmObject.edit);
+}
+
+async function detachUSB(data) {
+  let vmObject = await gatherDetailsFromEditVM(data.server, data.id, undefined, data.auth);
+
+  removeUSBCheck(vmObject.edit, data.usbId);
   return requestChange(data.server, data.id, data.auth, vmObject.edit);
 }
 

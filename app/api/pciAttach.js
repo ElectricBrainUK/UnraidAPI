@@ -17,7 +17,11 @@ export default function(req, res, next) {
     data = JSON.parse(Buffer.concat(body).toString());
     if (data) {
       let response = {};
-      response.message = await attachPCI(data);
+      if (!data.option) {
+        response.message = await attachPCI(data);
+      } else if (data.option === 'detach') {
+        response.message = await detachPCI(data);
+      }
       response.status = 200;
       res.send(response);
     }
@@ -64,6 +68,24 @@ async function attachPCI(data) {
 
   await Promise.all(Object.keys(stopped).map(stoppedVMId => changeVMState(stoppedVMId, "domain-start", data.server, data.auth, token)));
 
+  await changeVMState(data.id, "domain-stop", data.server, data.auth, token);
+  let result = await requestChange(data.server, data.id, data.auth, vmObject.edit);
+  await changeVMState(data.id, "domain-start", data.server, data.auth, token);
+  return result;
+}
+
+async function detachPCI(data) {
+  if (data.pciId && !data.pciIds) {
+    data.pciIds = [data.pciId];
+  }
+
+  let vmObject = await gatherDetailsFromEditVM(data.server, data.id, undefined, data.auth);
+
+  data.pciIds.forEach(pciId => {
+    removePCICheck(vmObject.edit, pciId);
+  });
+
+  let token = await getCSRFToken(data.server, data.auth);
   await changeVMState(data.id, "domain-stop", data.server, data.auth, token);
   let result = await requestChange(data.server, data.id, data.auth, vmObject.edit);
   await changeVMState(data.id, "domain-start", data.server, data.auth, token);
