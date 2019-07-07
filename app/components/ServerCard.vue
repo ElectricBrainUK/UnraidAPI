@@ -155,6 +155,7 @@
                   >
                     <usb-detail
                       v-if="usb.checked"
+                      :id="vm.id"
                       :detail="usb"
                       :server="server"
                       :ip="ip"
@@ -179,6 +180,7 @@
                       >
                         <usb-detail
                           v-if="detail.gpu && detail.checked"
+                          :id="vm.id"
                           :detail="detail"
                           :server="server"
                           :ip="ip"
@@ -198,6 +200,7 @@
                       >
                         <usb-detail
                           v-if="detail.sound && detail.checked"
+                          :id="vm.id"
                           :detail="detail"
                           :server="server"
                           :ip="ip"
@@ -217,6 +220,7 @@
                       >
                         <usb-detail
                           v-if="!detail.sound && !detail.gpu && detail.checked"
+                          :id="vm.id"
                           :detail="detail"
                           :server="server"
                           :ip="ip"
@@ -244,7 +248,7 @@
               :detail="detail"
               :server="server"
               :ip="ip"
-              :checkForServerPassword=checkForServerPassword
+              :check-for-server-password="checkForServerPassword"
             />
           </div>
         </v-expansion-panel-content>

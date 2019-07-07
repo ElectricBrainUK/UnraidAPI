@@ -330,9 +330,9 @@ export function changeVMState(id, action, server, auth, token) {
 }
 
 export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
-  let rawdata = fs.readFileSync("config/servers.json");
-  let servers = JSON.parse(rawdata);
   if (!vmObject) {
+    let rawdata = fs.readFileSync("config/servers.json");
+    let servers = JSON.parse(rawdata);
     vmObject = servers[ip].vm.details[id];
   }
   return axios({

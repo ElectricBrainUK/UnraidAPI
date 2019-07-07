@@ -86,7 +86,8 @@
       "pci",
       "checkForServerPassword",
       "reattachable",
-      "detachable"
+      "detachable",
+      "id"
     ],
     data() {
       return {
@@ -139,7 +140,7 @@
             method: "post",
             url: "api/usbAttach",
             data: {
-              id: this.vMSelector,
+              id: this.id,
               usbId: this.detail.id,
               server: this.ip,
               auth,
@@ -156,7 +157,7 @@
             method: "post",
             url: "api/pciAttach",
             data: {
-              id: this.vMSelector,
+              id: this.id,
               pciIds: [this.detail.id],
               server: this.ip,
               auth,
@@ -178,7 +179,7 @@
             method: "post",
             url: "api/usbAttach",
             data: {
-              id: this.vMSelector,
+              id: this.id,
               usbId: this.detail.id,
               server: this.ip,
               auth,
