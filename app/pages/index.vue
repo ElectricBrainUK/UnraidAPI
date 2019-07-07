@@ -95,8 +95,10 @@
             this.getServers();
           } else {
             this.servers = response.data.servers;
-            setTimeout(() => this.getServers(), 30000);
+            setTimeout(() => this.getServers(), 5000);
           }
+        }).catch(e => {
+          setTimeout(() => this.getServers(), 10000);
         });
       },
       checkForServerPassword(ip) {

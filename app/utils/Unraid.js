@@ -6,14 +6,12 @@ function getUnraidDetails(servers, serverAuth) {
   getServerDetails(servers, serverAuth);
   getVMs(servers, serverAuth);
   getUSBDetails(servers, serverAuth);
-  getPCIDetails();
+  getPCIDetails(servers);
 }
 
-function getPCIDetails() {
-  let rawdata = fs.readFileSync("config/servers.json");
-  let servers = JSON.parse(rawdata);
+function getPCIDetails(servers) {
   Object.keys(servers).forEach(ip => {
-    if (servers[ip].vm && servers[ip].vm.details && servers[ip].vm.details.length > 0) {
+    if (servers[ip].vm && servers[ip].vm.details && Object.keys(servers[ip].vm.details).length > 0) {
       servers[ip].pciDetails = servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].edit.pcis;
     }
     updateFile(servers, ip, "pciDetails");
@@ -25,7 +23,7 @@ function getUSBDetails(servers, serverAuth) {
     if (!serverAuth[ip]) {
       return;
     }
-    if (servers[ip].vm && servers[ip].vm.details && servers[ip].vm.details.length > 0) {
+    if (servers[ip].vm && servers[ip].vm.details && Object.keys(servers[ip].vm.details).length > 0) {
       axios({
         method: "get",
         url: "http://" + ip + "/VMs/UpdateVM?uuid=" + servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,

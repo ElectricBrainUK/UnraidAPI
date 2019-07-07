@@ -16,7 +16,7 @@ export default function(req, res, next) {
   });
 };
 
-async function connectToServer() {
+async function connectToServer(data) {
   let response = {};
   let servers = {};
   try {
@@ -25,6 +25,9 @@ async function connectToServer() {
   } catch (e) {
     console.log(e);
   } finally {
+    if (data.ip) {
+      servers[data.ip] = {};
+    }
     fs.writeFileSync("config/servers.json", JSON.stringify(servers));
     response.message = "Connected";
   }
