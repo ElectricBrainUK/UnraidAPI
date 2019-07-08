@@ -534,8 +534,19 @@ export async function requestChange(ip, id, auth, vmObject, create) {
 }
 
 async function buildForm(ip, auth, id, vmObject, create) {
-  let staticPart =
-    "template%5Bos%5D=" + vmObject.template_os +
+  let form = getStaticPart(vmObject, id, create);
+  form += "&csrf_token=" + await getCSRFToken(ip, auth);
+  form = getCPUPart(vmObject, form);
+  form = getDiskPart(vmObject, form);
+  form = getSharePart(vmObject, form);
+  form = getPCIPart(vmObject, form);
+  form = getUSBPart(vmObject, form);
+  form = getNetworkPart(vmObject, form);
+  return form;
+}
+
+export function getStaticPart(vmObject, id, create) {
+  return "template%5Bos%5D=" + vmObject.template_os +
     "template%5Bname%5D=" + vmObject.template_name +
     "template%5Bicon%5D=" + vmObject.template_icon +
     "&domain%5Bpersistent%5D=" + vmObject.domain_persistent +
@@ -545,7 +556,6 @@ async function buildForm(ip, auth, id, vmObject, create) {
     "&domain%5Bclock%5D=" + vmObject.domain_clock +
     "&domain%5Boldname%5D=" + vmObject.domain_oldname +
     "&domain%5Bname%5D=" + vmObject.domain_name +
-    "&domain%5Bclock%5D=" + vmObject.domain_clock +
     "&domain%5Barch%5D=" + vmObject.domain_arch +
     "&domain%5Bdesc%5D=" + vmObject.domain_desc +
     "&domain%5Bcpumode%5D=" + vmObject.domain_cpumode +
@@ -560,26 +570,36 @@ async function buildForm(ip, auth, id, vmObject, create) {
     "&media%5Bdrivers%5D=" + vmObject.media_drivers +
     "&media%5Bdriversbus%5D=" + vmObject.media_driversbus +
     (create ? ("&createvm=" + 1) : ("&updatevm=" + 1)) +
-    "&domain%5Bpassword%5D=" +
-    "&csrf_token=" + await getCSRFToken(ip, auth);
+    "&domain%5Bpassword%5D=";
+}
 
+export function getCPUPart(vmObject, form) {
   vmObject.vcpus.forEach(cpu => {
-    staticPart += "&domain%5Bvcpu%5D%5B%5D=" + cpu;
+    form += "&domain%5Bvcpu%5D%5B%5D=" + cpu;
   });
+  return form;
+}
 
+export function getDiskPart(vmObject, form) {
   vmObject.disks.forEach((disk, index) => {
-    staticPart += "&disk%5B" + index + "%5D%5Bimage%5D=" + disk.image;
-    staticPart += "&disk%5B" + index + "%5D%5Bselect%5D=" + disk.select;
-    staticPart += "&disk%5B" + index + "%5D%5Bsize%5D=" + disk.size;
-    staticPart += "&disk%5B" + index + "%5D%5Bdriver%5D=" + disk.driver;
-    staticPart += "&disk%5B" + index + "%5D%5Bbus%5D=" + disk.bus;
+    form += "&disk%5B" + index + "%5D%5Bimage%5D=" + disk.image;
+    form += "&disk%5B" + index + "%5D%5Bselect%5D=" + disk.select;
+    form += "&disk%5B" + index + "%5D%5Bsize%5D=" + disk.size;
+    form += "&disk%5B" + index + "%5D%5Bdriver%5D=" + disk.driver;
+    form += "&disk%5B" + index + "%5D%5Bbus%5D=" + disk.bus;
   });
+  return form;
+}
 
+export function getSharePart(vmObject, form) {
   vmObject.shares.forEach((share, index) => {
-    staticPart += "&shares%5B" + index + "%5D%5Bsource%5D=" + share.source;
-    staticPart += "&shares%5B" + index + "%5D%5Btarget%5D=" + share.target;
+    form += "&shares%5B" + index + "%5D%5Bsource%5D=" + share.source;
+    form += "&shares%5B" + index + "%5D%5Btarget%5D=" + share.target;
   });
+  return form;
+}
 
+export function getPCIPart(vmObject, form) {
   let audioDevices = 0;
   let gpus = 0;
   vmObject.pcis.forEach(pciDevice => {
@@ -588,29 +608,34 @@ async function buildForm(ip, auth, id, vmObject, create) {
     }
 
     if (pciDevice.gpu && pciDevice.checked) {
-      staticPart += "&gpu%5B" + gpus + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
-      staticPart += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI("qxl");
-      staticPart += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + encodeURI(pciDevice.keymap);
-      staticPart += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + encodeURI(pciDevice.bios);
+      form += "&gpu%5B" + gpus + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
+      form += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI("qxl");
+      form += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + (pciDevice.keymap ? encodeURI(pciDevice.keymap) : '');
+      form += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + (pciDevice.bios ? encodeURI(pciDevice.bios) : '');
       gpus++;
     } else if (pciDevice.audio && pciDevice.checked) {
-      staticPart += "&audio%5B" + audioDevices + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
+      form += "&audio%5B" + audioDevices + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
       audioDevices++;
     } else {
-      staticPart += "&pci%5B%5D=" + encodeURI(pciDevice.id) + (pciDevice.checked ? "" : "%23remove");
+      form += "&pci%5B%5D=" + encodeURI(pciDevice.id) + (pciDevice.checked ? "" : "%23remove");
     }
   });
+  return form;
+}
 
+export function getUSBPart(vmObject, form) {
   vmObject.usbs.forEach(usbDevice => {
-    staticPart += "&usb%5B%5D=" + encodeURI(usbDevice.id) + (usbDevice.checked ? "" : "%23remove");
+    form += "&usb%5B%5D=" + encodeURI(usbDevice.id) + (usbDevice.checked ? "" : "%23remove");
   });
+  return form;
+}
 
+export function getNetworkPart(vmObject, form) {
   vmObject.nics.forEach((nicDevice, index) => {
-    staticPart += "&nic%5B" + index + "%5D%5Bmac%5D=" + nicDevice.mac;
-    staticPart += "&nic%5B" + index + "%5D%5Bnetwork%5D=" + nicDevice.network;
+    form += "&nic%5B" + index + "%5D%5Bmac%5D=" + nicDevice.mac;
+    form += "&nic%5B" + index + "%5D%5Bnetwork%5D=" + nicDevice.network;
   });
-
-  return staticPart;
+  return form;
 }
 
 export function removePCICheck(details, id) {
