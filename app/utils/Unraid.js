@@ -622,5 +622,11 @@ export function addPCICheck(details, id) {
 }
 
 export function flipPCICheck(details, id) {
-  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => device.checked = !device.checked);
+  let check;
+  details.pcis.filter(pciDevice => pciDevice.id.split(".")[0] === id.split(".")[0]).map(device => {
+    device.checked = check ? check : !device.checked;
+    if (!check) {
+      check = device.checked;
+    }
+  });
 }
