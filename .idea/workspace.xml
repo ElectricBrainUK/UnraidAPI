@@ -3,6 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config/servers.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/servers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.blob" beforeDir="false" afterPath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.blob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/.data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/07d9138d910c9ab1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/73c9f404152575c9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/node_modules/@nuxt/core/node_modules/.cache/esm/950db63217d7d6f8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/test/unit/utils/Unraid.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/test/unit/utils/Unraid.spec.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/Unraid.js" afterDir="false" />
     </list>
@@ -20,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/test/unit/utils/Unraid.spec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="277" column="71" selection-start-line="277" selection-start-column="71" selection-end-line="277" selection-end-column="71" />
+            <state relative-caret-position="319">
+              <caret line="325" column="118" selection-start-line="325" selection-start-column="118" selection-end-line="325" selection-end-column="118" />
               <folding>
                 <element signature="e#0#134#0" expanded="true" />
               </folding>
@@ -30,10 +38,64 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/pages/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1302">
+              <caret line="100" column="48" selection-start-line="100" selection-start-column="48" selection-end-line="100" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Dockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="23" selection-end-line="15" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/.dockerignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="452">
+              <caret line="75" column="51" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/config/servers.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="1" selection-start-column="1" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="612" column="55" selection-start-line="612" selection-start-column="55" selection-end-line="612" selection-end-column="55" />
+            <state relative-caret-position="-1905">
+              <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -53,12 +115,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>simplifyResponse</find>
-      <find>processVMResponse</find>
-      <find>getVMs</find>
-      <find>servers[ip].auth</find>
-      <find>basic</find>
-      <find>servers</find>
       <find>serverAuth[ip].auth</find>
       <find>sb-detail</find>
       <find>checkForServerPassword</find>
@@ -69,7 +125,6 @@
       <find>center</find>
       <find>usb-detail</find>
       <find>.title</find>
-      <find>updateFile</find>
       <find>getServerDetails</find>
       <find>getUnraidDetails</find>
       <find>usbdetails</find>
@@ -83,6 +138,13 @@
       <find>getDiskPart</find>
       <find>toEqual(</find>
       <find>expec</find>
+      <find>31CE59A20655F557</find>
+      <find>csrf_token</find>
+      <find>pcis</find>
+      <find>product</find>
+      <find>1</find>
+      <find>updateFile</find>
+      <find>getUSBDetails</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;Failed with status code: &quot; + e.statusText</replace>
@@ -95,7 +157,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/components/VirtualMachineCard.vue" />
         <option value="$PROJECT_DIR$/pages/index.vue" />
         <option value="$PROJECT_DIR$/api/changeVMStatus.js" />
         <option value="$PROJECT_DIR$/components/EditVmCard.vue" />
@@ -140,12 +201,13 @@
         <option value="$PROJECT_DIR$/app/components/ServerCard.vue" />
         <option value="$PROJECT_DIR$/app/components/UsbDetail.vue" />
         <option value="$PROJECT_DIR$/app/test/utils/Unraid.spec.js" />
-        <option value="$PROJECT_DIR$/app/package.json" />
         <option value="$PROJECT_DIR$/app/test/utils/Unraid.test.js" />
         <option value="$PROJECT_DIR$/app/jest.config.js" />
         <option value="$PROJECT_DIR$/app/.babelrc" />
         <option value="$PROJECT_DIR$/app/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/app/test/unit/utils/Unraid.spec.js" />
+        <option value="$PROJECT_DIR$/app/package.json" />
+        <option value="$PROJECT_DIR$/app/config/servers.json" />
       </list>
     </option>
   </component>
@@ -310,32 +372,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Jest.Unraid.spec.js">
-    <configuration name="Unraid API (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/app/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/app" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/app/test/utils/Unraid.test.js" />
-      <test-names>
-        <test-name value="Unraid API" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="Unraid API (2)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/app/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/app" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/app/test/unit/utils/Unraid.test.js" />
-      <test-names>
-        <test-name value="Unraid API" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="Unraid API" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -395,13 +431,33 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/app/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/app/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Jest.Unraid.spec.js" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.start" />
         <item itemvalue="Jest.VM Change Form" />
         <item itemvalue="Jest.Unraid API" />
-        <item itemvalue="Jest.Unraid API (2)" />
-        <item itemvalue="Jest.Unraid API (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -419,14 +475,7 @@
       <workItem from="1560461574706" duration="49402000" />
       <workItem from="1561725303537" duration="3000" />
       <workItem from="1561802200703" duration="115000" />
-      <workItem from="1561989491132" duration="29751000" />
-    </task>
-    <task id="LOCAL-00002" summary="initial commit">
-      <created>1560126673438</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1560126673438</updated>
+      <workItem from="1561989491132" duration="37988000" />
     </task>
     <task id="LOCAL-00003" summary="Clean up">
       <created>1560168296841</created>
@@ -764,43 +813,50 @@
       <option name="project" value="LOCAL" />
       <updated>1562607771959</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Finish PCI tests and add Form tests">
+      <created>1562610745964</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1562610745965</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 20m 35s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.08 at 21h 45m 20s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 21m 08s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.08 at 21h 46m 29s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 21m 52s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.08 at 21h 47m 54s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 22m 36s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.08 at 21h 48m 11s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 22m 50s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.08 at 21h 48m 35s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 26m 22s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.09 at 10h 31m 57s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 27m 33s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.09 at 10h 34m 42s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 28m 15s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.09 at 10h 58m 53s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 28m 50s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.09 at 20h 23m 31s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="VM_Change_Form - 2019.07.08 at 19h 29m 40s.xml">
-      <configuration name="VM Change Form" configurationId="JavaScriptTestRunnerJest" />
+    <history-entry file="Unraid_spec_js - 2019.07.13 at 18h 41m 03s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="174306000" />
+    <option name="totallyTimeSpent" value="182543000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -813,7 +869,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -821,13 +876,13 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4982382" weight="0.32891566" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49330515" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49330515" weight="0.26987952" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
-      <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.48766738" weight="0.27831325" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49330515" weight="0.32891566" />
+      <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.48766738" weight="0.3385542" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.49330515" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50669485" side_tool="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49400985" weight="0.32891566" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
@@ -850,7 +905,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add documentation" />
     <MESSAGE value="Bug fixes and restart button" />
     <MESSAGE value="Bug fix for pci attach" />
     <MESSAGE value="Add better logging" />
@@ -875,7 +929,8 @@
     <MESSAGE value="Fix gathering bugs" />
     <MESSAGE value="Fix usb bugs" />
     <MESSAGE value="Init tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Init tests" />
+    <MESSAGE value="Finish PCI tests and add Form tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish PCI tests and add Form tests" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.json">
@@ -1031,13 +1086,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="100" column="48" selection-start-line="100" selection-start-column="48" selection-end-line="100" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/servers-1.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1048,20 +1096,6 @@
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/servers.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="49801" selection-start-column="49801" selection-end-column="49801" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/.dockerignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1096,31 +1130,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="75" column="51" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.eslintrc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-126">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1155,10 +1168,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/nuxt.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="75" column="51" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1302">
+          <caret line="100" column="48" selection-start-line="100" selection-start-column="48" selection-end-line="100" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="23" selection-end-line="15" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.dockerignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/servers.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="1" selection-start-column="1" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/utils/Unraid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="612" column="55" selection-start-line="612" selection-start-column="55" selection-end-line="612" selection-end-column="55" />
+        <state relative-caret-position="-1905">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -1167,8 +1222,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/test/unit/utils/Unraid.spec.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="277" column="71" selection-start-line="277" selection-start-column="71" selection-end-line="277" selection-end-column="71" />
+        <state relative-caret-position="319">
+          <caret line="325" column="118" selection-start-line="325" selection-start-column="118" selection-end-line="325" selection-end-column="118" />
           <folding>
             <element signature="e#0#134#0" expanded="true" />
           </folding>

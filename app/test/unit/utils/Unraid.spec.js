@@ -1,9 +1,9 @@
 import {
-  addPCICheck,
+  addPCICheck, extractReverseValue, extractValue,
   flipPCICheck,
   getCPUPart,
   getDiskPart, getNetworkPart, getPCIPart, getSharePart,
-  getStaticPart, getUSBPart,
+  getStaticPart, getUnraidDetails, getUSBPart,
   removePCICheck
 } from "../../../utils/Unraid";
 
@@ -309,4 +309,27 @@ describe('VM Change Form', () => {
   test('Get Network Part', () => {
     expect(getNetworkPart(networkInput, '')).toEqual(expectedNetworkPart);
   });
+});
+
+describe('Detail Extraction', () => {
+
+  const expectedUnraidDetails = {"1": {"pciDetails": [{"id": "1", "name": "test"}, {"id": "21", "name": "test2"}], "vm": {"details": {"testVM": {"edit": {"pcis": [{"id": "1", "name": "test"}, {"id": "21", "name": "test2"}]}}}}}};
+
+  test('Extract Value from HTML', () => {
+    const inputToExtractFrom = 'aloadOfDataWithRandom<HTML><tags with="attributes" and="ids">test</tags></HTML>';
+    expect(extractValue(inputToExtractFrom, 'with="', '"')).toEqual('attributes');
+    expect(extractValue(inputToExtractFrom, '">', '<')).toEqual('test');
+  });
+
+  test('Extract Value from HTML by reversing the string', () => {
+    const inputToExtractFrom = 'aloadOfDataWithRandom<HTML><tags with="attributes">test</tags><tags with="values" selected>test</tags></HTML>';
+    expect(extractReverseValue(extractValue(inputToExtractFrom, '<tags', 'selected>'), '"', 'with="')).toEqual('values');
+  });
+
+  test('Get PCI Details', () => {
+    let inputDetails = {"1":{vm: {details: {testVM: {edit:{pcis:[{name: 'test', id: '1'}, {name: 'test2', id: '21'}]}}}}}};
+    getUnraidDetails(inputDetails, {});
+    expect(inputDetails).toEqual(expectedUnraidDetails);
+  });
+  
 });
