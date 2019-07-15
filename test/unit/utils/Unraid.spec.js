@@ -2,7 +2,7 @@ import {
   addPCICheck, extractReverseValue, extractValue,
   flipPCICheck,
   getCPUPart,
-  getDiskPart, getNetworkPart, getPCIPart, getSharePart,
+  getDiskPart, getNetworkPart, getPCIDetails, getPCIPart, getSharePart,
   getStaticPart, getUnraidDetails, getUSBPart,
   removePCICheck
 } from "../../../utils/Unraid";
@@ -328,7 +328,7 @@ describe('Detail Extraction', () => {
 
   test('Get PCI Details', () => {
     let inputDetails = {"1":{vm: {details: {testVM: {edit:{pcis:[{name: 'test', id: '1'}, {name: 'test2', id: '21'}]}}}}}};
-    getUnraidDetails(inputDetails, {});
+    getPCIDetails(inputDetails, true);
     expect(inputDetails).toEqual(expectedUnraidDetails);
   });
   

@@ -9,12 +9,14 @@ export function getUnraidDetails(servers, serverAuth) {
   getPCIDetails(servers);
 }
 
-function getPCIDetails(servers) {
+export function getPCIDetails(servers, skipSave) {
   Object.keys(servers).forEach(ip => {
     if (servers[ip].vm && servers[ip].vm.details && Object.keys(servers[ip].vm.details).length > 0) {
       servers[ip].pciDetails = servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].edit.pcis;
     }
-    updateFile(servers, ip, "pciDetails");
+    if (!skipSave) {
+      updateFile(servers, ip, "pciDetails");
+    }
   });
 }
 
@@ -613,8 +615,8 @@ export function getPCIPart(vmObject, form) {
     if (pciDevice.gpu && pciDevice.checked) {
       form += "&gpu%5B" + gpus + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
       form += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI("qxl");
-      form += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + (pciDevice.keymap ? encodeURI(pciDevice.keymap) : '');
-      form += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + (pciDevice.bios ? encodeURI(pciDevice.bios) : '');
+      form += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + (pciDevice.keymap ? encodeURI(pciDevice.keymap) : "");
+      form += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + (pciDevice.bios ? encodeURI(pciDevice.bios) : "");
       gpus++;
     } else if (pciDevice.audio && pciDevice.checked) {
       form += "&audio%5B" + audioDevices + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
