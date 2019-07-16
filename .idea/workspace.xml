@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="Rearrange">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/unit/utils/Unraid.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/unit/utils/Unraid.spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Unraid.js" afterDir="false" />
-    </list>
+    <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -17,7 +13,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/unit/utils/Unraid.spec.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="318">
@@ -25,6 +21,15 @@
               <folding>
                 <element signature="e#0#241#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$USER_HOME$/Downloads/gl-code-quality-report.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-10906">
+              <caret line="18" column="26" lean-forward="true" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -82,11 +87,6 @@
               <caret column="95" selection-start-column="95" selection-end-column="95" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jest.config.js">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -152,7 +152,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.json" />
         <option value="$PROJECT_DIR$/api/usbAttach.js" />
         <option value="$PROJECT_DIR$/components/UsbDetail.vue" />
         <option value="$PROJECT_DIR$/components/SetupCard.vue" />
@@ -203,6 +202,7 @@
         <option value="$PROJECT_DIR$/.babelrc" />
         <option value="$PROJECT_DIR$/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/test/unit/utils/Unraid.spec.js" />
+        <option value="$USER_HOME$/Downloads/gl-code-quality-report.json" />
       </list>
     </option>
   </component>
@@ -422,14 +422,7 @@
       <workItem from="1561725303537" duration="3000" />
       <workItem from="1561802200703" duration="115000" />
       <workItem from="1561989491132" duration="38212000" />
-      <workItem from="1563180309978" duration="2487000" />
-    </task>
-    <task id="LOCAL-00006" summary="Show busyness, auto fetch new data, align term usage">
-      <created>1560193979228</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1560193979228</updated>
+      <workItem from="1563180309978" duration="2820000" />
     </task>
     <task id="LOCAL-00007" summary="Add some extra details and a webterminal iframe">
       <created>1560208800428</created>
@@ -767,13 +760,17 @@
       <option name="project" value="LOCAL" />
       <updated>1563187067683</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Fix using fs in test">
+      <created>1563191995841</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1563191995841</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unraid_spec_js - 2019.07.09 at 10h 31m 57s.xml">
-      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
-    </history-entry>
     <history-entry file="Unraid_spec_js - 2019.07.09 at 10h 34m 42s.xml">
       <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
@@ -801,9 +798,12 @@
     <history-entry file="Unraid_spec_js - 2019.07.15 at 11h 21m 40s.xml">
       <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
+    <history-entry file="Unraid_spec_js - 2019.07.15 at 12h 59m 21s.xml">
+      <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185254000" />
+    <option name="totallyTimeSpent" value="185587000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -818,7 +818,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -830,9 +830,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
       <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.48766738" weight="0.3385542" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49330515" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.49330515" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50669485" side_tool="true" weight="0.32891566" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49400985" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49400985" weight="0.32891566" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -853,7 +853,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add better logging" />
     <MESSAGE value="Add GPU Swapping" />
     <MESSAGE value="Change pciAttach to allow an array of ids, rather than one at a time" />
     <MESSAGE value="Add check to see if vm already stopped" />
@@ -878,10 +877,10 @@
     <MESSAGE value="Finish PCI tests and add Form tests" />
     <MESSAGE value="Add some detail gathering tests" />
     <MESSAGE value="Rearrange" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rearrange" />
+    <MESSAGE value="Fix using fs in test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix using fs in test" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/serversbu.json" />
     <entry file="file://$PROJECT_DIR$/components/UsbDetail.vue" />
     <entry file="file://$PROJECT_DIR$/components/ServerCard.vue" />
     <entry file="file://$PROJECT_DIR$/nginx/default.conf">
@@ -1208,6 +1207,13 @@
           <folding>
             <element signature="e#0#241#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/gl-code-quality-report.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10906">
+          <caret line="18" column="26" lean-forward="true" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
         </state>
       </provider>
     </entry>
