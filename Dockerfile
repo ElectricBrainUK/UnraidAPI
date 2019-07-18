@@ -9,7 +9,7 @@ RUN mkdir -p ${APP_ROOT}
 COPY . ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 # Expose the app port
-EXPOSE 3005
+EXPOSE 80:3005
 
 RUN npm install
 RUN npm run build
