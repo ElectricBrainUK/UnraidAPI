@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="" />
+    <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -25,7 +29,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Downloads/gl-code-quality-report.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-10906">
@@ -54,12 +58,20 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dockerfile">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+            </state>
+          </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="54" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -160,8 +172,6 @@
         <option value="$PROJECT_DIR$/package-lock.json" />
         <option value="$PROJECT_DIR$/.nuxt/App.js" />
         <option value="$PROJECT_DIR$/components/ServerCard.vue" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/nginx/default.conf" />
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/app/pages/inspire.vue" />
@@ -203,6 +213,8 @@
         <option value="$PROJECT_DIR$/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/test/unit/utils/Unraid.spec.js" />
         <option value="$USER_HOME$/Downloads/gl-code-quality-report.json" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -322,7 +334,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Jest.Unraid.spec.js">
+  <component name="RunManager" selected="npm.start">
     <configuration name="PCI Check Changes" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -387,11 +399,11 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="test" />
+        <script value="start" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -399,11 +411,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.Dockerfile" />
+        <item itemvalue="npm.start" />
         <item itemvalue="Jest.Unraid.spec.js" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="Jest.PCI Check Changes" />
-        <item itemvalue="npm.test" />
       </list>
     </recent_temporary>
   </component>
@@ -422,7 +434,7 @@
       <workItem from="1561725303537" duration="3000" />
       <workItem from="1561802200703" duration="115000" />
       <workItem from="1561989491132" duration="38212000" />
-      <workItem from="1563180309978" duration="2820000" />
+      <workItem from="1563180309978" duration="3680000" />
     </task>
     <task id="LOCAL-00007" summary="Add some extra details and a webterminal iframe">
       <created>1560208800428</created>
@@ -803,7 +815,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185587000" />
+    <option name="totallyTimeSpent" value="186447000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -818,7 +830,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -829,8 +841,8 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
-      <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.48766738" weight="0.3385542" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.49330515" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Docker" order="7" sideWeight="0.48766738" visible="true" weight="0.3385542" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49330515" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50669485" side_tool="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49400985" weight="0.32891566" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
@@ -1173,18 +1185,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/servers.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="95" selection-start-column="95" selection-end-column="95" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.babelrc">
       <provider selected="true" editor-type-id="text-editor">
@@ -1214,6 +1220,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-10906">
           <caret line="18" column="26" lean-forward="true" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="54" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
         </state>
       </provider>
     </entry>
