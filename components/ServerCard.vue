@@ -123,6 +123,13 @@
                 :src="'http://' + ip + vm.icon"
               >
               <edit-vm-card :vm="vm" />
+              <v-btn
+                color="info"
+                dark
+                v-on:click="downloadXML(vm)"
+              >
+                XML
+              </v-btn>
               <v-chip>{{ vm.id }}</v-chip>
               <v-chip>Cores: {{ vm.coreCount }}</v-chip>
               <v-chip>RAM: {{ vm.ramAllocation }}</v-chip>
@@ -401,6 +408,21 @@
             }
           }
         });
+      },
+      downloadXML(vm) {
+        this.download(vm.name + ".xml",vm.xml);
+      },
+      download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
       }
     }
   };

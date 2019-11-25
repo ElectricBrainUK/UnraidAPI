@@ -351,6 +351,8 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
 }
 
 function extractVMDetails(vmObject, response) {
+  vmObject.xml = extractValue(response.data, "<textarea id=\"addcode\" name=\"xmldesc\" placeholder=\"Copy &amp; Paste Domain XML Configuration Here.\" autofocus>", "</textarea>").split("&lt;").join("<").split("&gt;").join(">");
+
   vmObject.edit = {
     template_os: extractValue(response.data, "id=\"template_os\" value=\"", "\""),
     domain_type: extractValue(response.data, "domain[type]\" value=\"", "\""),
