@@ -4,6 +4,22 @@
 
 > A new UI and API for controlling multiple unraid instances
 
+## Install
+
+Add the following template url to your list: 
+https://github.com/ElectricBrainUK/docker-templates
+
+## Env variables
+
+```
+MQTTBroker Youre broker address or domain e.g. hassio 
+MQTTPort e.g. 1883 
+MQTTUser e.g. mqtt 
+MQTTPass e.g. password
+MQTTBaseTopic the base topic for all MQTT publishes e.g. homeassistant
+
+``` 
+
 ## Build Setup
 
 ``` bash
