@@ -1,6 +1,7 @@
 import mqtt from "mqtt";
 import { changeVMState, getCSRFToken, getUnraidDetails } from "../utils/Unraid";
 import fs from "fs";
+import { attachUSB, detachUSB } from "../api/usbAttach";
 
 export default function startMQTTClient() {
   if (!process.env.MQTTBroker) {
@@ -64,6 +65,39 @@ export default function startMQTTClient() {
         }
 
         await changeVMState(vmIdentifier, command, ip, keys[ip], token);
+      } else if (topic.includes("attach")) {
+        const topicParts = topic.split("/");
+        let ip = "";
+        let serverDetails = {};
+
+        for (let [serverIp, server] of Object.entries(servers)) {
+          if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
+            ip = serverIp;
+            serverDetails = server;
+            break;
+          }
+        }
+
+        let vmIdentifier = "";
+        Object.keys(serverDetails.vm.details).forEach(vmId => {
+          const vm = serverDetails.vm.details[vmId];
+          if (sanitise(vm.name) === topicParts[2]) {
+            vmIdentifier = vmId;
+          }
+        });
+
+        let data = {
+          server: ip,
+          id: vmIdentifier,
+          auth: keys[ip],
+          usbId: topicParts[3].replace("_", ":")
+        };
+
+        if (message.toString() && message.toString() !== 'false' && message.toString() !== 'False') {
+          await attachUSB(data);
+        } else {
+          await detachUSB(data);
+        }
       }
     });
 
@@ -100,13 +134,18 @@ function updateMQTT(client) {
         "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
         "name": serverTitleSanitised,
         "unique_id": serverTitleSanitised + " unraid api server",
-        "device": { "identifiers": [serverTitleSanitised], "name": serverTitleSanitised, "manufacturer": server.serverDetails.motherboard }
+        "device": {
+          "identifiers": [serverTitleSanitised],
+          "name": serverTitleSanitised,
+          "manufacturer": server.serverDetails.motherboard
+        }
       }));
       client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
 
       Object.keys(server.vm.details).forEach(vmId => {
         let vm = server.vm.details[vmId];
         const vmSanitisedName = sanitise(vm.edit.domain_name);
+
         const vmDetails = {
           id: vmId,
           status: vm.status,
@@ -115,9 +154,10 @@ function updateMQTT(client) {
           primaryGPU: vm.primaryGPU,
           name: vmSanitisedName,
           description: vm.edit.description,
-          mac: vm.edit.nics[0] ? vm.edit.nics[0].mac : undefined,
-          usbs: vm.edit.usbs,
+          mac: vm.edit.nics[0] ? vm.edit.nics[0].mac : undefined
         };
+
+
         client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/" + vmSanitisedName + "/config", JSON.stringify({
           "payload_on": "started",
           "payload_off": "stopped",
@@ -126,11 +166,44 @@ function updateMQTT(client) {
           "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName,
           "name": serverTitleSanitised + "_" + vmSanitisedName,
           "unique_id": serverTitleSanitised + "_" + vmId,
-          "device": { "identifiers": [serverTitleSanitised + "_" + vmSanitisedName], "name": serverTitleSanitised + "_" + vmSanitisedName, "manufacturer": server.serverDetails.motherboard },
+          "device": {
+            "identifiers": [serverTitleSanitised + "_" + vmSanitisedName],
+            "name": serverTitleSanitised + "_" + vmSanitisedName,
+            "manufacturer": server.serverDetails.motherboard
+          },
           "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state"
         }));
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName, JSON.stringify(vmDetails));
         client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state");
+
+        if (vm.edit.usbs && vm.edit.usbs.length > 0) {
+          vm.edit.usbs.map(device => {
+            const sanitiseUSBName = sanitise(device.name);
+            const sanitiseUSBId = sanitise(device.id);
+
+            let usbDetails = {};
+            usbDetails.name = sanitiseUSBName;
+            usbDetails.attached = !!device.checked;
+
+            client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/" + vmSanitisedName + "_" + sanitiseUSBId + "/config", JSON.stringify({
+              "payload_on": true,
+              "payload_off": false,
+              "value_template": "{{ value_json.attached }}",
+              "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
+              "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
+              "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBName,
+              "unique_id": serverTitleSanitised + "_" + vmId + "_" + sanitiseUSBId,
+              "device": {
+                "identifiers": [serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId],
+                "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId,
+                "manufacturer": sanitiseUSBName
+              },
+              "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId + "/attach"
+            }));
+            client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId, JSON.stringify(usbDetails));
+            client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId + "/attach");
+          });
+        }
       });
     });
   } catch (e) {
@@ -143,9 +216,9 @@ function mqttRepeat(client) {
   setTimeout(function() {
     updateMQTT(client);
     mqttRepeat(client);
-  }, 10000);
+  }, 20000);
 }
 
 function sanitise(string) {
-  return string.toLowerCase().split(" ").join("_").split(".").join("").split("(").join("").split(")").join("")
+  return string.toLowerCase().split(" ").join("_").split(".").join("").split("(").join("").split(")").join("").split(":").join("_");
 }
