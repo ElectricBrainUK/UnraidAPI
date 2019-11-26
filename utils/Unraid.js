@@ -337,7 +337,6 @@ export function changeArrayState(action, server, auth, token) {
     data: action === "start" ? "startState=STOPPED&file=&csrf_token=" + token + "&cmdStart=Start" : "startState=STARTED&file=&csrf_token=" + token + "&cmdStop=Stop",
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
-    console.log(response.data);
     return response.data;
   }).catch(e => {
     console.log("Change Array State for ip: " + ip + " Failed with status code: " + e.statusText);

@@ -95,6 +95,7 @@ export default function startMQTTClient() {
       console.log("Can't connect" + error);
     });
   } catch (e) {
+    console.log(e);
     setTimeout(() => {
       startMQTTClient();
     }, 30000);
