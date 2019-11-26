@@ -115,7 +115,7 @@ function updateMQTT(client) {
       }
       server.serverDetails.on = true;
       const serverTitleSanitised = sanitise(server.serverDetails.title);
-      client.publish(process.env.MQTTBaseTopic + "/binary_sensor/" + server.serverDetails.title + "/config", JSON.stringify({
+      client.publish(process.env.MQTTBaseTopic + "/binary_sensor/" + serverTitleSanitised + "/config", JSON.stringify({
         "payload_on": true,
         "payload_off": false,
         "value_template": "{{ value_json.on }}",
@@ -130,7 +130,7 @@ function updateMQTT(client) {
           "manufacturer": server.serverDetails.motherboard
         }
       }));
-      client.publish(process.env.MQTTBaseTopic + "/switch/" + server.serverDetails.title + "/config", JSON.stringify({
+      client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/config", JSON.stringify({
         "payload_on": "Started",
         "payload_off": "Stopped",
         "value_template": "{{ value_json.arrayStatus }}",
@@ -175,7 +175,8 @@ function updateMQTT(client) {
           "device": {
             "identifiers": [serverTitleSanitised + "_" + vmSanitisedName],
             "name": serverTitleSanitised + "_" + vmSanitisedName,
-            "manufacturer": server.serverDetails.motherboard
+            "manufacturer": server.serverDetails.motherboard,
+            "model": "VM"
           },
           "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state"
         }));
