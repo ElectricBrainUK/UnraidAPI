@@ -16,59 +16,63 @@ export default function startMQTTClient() {
   };
   const client = mqtt.connect("mqtt://" + process.env.MQTTBroker, options);
 
-  let keys = JSON.parse(fs.readFileSync("secure/mqttKeys"));
-  let servers = JSON.parse(fs.readFileSync("config/servers.json"));
+  try {
+    let keys = JSON.parse(fs.readFileSync("secure/mqttKeys"));
+    let servers = JSON.parse(fs.readFileSync("config/servers.json"));
 
-  client.on("connect", () => {
-    console.log("Connected to mqtt broker");
-    updateMQTT(client);
-    mqttRepeat(client);
-  }, (err) => {
-    console.log(err);
-  });
+    client.on("connect", () => {
+      console.log("Connected to mqtt broker");
+      updateMQTT(client);
+      mqttRepeat(client);
+    }, (err) => {
+      console.log(err);
+    });
 
-  client.on("message", async (topic, message) => {
-    if (topic.includes("state")) {
-      const topicParts = topic.split("/");
-      let ip = "";
-      let serverDetails = {};
+    client.on("message", async (topic, message) => {
+      if (topic.includes("state")) {
+        const topicParts = topic.split("/");
+        let ip = "";
+        let serverDetails = {};
 
-      for (let [serverIp, server] of Object.entries(servers)) {
-        if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
-          ip = serverIp;
-          serverDetails = server;
-          break;
+        for (let [serverIp, server] of Object.entries(servers)) {
+          if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
+            ip = serverIp;
+            serverDetails = server;
+            break;
+          }
         }
-      }
 
-      let token = await getCSRFToken(ip, keys[ip]);
-      let vmIdentifier = "";
-      let vmDetails = {};
-      Object.keys(serverDetails.vm.details).forEach(vmId => {
-        const vm = serverDetails.vm.details[vmId];
-        if (sanitise(vm.name) === topicParts[2]) {
-          vmIdentifier = vmId;
-          vmDetails = vm;
+        let token = await getCSRFToken(ip, keys[ip]);
+        let vmIdentifier = "";
+        let vmDetails = {};
+        Object.keys(serverDetails.vm.details).forEach(vmId => {
+          const vm = serverDetails.vm.details[vmId];
+          if (sanitise(vm.name) === topicParts[2]) {
+            vmIdentifier = vmId;
+            vmDetails = vm;
+          }
+        });
+
+        let command = "";
+        switch (message.toString()) {
+          case "started":
+            command = "domain-start";
+            break;
+          case "stopped":
+            command = "domain-stop";
+            break;
         }
-      });
 
-      let command = "";
-      switch (message.toString()) {
-        case "started":
-          command = "domain-start";
-          break;
-        case "stopped":
-          command = "domain-stop";
-          break;
+        await changeVMState(vmIdentifier, command, ip, keys[ip], token);
       }
+    });
 
-      await changeVMState(vmIdentifier, command, ip, keys[ip], token);
-    }
-  });
-
-  client.on("error", function(error) {
-    console.log("Can't connect" + error);
-  });
+    client.on("error", function(error) {
+      console.log("Can't connect" + error);
+    });
+  } catch (e) {
+    console.log("Please restart after first time set up to enable MQTT");
+  }
 }
 
 function updateMQTT(client) {
