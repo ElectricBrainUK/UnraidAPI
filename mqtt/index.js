@@ -71,7 +71,9 @@ export default function startMQTTClient() {
       console.log("Can't connect" + error);
     });
   } catch (e) {
-    console.log("Please restart after first time set up to enable MQTT");
+    setTimeout(() => {
+      startMQTTClient();
+    }, 30000);
   }
 }
 
