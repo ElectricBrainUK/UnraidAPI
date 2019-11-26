@@ -19,6 +19,18 @@ export default function(req, res, next) {
   }
   let response = {};
   response.servers = servers;
+
+  if (process.env.MQTTBroker) {
+    try {
+      if (!fs.existsSync("secure/")){
+        fs.mkdirSync("secure/");
+      }
+      fs.writeFileSync("secure/mqttKeys", req.headers.authorization);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   getUnraidDetails(response.servers, JSON.parse(req.headers.authorization));
   response.status = 200;
   res.send(response);

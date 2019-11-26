@@ -8,7 +8,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path ../.gitignore .",
     "precommit": "npm run lint",
     "test": "jest",
-    "dev": "cross-env NUXT_HOST=0.0.0.0 NUXT_PORT=3000 NODE_ENV=development nodemon server/index.js --watch server",
+    "dev": "cross-env MQTTBroker=hassio MQTTPort=1883 MQTTUser=mqtt MQTTPass=MQTTP4ss MQTTBaseTopic=homeassistant NUXT_HOST=0.0.0.0 NUXT_PORT=3000 NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NUXT_HOST=0.0.0.0 NUXT_PORT=80 NODE_ENV=production node server/index.js",
     "generate": "nuxt generate"
@@ -26,6 +26,7 @@
     "html-table-to-json": "^0.4.0",
     "http": "0.0.0",
     "js-base64": "^2.5.1",
+    "mqtt": "^3.0.0",
     "nuxt": "^2.0.0",
     "vuetify-loader": "^1.2.1"
   },
