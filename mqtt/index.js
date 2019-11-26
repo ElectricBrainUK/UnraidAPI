@@ -184,6 +184,7 @@ function updateMQTT(client) {
             let usbDetails = {};
             usbDetails.name = sanitiseUSBName;
             usbDetails.attached = !!device.checked;
+            usbDetails.id = device.id;
 
             client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/" + vmSanitisedName + "_" + sanitiseUSBId + "/config", JSON.stringify({
               "payload_on": true,
