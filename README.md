@@ -10,6 +10,7 @@ Add the following template url to your list:
 https://github.com/ElectricBrainUK/docker-templates
 
 ## Env variables
+If you want to enable MQTT:
 
 ```
 MQTTBroker Youre broker address or domain e.g. hassio 
@@ -19,6 +20,8 @@ MQTTPass e.g. password
 MQTTBaseTopic the base topic for all MQTT publishes e.g. homeassistant
 
 ``` 
+Check out the HA docs on how to set up discovery for MQTT here:
+https://www.home-assistant.io/docs/mqtt/discovery/
 
 ## Build Setup
 
