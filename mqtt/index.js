@@ -1,5 +1,5 @@
 import mqtt from "mqtt";
-import { changeVMState, getCSRFToken, getUnraidDetails } from "../utils/Unraid";
+import { changeArrayState, changeVMState, getCSRFToken, getUnraidDetails } from "../utils/Unraid";
 import fs from "fs";
 import { attachUSB, detachUSB } from "../api/usbAttach";
 
@@ -30,22 +30,24 @@ export default function startMQTTClient() {
     });
 
     client.on("message", async (topic, message) => {
-      if (topic.includes("state")) {
-        const topicParts = topic.split("/");
-        let ip = "";
-        let serverDetails = {};
+      const topicParts = topic.split("/");
+      let ip = "";
+      let serverDetails = {};
 
-        for (let [serverIp, server] of Object.entries(servers)) {
-          if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
-            ip = serverIp;
-            serverDetails = server;
-            break;
-          }
+      for (let [serverIp, server] of Object.entries(servers)) {
+        if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
+          ip = serverIp;
+          serverDetails = server;
+          break;
         }
+      }
 
-        let token = await getCSRFToken(ip, keys[ip]);
-        let vmIdentifier = "";
-        let vmDetails = {};
+      let token = await getCSRFToken(ip, keys[ip]);
+
+      let vmIdentifier = "";
+      let vmDetails = {};
+
+      if (topicParts.length >= 3) {
         Object.keys(serverDetails.vm.details).forEach(vmId => {
           const vm = serverDetails.vm.details[vmId];
           if (sanitise(vm.name) === topicParts[2]) {
@@ -53,7 +55,9 @@ export default function startMQTTClient() {
             vmDetails = vm;
           }
         });
+      }
 
+      if (topic.includes("state")) {
         let command = "";
         switch (message.toString()) {
           case "started":
@@ -66,26 +70,6 @@ export default function startMQTTClient() {
 
         await changeVMState(vmIdentifier, command, ip, keys[ip], token);
       } else if (topic.includes("attach")) {
-        const topicParts = topic.split("/");
-        let ip = "";
-        let serverDetails = {};
-
-        for (let [serverIp, server] of Object.entries(servers)) {
-          if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
-            ip = serverIp;
-            serverDetails = server;
-            break;
-          }
-        }
-
-        let vmIdentifier = "";
-        Object.keys(serverDetails.vm.details).forEach(vmId => {
-          const vm = serverDetails.vm.details[vmId];
-          if (sanitise(vm.name) === topicParts[2]) {
-            vmIdentifier = vmId;
-          }
-        });
-
         let data = {
           server: ip,
           id: vmIdentifier,
@@ -98,6 +82,12 @@ export default function startMQTTClient() {
         } else {
           await detachUSB(data);
         }
+      } else if (topic.includes("array")) {
+        let command = "start";
+        if (message.toString() === 'Stopped') {
+          command = 'stop';
+        }
+        await changeArrayState(command, ip, keys[ip], token);
       }
     });
 
@@ -140,6 +130,22 @@ function updateMQTT(client) {
           "manufacturer": server.serverDetails.motherboard
         }
       }));
+      client.publish(process.env.MQTTBaseTopic + "/switch/" + server.serverDetails.title + "/config", JSON.stringify({
+        "payload_on": "Started",
+        "payload_off": "Stopped",
+        "value_template": "{{ value_json.arrayStatus }}",
+        "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+        "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+        "name": serverTitleSanitised + "_array",
+        "unique_id": serverTitleSanitised + " unraid api array",
+        "device": {
+          "identifiers": [serverTitleSanitised],
+          "name": serverTitleSanitised,
+          "manufacturer": server.serverDetails.motherboard
+        },
+        "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/array"
+      }));
+      client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/array");
       client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
 
       Object.keys(server.vm.details).forEach(vmId => {
@@ -221,5 +227,8 @@ function mqttRepeat(client) {
 }
 
 function sanitise(string) {
+  if (!string) {
+    return "";
+  }
   return string.toLowerCase().split(" ").join("_").split(".").join("").split("(").join("").split(")").join("").split(":").join("_");
 }

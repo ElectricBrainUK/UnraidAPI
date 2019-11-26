@@ -13,6 +13,28 @@
           <template v-slot:header>
             Details
           </template>
+          <v-btn
+            v-if="server.serverDetails.arrayStatus && !server.serverDetails.arrayStatus.includes('Started')"
+            :disabled="server.isBusy"
+            color="success"
+            fab
+            small
+            dark
+            @click="startArray()"
+          >
+            Start Array
+          </v-btn>
+          <v-btn
+            v-if="server.serverDetails.arrayStatus && server.serverDetails.arrayStatus.includes('Started')"
+            :disabled="server.isBusy"
+            color="error"
+            fab
+            small
+            dark
+            @click="stopArray()"
+          >
+            Stop Array
+          </v-btn>
           <v-chip>IP: {{ ip }}</v-chip>
           <v-chip
             v-for="(detail, key) in server.serverDetails"
@@ -364,6 +386,34 @@
       "checkForServerPassword"
     ],
     methods: {
+      startArray() {
+        this.changeArrayStatus('start');
+      },
+      stopArray() {
+        this.changeArrayStatus('stop');
+      },
+      async changeArrayStatus(action) {
+        let auth = await this.checkForServerPassword(this.ip);
+        this.server.isBusy = true;
+        axios({
+          method: "post",
+          url: "api/arrayStatus",
+          data: {
+            action: action,
+            server: this.ip,
+            auth
+          }
+        }).then((response) => {
+          if (response) {
+            this.server.isBusy = false;
+            if (response.data && response.data.message && response.data.message.success) {
+              this.server.arrayStatus = response.data.message.state;
+            } else if (response && response.data && response.data.message && response.data.message.error) {
+              alert(response.data.message.error);
+            }
+          }
+        });
+      },
       startVM(vm) {
         if (vm.status === "paused") {
           this.changeVMStatus(vm, "domain-resume");

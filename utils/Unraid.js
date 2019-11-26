@@ -44,7 +44,7 @@ function getUSBDetails(servers, serverAuth) {
         }
         updateFile(servers, ip, "usbDetails");
       }).catch(e => {
-        console.log("Get USB Details: Failed with status code: " + e.statusText);
+        console.log("Get USB Details for ip: " + ip + " Failed with status code: " + e.statusText);
       });
     }
   });
@@ -56,6 +56,7 @@ function getServerDetails(servers, serverAuth) {
       return;
     }
     servers[ip].serverDetails = await scrapeHTML(ip, serverAuth);
+    servers[ip].serverDetails = { ...await scrapeMainHTML(ip, serverAuth), ...servers[ip].serverDetails };
 
     updateFile(servers, ip, "serverDetails");
   });
@@ -78,7 +79,25 @@ function scrapeHTML(ip, serverAuth) {
         "<span class='info'>", "<")
     };
   }).catch(e => {
-    console.log("Get Dashboard Details: Failed with status code: " + e.statusText);
+    console.log("Get Dashboard Details for ip: " + ip + " Failed with status code: " + e.statusText);
+  });
+}
+
+function scrapeMainHTML(ip, serverAuth) {
+  return axios({
+    method: "get",
+    url: "http://" + ip + "/Main",
+    headers: {
+      "Authorization": "Basic " + serverAuth[ip]
+    }
+  }).then((response) => {
+    let protection = extractValue(response.data, "</td></tr>\n          <tr><td>", "</td><td>");
+    return {
+      arrayStatus: extractReverseValue(extractValue(response.data, "<table class=\"array_status\">", "/span>"), "<", ">").split(",")[0],
+      arrayProtection: protection.includes(">") ? undefined : protection
+    };
+  }).catch(e => {
+    console.log("Get Main Details for ip: " + ip + " Failed with status code: " + e.statusText);
   });
 }
 
@@ -103,7 +122,7 @@ function getVMs(servers, serverAuth) {
       servers[ip].vm.extras = extras;
       updateFile(servers, ip, "vm");
     }).catch(e => {
-      console.log("Get VM Details: Failed with status code: " + e.statusText);
+      console.log("Get VM Details for ip: " + ip + " Failed with status code: " + e.statusText);
     });
   });
 }
@@ -293,7 +312,7 @@ export function getCSRFToken(server, auth) {
   }).then(response => {
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
-    console.log("Get CSRF Token: Failed with status code: " + e.statusText);
+    console.log("Get CSRF Token for ip: " + ip + " Failed with status code: " + e.statusText);
   });
 }
 
@@ -304,6 +323,25 @@ export function extractReverseValue(data, value, terminator) {
 export function extractValue(data, value, terminator) {
   let start = data.substring(data.toString().indexOf(value) + value.length);
   return start.substring(0, start.indexOf(terminator));
+}
+
+export function changeArrayState(action, server, auth, token) {
+  return axios({
+    method: "POST",
+    url: "http://" + server + "/update.htm",
+    headers: {
+      "Authorization": "Basic " + auth,
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    data: action === "start" ? "startState=STOPPED&file=&csrf_token=" + token + "&cmdStart=Start" : "startState=STARTED&file=&csrf_token=" + token + "&cmdStop=Stop",
+    httpAgent: new http.Agent({ keepAlive: true })
+  }).then((response) => {
+    console.log(response.data);
+    return response.data;
+  }).catch(e => {
+    console.log("Change Array State for ip: " + ip + " Failed with status code: " + e.statusText);
+  });
 }
 
 export function changeVMState(id, action, server, auth, token) {
@@ -326,7 +364,7 @@ export function changeVMState(id, action, server, auth, token) {
     }
     return response.data;
   }).catch(e => {
-    console.log("Change VM State: Failed with status code: " + e.statusText);
+    console.log("Change VM State for ip: " + ip + " Failed with status code: " + e.statusText);
   });
 }
 
@@ -345,7 +383,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
   }).then(response => {
     return extractVMDetails(vmObject, response);
   }).catch(e => {
-    console.log("Get VM Edit details: Failed with status code: " + e.statusText);
+    console.log("Get VM Edit details for ip: " + ip + " Failed with status code: " + e.statusText);
     return vmObject;
   });
 }
@@ -536,7 +574,7 @@ export async function requestChange(ip, id, auth, vmObject, create) {
   }).then((response) => {
     return response.data;
   }).catch(e => {
-    console.log("Make Edit: Failed with status code: " + e.statusText);
+    console.log("Make Edit for ip: " + ip + " Failed with status code: " + e.statusText);
   });
 }
 
