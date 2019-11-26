@@ -204,7 +204,8 @@ function updateMQTT(client) {
               "device": {
                 "identifiers": [serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId],
                 "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId,
-                "manufacturer": sanitiseUSBName
+                "manufacturer": sanitiseUSBName,
+                "model": "USB Device"
               },
               "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId + "/attach"
             }));
