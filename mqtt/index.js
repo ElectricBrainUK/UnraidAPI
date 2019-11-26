@@ -128,7 +128,8 @@ function updateMQTT(client) {
         "device": {
           "identifiers": [serverTitleSanitised],
           "name": serverTitleSanitised,
-          "manufacturer": server.serverDetails.motherboard
+          "manufacturer": server.serverDetails.motherboard,
+          "model": "Unraid Server"
         }
       }));
       client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/config", JSON.stringify({
@@ -142,7 +143,8 @@ function updateMQTT(client) {
         "device": {
           "identifiers": [serverTitleSanitised],
           "name": serverTitleSanitised,
-          "manufacturer": server.serverDetails.motherboard
+          "manufacturer": server.serverDetails.motherboard,
+          "model": "Unraid Server"
         },
         "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/array"
       }));
