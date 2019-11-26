@@ -28,6 +28,9 @@ async function connectToServer(data) {
     if (data.ip) {
       servers[data.ip] = {};
     }
+    if (!fs.existsSync("config/")){
+      fs.mkdirSync("config/");
+    }
     fs.writeFileSync("config/servers.json", JSON.stringify(servers));
     response.message = "Connected";
   }
