@@ -25,10 +25,10 @@ export default function(req, res, next) {
 
   if (process.env.MQTTBroker) {
     try {
-      if (!fs.existsSync("secure/")){
-        fs.mkdirSync("secure/");
+      if (!fs.existsSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/")){
+        fs.mkdirSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/");
       }
-      fs.writeFileSync("secure/mqttKeys", req.headers.authorization);
+      fs.writeFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys", req.headers.authorization);
     } catch (e) {
       console.log(e);
     }

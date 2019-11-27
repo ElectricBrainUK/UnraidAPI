@@ -18,7 +18,7 @@ export default function startMQTTClient() {
   const client = mqtt.connect("mqtt://" + process.env.MQTTBroker, options);
 
   try {
-    let keys = JSON.parse(fs.readFileSync("secure/mqttKeys"));
+    let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
     let servers = JSON.parse(fs.readFileSync("config/servers.json"));
 
     client.on("connect", () => {
@@ -95,7 +95,7 @@ export default function startMQTTClient() {
       console.log("Can't connect" + error);
     });
   } catch (e) {
-    if (e.toString().includes('no such file or directory, open \'secure/mqttKeys\'')) {
+    if (e.toString().includes('no such file or directory, open') && e.toString().includes('mqttKeys')) {
       console.log("Server details failed to load. Have you set up any servers in the UI?")
     } else {
       console.log(e);
@@ -108,7 +108,7 @@ export default function startMQTTClient() {
 
 function updateMQTT(client) {
   try {
-    let keys = JSON.parse(fs.readFileSync("secure/mqttKeys"));
+    let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
     let servers = JSON.parse(fs.readFileSync("config/servers.json"));
 
     getUnraidDetails(servers, keys);
