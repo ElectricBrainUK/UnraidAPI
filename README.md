@@ -20,6 +20,12 @@ MQTTPass e.g. password
 MQTTBaseTopic the base topic for all MQTT publishes e.g. homeassistant
 
 ``` 
+Where to store the secure keys. If left blank the keys are kept in memory and will be destroyed each time the container is updated.
+Set to config to have the data persisted
+```
+KeyStorage config
+```
+
 Check out the HA docs on how to set up discovery for MQTT here:
 https://www.home-assistant.io/docs/mqtt/discovery/
 
