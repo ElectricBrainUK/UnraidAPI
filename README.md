@@ -1,5 +1,8 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9EC6MMLG7KLNA&source=url)
+# Support
+For support please go to our discord channel: https://discord.gg/Qa3Bjr9
 
+For missing features please raise an issue (or a PR if you feel like giving it a go!)
 # unraidapi
 
 > A new UI and API for controlling multiple unraid instances
