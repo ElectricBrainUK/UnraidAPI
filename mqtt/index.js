@@ -95,7 +95,11 @@ export default function startMQTTClient() {
       console.log("Can't connect" + error);
     });
   } catch (e) {
-    console.log(e);
+    if (e.toString().includes('no such file or directory, open \'secure/mqttKeys\'')) {
+      console.log("Server details failed to load. Have you set up any servers in the UI?")
+    } else {
+      console.log(e);
+    }
     setTimeout(() => {
       startMQTTClient();
     }, 30000);
