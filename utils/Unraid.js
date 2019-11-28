@@ -11,7 +11,7 @@ export function getUnraidDetails(servers, serverAuth) {
 
 export function getPCIDetails(servers, skipSave) {
   Object.keys(servers).forEach(ip => {
-    if (servers[ip].vm && servers[ip].vm.details && Object.keys(servers[ip].vm.details).length > 0) {
+    if (servers[ip].vm && servers[ip].vm.details && Object.keys(servers[ip].vm.details).length > 0 && servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].edit) {
       servers[ip].pciDetails = servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].edit.pcis;
     }
     if (!skipSave) {
@@ -387,10 +387,8 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
   });
 }
 
-function extractVMDetails(vmObject, response) {
-  vmObject.xml = extractValue(response.data, "<textarea id=\"addcode\" name=\"xmldesc\" placeholder=\"Copy &amp; Paste Domain XML Configuration Here.\" autofocus>", "</textarea>").split("&lt;").join("<").split("&gt;").join(">");
-
-  vmObject.edit = {
+function getVMStaticData(response) {
+  return {
     template_os: extractValue(response.data, "id=\"template_os\" value=\"", "\""),
     domain_type: extractValue(response.data, "domain[type]\" value=\"", "\""),
     template_name: extractValue(response.data, "template[name]\" value=\"", "\""),
@@ -415,17 +413,22 @@ function extractVMDetails(vmObject, response) {
     gpu_bios: extractValue(response.data, "=\"^[^.].*\" data-pickroot=\"/\" value=\"", "\""),//todo deprecate
     nic_0_mac: extractValue(response.data, "name=\"nic[0][mac]\" class=\"narrow\" value=\"", "\"") //todo deprecate
   };
+}
 
-  vmObject.edit.vcpus = [];
+function extractCPUDetails(response) {
+  let cpuDetails = [];
   while (response.data.includes("for='vcpu")) {
     let row = extractValue(response.data, "<label for='vcpu", "</label>");
     if (row.includes("checked")) {
-      vmObject.edit.vcpus.push(extractValue(row, "value='", "'"));
+      cpuDetails.push(extractValue(row, "value='", "'"));
     }
     response.data = response.data.replace("for='vcpu", "");
   }
+  return cpuDetails;
+}
 
-  vmObject.edit.disks = [];
+function extractDiskData(response) {
+  let disks = [];
   while (response.data.includes("id=\"disk_")) {
     let row = extractValue(response.data, "id=\"disk_", ">");
     let disk = extractValue(row, "", "\"");
@@ -435,7 +438,7 @@ function extractVMDetails(vmObject, response) {
     let disksize = extractValue(response.data, "name=\"disk[" + disk + "][size]\" value=\"", "\"");
     let diskpath = extractValue(row, "value=\"", "\"");
     if (diskpath) {
-      vmObject.edit.disks.push({
+      disks.push({
         select: diskselect,
         image: diskpath,
         driver: diskdriver,
@@ -445,23 +448,30 @@ function extractVMDetails(vmObject, response) {
     }
     response.data = response.data.replace("id=\"disk_", "");
   }
+  return disks;
+}
 
+function extractShareData(response) {
+  let shares = [];
   response.data.replace("<script type=\"text/html\" id=\"tmplShare\">\n" +
     "                                                                                <table class=\"domain_os other\">\n" +
     "                                                                                    <tr class=\"advanced\">\n" +
     "                                                                                        <td>Unraid Share:</td>", "");
-  vmObject.edit.shares = [];
+
   while (response.data.includes("<td>Unraid Share:</td>")) {
     let sourceRow = extractValue(response.data, "<td>Unraid Share:</td>", "</td>");
     let targetRow = extractValue(response.data, "<td>Unraid Mount tag:</td>", "</td>");
-    vmObject.edit.shares.push({
+    shares.push({
       source: extractValue(sourceRow, "value=\"", "\""),
       target: extractValue(targetRow, "value=\"", "\"")
     });
     response.data = response.data.replace("<td>Unraid Share:</td>", "");
   }
+  return shares;
+}
 
-  vmObject.edit.usbs = [];
+function extractUSBData(response) {
+  let usbs = [];
   let usbInfo = extractValue(response.data, "<td>USB Devices:</td>", "</td>");
   while (usbInfo.includes("value=\"")) {
     let row = extractValue(usbInfo, "value=\"", " (");
@@ -471,12 +481,15 @@ function extractVMDetails(vmObject, response) {
     }
     usb.id = row.substring(0, row.indexOf("\""));
     usb.name = row.substring(row.indexOf("/") + 3);
-    vmObject.edit.usbs.push(usb);
+    usbs.push(usb);
 
     usbInfo = usbInfo.replace("value=\"", "");
   }
+  return usbs;
+}
 
-  vmObject.edit.pcis = [];
+function extractPCIData(response) {
+  let pcis = [];
   while (response.data.includes(" name=\"pci[]\" id")) {
     let row = extractValue(response.data, " name=\"pci[]\" id", "/>");
     let device = {};
@@ -485,11 +498,14 @@ function extractVMDetails(vmObject, response) {
       device.checked = true;
     }
     device.id = extractValue(row, "value=\"", "\"");
-    vmObject.edit.pcis.push(device);
+    pcis.push(device);
 
     response.data = response.data.replace(" name=\"pci[]\" id", "");
   }
+  return pcis;
+}
 
+function extractGPUData(response, vmObject) {
   let gpuNo = 0;
   while (response.data.includes("<td>Graphics Card:</td>")) {
     let gpuInfo = extractValue(response.data, "<td>Graphics Card:</td>", "</td>");
@@ -529,7 +545,9 @@ function extractVMDetails(vmObject, response) {
     gpuNo++;
     response.data = response.data.replace("<td>Graphics Card:</td>", "");
   }
+}
 
+function extractSoundData(response, vmObject) {
   let soundInfo = extractValue(response.data, "<td>Sound Card:</td>", "</td>");
   while (soundInfo.includes("<option value='")) {
     let row = extractValue(soundInfo, "<option value='", ">");
@@ -544,18 +562,44 @@ function extractVMDetails(vmObject, response) {
 
     soundInfo = soundInfo.replace("<option value='", "");
   }
+}
 
+function extractNICInformation(response) {
   let nicInfo = extractValue(response.data, "<table data-category=\"Network\" data-multiple=\"true\"", "</table>");
   let nicNo = 0;
-  vmObject.edit.nics = [];
+
+  let nics = [];
   while (nicInfo.includes("<td>Network MAC:</td>")) {
     let nic = {};
     nic.mac = extractValue(nicInfo, "name=\"nic[" + nicNo + "][mac]\" class=\"narrow\" value=\"", "\"");
     nic.network = extractReverseValue(extractValue(nicInfo, "name=\"nic[" + nicNo + "][network]\"", "selected>"), "'", "value='");
-    vmObject.edit.nics.push(nic);
+    nics.push(nic);
 
     nicInfo = nicInfo.replace("<td>Network MAC:</td>", "");
   }
+  return nics;
+}
+
+function extractVMDetails(vmObject, response) {
+  vmObject.xml = extractValue(response.data, "<textarea id=\"addcode\" name=\"xmldesc\" placeholder=\"Copy &amp; Paste Domain XML Configuration Here.\" autofocus>", "</textarea>").split("&lt;").join("<").split("&gt;").join(">");
+
+  vmObject.edit = getVMStaticData(response);
+
+  vmObject.edit.vcpus = extractCPUDetails(response);
+
+  vmObject.edit.disks = extractDiskData(response);
+
+  vmObject.edit.shares = extractShareData(response);
+
+  vmObject.edit.usbs = extractUSBData(response);
+
+  vmObject.edit.pcis = extractPCIData(response);
+
+  extractGPUData(response, vmObject);
+
+  extractSoundData(response, vmObject);
+
+  vmObject.edit.nics = extractNICInformation(response);
   return vmObject;
 }
 

@@ -3,6 +3,8 @@ import { changeArrayState, changeVMState, getCSRFToken, getUnraidDetails } from 
 import fs from "fs";
 import { attachUSB, detachUSB } from "../api/usbAttach";
 
+let retry;
+
 export default function startMQTTClient() {
   if (!process.env.MQTTBroker) {
     console.log("mqtt disabled");
@@ -24,6 +26,9 @@ export default function startMQTTClient() {
     client.on("connect", () => {
       console.log("Connected to mqtt broker");
       updateMQTT(client);
+      if (repeater) {
+        repeater = clearTimeout(repeater);
+      }
       mqttRepeat(client);
     }, (err) => {
       console.log(err);
@@ -100,7 +105,10 @@ export default function startMQTTClient() {
     } else {
       console.log(e);
     }
-    setTimeout(() => {
+    if (retry) {
+      retry = clearInterval(retry);
+    }
+    retry = setTimeout(() => {
       startMQTTClient();
     }, 30000);
   }
@@ -157,7 +165,7 @@ function updateMQTT(client) {
 
       Object.keys(server.vm.details).forEach(vmId => {
         let vm = server.vm.details[vmId];
-        const vmSanitisedName = sanitise(vm.edit.domain_name);
+        const vmSanitisedName = sanitise(vm.edit ? vm.edit.domain_name : vm.name );
 
         const vmDetails = {
           id: vmId,
@@ -228,8 +236,10 @@ function updateMQTT(client) {
   }
 }
 
+let repeater;
+
 function mqttRepeat(client) {
-  setTimeout(function() {
+  repeater = setTimeout(function() {
     updateMQTT(client);
     mqttRepeat(client);
   }, 20000);
