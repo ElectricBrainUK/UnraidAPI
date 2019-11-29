@@ -5,7 +5,7 @@ For support please go to our discord channel: https://discord.gg/Qa3Bjr9
 For missing features please raise an issue (or a PR if you feel like giving it a go!)
 # unraidapi
 
-> A new UI and API for controlling multiple unraid instances
+> A new UI and API for controlling multiple unraid instances and connecting them to the Home Assistant
 
 ## Install
 
