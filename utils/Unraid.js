@@ -45,6 +45,7 @@ function getUSBDetails(servers, serverAuth) {
         updateFile(servers, ip, "usbDetails");
       }).catch(e => {
         console.log("Get USB Details for ip: " + ip + " Failed with status code: " + e.statusText);
+        console.log(e.message);
       });
     }
   });
@@ -80,6 +81,7 @@ function scrapeHTML(ip, serverAuth) {
     };
   }).catch(e => {
     console.log("Get Dashboard Details for ip: " + ip + " Failed with status code: " + e.statusText);
+    console.log(e.message);
   });
 }
 
@@ -98,6 +100,7 @@ function scrapeMainHTML(ip, serverAuth) {
     };
   }).catch(e => {
     console.log("Get Main Details for ip: " + ip + " Failed with status code: " + e.statusText);
+    console.log(e.message);
   });
 }
 
@@ -123,6 +126,7 @@ function getVMs(servers, serverAuth) {
       updateFile(servers, ip, "vm");
     }).catch(e => {
       console.log("Get VM Details for ip: " + ip + " Failed with status code: " + e.statusText);
+      console.log(e.message);
     });
   });
 }
@@ -235,7 +239,10 @@ function isClosingTag(remaining, open) {
 function checkContents(remaining, object) {
   if (hasContents(remaining)) {
     if (object.contents) {
-      object.content += contentCheck.contents;
+      object.content += object.contents;
+      console.log(object.contents);
+      console.log("The contents were left as above, but should they be as bellow?");
+      console.log(remaining.substring(0, remaining.indexOf("<")));
     } else {
       object.contents = remaining.substring(0, remaining.indexOf("<"));
     }
@@ -313,6 +320,7 @@ export function getCSRFToken(server, auth) {
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
     console.log("Get CSRF Token for ip: " + ip + " Failed with status code: " + e.statusText);
+    console.log(e.message);
   });
 }
 
@@ -340,6 +348,7 @@ export function changeArrayState(action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change Array State for ip: " + ip + " Failed with status code: " + e.statusText);
+    console.log(e.message);
   });
 }
 
@@ -364,6 +373,7 @@ export function changeVMState(id, action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change VM State for ip: " + ip + " Failed with status code: " + e.statusText);
+    console.log(e.message);
   });
 }
 
@@ -383,6 +393,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
     return extractVMDetails(vmObject, response);
   }).catch(e => {
     console.log("Get VM Edit details for ip: " + ip + " Failed with status code: " + e.statusText);
+    console.log(e.message);
     return vmObject;
   });
 }
@@ -622,6 +633,7 @@ export async function requestChange(ip, id, auth, vmObject, create) {
     return response.data;
   }).catch(e => {
     console.log("Make Edit for ip: " + ip + " Failed with status code: " + e.statusText);
+    console.log(e.message);
   });
 }
 
