@@ -33,6 +33,9 @@ function getUSBDetails(servers, serverAuth) {
           "Authorization": "Basic " + serverAuth[ip]
         }
       }).then(response => {
+        servers[ip].status = 'online';
+        updateFile(servers, ip, "status");
+
         servers[ip].usbDetails = [];
         while (response.data.toString().includes("<label for=\"usb")) {
           let row = extractValue(response.data, "<label for=\"usb", "</label>");
@@ -46,6 +49,10 @@ function getUSBDetails(servers, serverAuth) {
       }).catch(e => {
         console.log("Get USB Details for ip: " + ip + " Failed with status code: " + e.statusText);
         console.log(e.message);
+        if (e.message.includes('ETIMEDOUT')) {
+          servers[ip].status = 'offline';
+          updateFile(servers, ip, "status");
+        }
       });
     }
   });
@@ -58,6 +65,8 @@ function getServerDetails(servers, serverAuth) {
     }
     servers[ip].serverDetails = await scrapeHTML(ip, serverAuth);
     servers[ip].serverDetails = { ...await scrapeMainHTML(ip, serverAuth), ...servers[ip].serverDetails };
+
+    servers[ip].serverDetails.on = !!servers[ip].status;
 
     updateFile(servers, ip, "serverDetails");
   });
@@ -240,9 +249,6 @@ function checkContents(remaining, object) {
   if (hasContents(remaining)) {
     if (object.contents) {
       object.content += object.contents;
-      console.log(object.contents);
-      console.log("The contents were left as above, but should they be as bellow?");
-      console.log(remaining.substring(0, remaining.indexOf("<")));
     } else {
       object.contents = remaining.substring(0, remaining.indexOf("<"));
     }
