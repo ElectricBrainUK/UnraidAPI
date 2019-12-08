@@ -21,7 +21,7 @@
     "axios": "^0.19.0",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
-    "form-data": "^2.3.3",
+    "form-data": "^2.5.1",
     "fs": "0.0.1-security",
     "html-table-to-json": "^0.4.0",
     "http": "0.0.0",

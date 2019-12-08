@@ -2,11 +2,48 @@ import axios from "axios";
 import fs from "fs";
 import http from "http";
 
+const FormData = require("form-data");
+
+axios.defaults.withCredentials = true;
+
+let authCookies = {};
+
 export function getUnraidDetails(servers, serverAuth) {
+  logIn(servers, serverAuth);
   getServerDetails(servers, serverAuth);
   getVMs(servers, serverAuth);
   getUSBDetails(servers, serverAuth);
   getPCIDetails(servers);
+}
+
+function logIn(servers, serverAuth) {
+  Object.keys(servers).forEach(ip => {
+    if (!serverAuth[ip] || authCookies[ip]) {
+      return;
+    }
+    const buff = Buffer.from(serverAuth[ip], "base64");
+
+    let details = buff.toString("ascii").substring(5);
+
+    let data = new FormData();
+    data.append("username", "root");
+    data.append("password", details);
+
+    axios({
+      url: "http://" + ip + "/login",
+      method: "POST",
+      data,
+      headers: { ...data.getHeaders(), "cache-control" : "no-cache", "Content-Type" : "application/x-www-form-urlencoded" },
+      httpAgent: new http.Agent({ keepAlive: true }),
+      maxRedirects: 0
+    }).then(response => {
+      authCookies[ip] = response.headers["set-cookie"][0];
+    }).catch(error => {
+      if (error.response.headers["set-cookie"][0]) {
+        authCookies[ip] = error.response.headers["set-cookie"][0];
+      }
+    });
+  });
 }
 
 export function getPCIDetails(servers, skipSave) {
@@ -30,10 +67,11 @@ function getUSBDetails(servers, serverAuth) {
         method: "get",
         url: "http://" + ip + "/VMs/UpdateVM?uuid=" + servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,
         headers: {
-          "Authorization": "Basic " + serverAuth[ip]
+          "Authorization": "Basic " + serverAuth[ip],
+          "Cookie": authCookies[ip] ? authCookies[ip] : ""
         }
       }).then(response => {
-        servers[ip].status = 'online';
+        servers[ip].status = "online";
         updateFile(servers, ip, "status");
 
         servers[ip].usbDetails = [];
@@ -48,9 +86,10 @@ function getUSBDetails(servers, serverAuth) {
         updateFile(servers, ip, "usbDetails");
       }).catch(e => {
         console.log("Get USB Details for ip: " + ip + " Failed with status code: " + e.statusText);
+        authCookies[ip] = undefined;
         console.log(e.message);
-        if (e.message.includes('ETIMEDOUT')) {
-          servers[ip].status = 'offline';
+        if (e.message.includes("ETIMEDOUT")) {
+          servers[ip].status = "offline";
           updateFile(servers, ip, "status");
         }
       });
@@ -77,12 +116,13 @@ function scrapeHTML(ip, serverAuth) {
     method: "get",
     url: "http://" + ip + "/Dashboard",
     headers: {
-      "Authorization": "Basic " + serverAuth[ip]
+      "Authorization": "Basic " + serverAuth[ip],
+      "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then((response) => {
     return {
       title: extractValue(response.data, "title>", "/"),
-      cpu: extractValue(response.data, "cpu_view'><td></td><td colspan='3'>", "<"),
+      cpu: extractReverseValue(extractValue(response.data, "cpu_view'>", "</tr"), "<br>", ">"),
       memory: extractValue(response.data, "Memory<br><span>", "<"),
       motherboard: extractValue(response.data, "<tr class='mb_view'><td></td><td colspan='3'>", "<"),
       diskSpace: extractValue(response.data, "title='Go to disk settings'><i class='fa fa-fw fa-cog chevron mt0'></i></a>\n" +
@@ -90,6 +130,7 @@ function scrapeHTML(ip, serverAuth) {
     };
   }).catch(e => {
     console.log("Get Dashboard Details for ip: " + ip + " Failed with status code: " + e.statusText);
+    authCookies[ip] = undefined;
     console.log(e.message);
   });
 }
@@ -99,7 +140,8 @@ function scrapeMainHTML(ip, serverAuth) {
     method: "get",
     url: "http://" + ip + "/Main",
     headers: {
-      "Authorization": "Basic " + serverAuth[ip]
+      "Authorization": "Basic " + serverAuth[ip],
+      "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then((response) => {
     let protection = extractValue(response.data, "</td></tr>\n          <tr><td>", "</td><td>");
@@ -109,6 +151,7 @@ function scrapeMainHTML(ip, serverAuth) {
     };
   }).catch(e => {
     console.log("Get Main Details for ip: " + ip + " Failed with status code: " + e.statusText);
+    authCookies[ip] = undefined;
     console.log(e.message);
   });
 }
@@ -122,7 +165,8 @@ function getVMs(servers, serverAuth) {
       method: "get",
       url: "http://" + ip + "/plugins/dynamix.vm.manager/include/VMMachines.php",
       headers: {
-        "Authorization": "Basic " + serverAuth[ip]
+        "Authorization": "Basic " + serverAuth[ip],
+        "Cookie": authCookies[ip] ? authCookies[ip] : ""
       }
     }).then(async (response) => {
       let parts = response.data.toString().split("\u0000");
@@ -135,6 +179,7 @@ function getVMs(servers, serverAuth) {
       updateFile(servers, ip, "vm");
     }).catch(e => {
       console.log("Get VM Details for ip: " + ip + " Failed with status code: " + e.statusText);
+      authCookies[ip] = undefined;
       console.log(e.message);
     });
   });
@@ -320,12 +365,14 @@ export function getCSRFToken(server, auth) {
     method: "get",
     url: "http://" + server + "/Dashboard",
     headers: {
-      "Authorization": "Basic " + auth
+      "Authorization": "Basic " + auth,
+      "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then(response => {
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
     console.log("Get CSRF Token for ip: " + ip + " Failed with status code: " + e.statusText);
+    authCookies[ip] = undefined;
     console.log(e.message);
   });
 }
@@ -346,7 +393,8 @@ export function changeArrayState(action, server, auth, token) {
     headers: {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      "X-Requested-With": "XMLHttpRequest"
+      "X-Requested-With": "XMLHttpRequest",
+      "Cookie": authCookies[ip] ? authCookies[ip] : ""
     },
     data: action === "start" ? "startState=STOPPED&file=&csrf_token=" + token + "&cmdStart=Start" : "startState=STARTED&file=&csrf_token=" + token + "&cmdStop=Stop",
     httpAgent: new http.Agent({ keepAlive: true })
@@ -354,6 +402,7 @@ export function changeArrayState(action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change Array State for ip: " + ip + " Failed with status code: " + e.statusText);
+    authCookies[ip] = undefined;
     console.log(e.message);
   });
 }
@@ -365,7 +414,8 @@ export function changeVMState(id, action, server, auth, token) {
     headers: {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      "X-Requested-With": "XMLHttpRequest"
+      "X-Requested-With": "XMLHttpRequest",
+      "Cookie": authCookies[ip] ? authCookies[ip] : ""
     },
     data: "uuid=" + id + "&action=" + action + "&csrf_token=" + token,
     httpAgent: new http.Agent({ keepAlive: true })
@@ -379,6 +429,7 @@ export function changeVMState(id, action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change VM State for ip: " + ip + " Failed with status code: " + e.statusText);
+    authCookies[ip] = undefined;
     console.log(e.message);
   });
 }
@@ -393,12 +444,14 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
     method: "get",
     url: "http://" + ip + "/VMs/UpdateVM?uuid=" + id,
     headers: {
-      "Authorization": "Basic " + auth
+      "Authorization": "Basic " + auth,
+      "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then(response => {
     return extractVMDetails(vmObject, response);
   }).catch(e => {
     console.log("Get VM Edit details for ip: " + ip + " Failed with status code: " + e.statusText);
+    authCookies[ip] = undefined;
     console.log(e.message);
     return vmObject;
   });
@@ -639,6 +692,7 @@ export async function requestChange(ip, id, auth, vmObject, create) {
     return response.data;
   }).catch(e => {
     console.log("Make Edit for ip: " + ip + " Failed with status code: " + e.statusText);
+    authCookies[ip] = undefined;
     console.log(e.message);
   });
 }
