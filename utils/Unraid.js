@@ -366,13 +366,13 @@ export function getCSRFToken(server, auth) {
     url: "http://" + server + "/Dashboard",
     headers: {
       "Authorization": "Basic " + auth,
-      "Cookie": authCookies[ip] ? authCookies[ip] : ""
+      "Cookie": authCookies[server] ? authCookies[server] : ""
     }
   }).then(response => {
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
-    console.log("Get CSRF Token for ip: " + ip + " Failed with status code: " + e.statusText);
-    authCookies[ip] = undefined;
+    console.log("Get CSRF Token for server: " + server + " Failed with status code: " + e.statusText);
+    authCookies[server] = undefined;
     console.log(e.message);
   });
 }
@@ -415,7 +415,7 @@ export function changeVMState(id, action, server, auth, token) {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       "X-Requested-With": "XMLHttpRequest",
-      "Cookie": authCookies[ip] ? authCookies[ip] : ""
+      "Cookie": authCookies[server] ? authCookies[server] : ""
     },
     data: "uuid=" + id + "&action=" + action + "&csrf_token=" + token,
     httpAgent: new http.Agent({ keepAlive: true })
@@ -428,8 +428,8 @@ export function changeVMState(id, action, server, auth, token) {
     }
     return response.data;
   }).catch(e => {
-    console.log("Change VM State for ip: " + ip + " Failed with status code: " + e.statusText);
-    authCookies[ip] = undefined;
+    console.log("Change VM State for ip: " + server + " Failed with status code: " + e.statusText);
+    authCookies[server] = undefined;
     console.log(e.message);
   });
 }
