@@ -1,4 +1,13 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9EC6MMLG7KLNA&source=url)
+# Home Assistant Integration
+Use the env variable section to set up MQTT and connect to your MQTT broker. If auto discovery is enabled in home assistant the following will be created:
+- An entity for each of your servers 
+    - Monitor server status
+    - On/Off switch allows you to start stop array
+- An entity for each of your VMs
+    - On/Off toggle VM state
+    - A seperate entity with a switch to attach / detach any usbs to that vm
+
 # Support
 For support please go to our discord channel: https://discord.gg/Qa3Bjr9
 
