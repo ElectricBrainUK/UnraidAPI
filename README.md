@@ -9,6 +9,7 @@ Use the env variable section to set up MQTT and connect to your MQTT broker. If 
     - A seperate entity with a switch to attach / detach any usbs to that vm
 
 Manual Config Example:
+
 \- platform: mqtt
 
   command_topic: "homeassistant/servername/vmname/state"
