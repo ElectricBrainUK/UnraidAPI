@@ -8,6 +8,14 @@ Use the env variable section to set up MQTT and connect to your MQTT broker. If 
     - On/Off toggle VM state
     - A seperate entity with a switch to attach / detach any usbs to that vm
 
+Manual Config Example:
+- platform: mqtt
+  command_topic: "homeassistant/servername/vmname/state"
+  payload_on: "started"
+  payload_off: "stopped"
+
+When connecting the unraid api to an mqtt broker config details for all the various api functions is posted under the various homeassistant entity types. For example under homeassistant/switch/server/vm/config.
+
 # Support
 For support please go to our discord channel: https://discord.gg/Qa3Bjr9
 
