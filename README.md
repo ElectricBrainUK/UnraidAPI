@@ -30,8 +30,9 @@ For missing features please raise an issue (or a PR if you feel like giving it a
 
 ## Install
 
-Add the following template url to your list: 
+Add the following template url to your list in the Docker tab on unraid: 
 https://github.com/ElectricBrainUK/docker-templates
+Then when you go to add container it should be listed.
 
 ## Env variables
 If you want to enable MQTT:
