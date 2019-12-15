@@ -39,7 +39,7 @@ function logIn(servers, serverAuth) {
     }).then(response => {
       authCookies[ip] = response.headers["set-cookie"][0];
     }).catch(error => {
-      if (error.response.headers["set-cookie"][0]) {
+      if (error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
         authCookies[ip] = error.response.headers["set-cookie"][0];
       }
     });
