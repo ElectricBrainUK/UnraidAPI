@@ -1,5 +1,5 @@
 import mqtt from "mqtt";
-import { changeArrayState, changeVMState, getCSRFToken, getUnraidDetails } from "../utils/Unraid";
+import { changeArrayState, changeDockerState, changeVMState, getCSRFToken, getUnraidDetails } from "../utils/Unraid";
 import fs from "fs";
 import { attachUSB, detachUSB } from "../api/usbAttach";
 
@@ -51,18 +51,29 @@ export default function startMQTTClient() {
 
       let vmIdentifier = "";
       let vmDetails = {};
+      let dockerIdentifier = "";
 
       if (topicParts.length >= 3) {
-        Object.keys(serverDetails.vm.details).forEach(vmId => {
-          const vm = serverDetails.vm.details[vmId];
-          if (sanitise(vm.name) === topicParts[2]) {
-            vmIdentifier = vmId;
-            vmDetails = vm;
-          }
-        });
+        if (!topic.includes("docker")) {
+          Object.keys(serverDetails.vm.details).forEach(vmId => {
+            const vm = serverDetails.vm.details[vmId];
+            if (sanitise(vm.name) === topicParts[2]) {
+              vmIdentifier = vmId;
+              vmDetails = vm;
+            }
+          });
+        } else {
+          Object.keys(serverDetails.docker.details.containers).forEach(dockerId => {
+            const docker = serverDetails.docker.details.containers[dockerId];
+            if (sanitise(docker.name) === topicParts[2]) {
+              dockerIdentifier = dockerId;
+            }
+          });
+        }
       }
 
-      if (topic.includes("state")) {
+
+      if (topic.toLowerCase().includes("state")) {
         let command = "";
         switch (message.toString()) {
           case "started":
@@ -73,7 +84,11 @@ export default function startMQTTClient() {
             break;
         }
 
-        await changeVMState(vmIdentifier, command, ip, keys[ip], token);
+        if (!topic.includes("docker")) {
+          await changeVMState(vmIdentifier, command, ip, keys[ip], token);
+        } else {
+          await changeDockerState(dockerIdentifier, command, ip, keys[ip], token);
+        }
       } else if (topic.includes("attach")) {
         let data = {
           server: ip,
@@ -82,15 +97,15 @@ export default function startMQTTClient() {
           usbId: topicParts[3].replace("_", ":")
         };
 
-        if (message.toString() && message.toString() !== 'false' && message.toString() !== 'False') {
+        if (message.toString() && message.toString() !== "false" && message.toString() !== "False") {
           await attachUSB(data);
         } else {
           await detachUSB(data);
         }
       } else if (topic.includes("array")) {
         let command = "start";
-        if (message.toString() === 'Stopped') {
-          command = 'stop';
+        if (message.toString() === "Stopped") {
+          command = "stop";
         }
         await changeArrayState(command, ip, keys[ip], token);
       }
@@ -100,8 +115,8 @@ export default function startMQTTClient() {
       console.log("Can't connect" + error);
     });
   } catch (e) {
-    if (e.toString().includes('no such file or directory, open') && e.toString().includes('mqttKeys')) {
-      console.log("Server details failed to load. Have you set up any servers in the UI?")
+    if (e.toString().includes("no such file or directory, open") && e.toString().includes("mqttKeys")) {
+      console.log("Server details failed to load. Have you set up any servers in the UI?");
     } else {
       console.log(e);
     }
@@ -165,7 +180,7 @@ function updateMQTT(client) {
 
       Object.keys(server.vm.details).forEach(vmId => {
         let vm = server.vm.details[vmId];
-        const vmSanitisedName = sanitise(vm.edit ? vm.edit.domain_name : vm.name );
+        const vmSanitisedName = sanitise(vm.edit ? vm.edit.domain_name : vm.name);
 
         const vmDetails = {
           id: vmId,
@@ -228,6 +243,30 @@ function updateMQTT(client) {
             client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId + "/attach");
           });
         }
+      });
+
+      Object.keys(server.docker.details.containers).forEach(dockerId => {
+        let docker = server.docker.details.containers[dockerId];
+        docker.name = sanitise(docker.name);
+
+        client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/" + docker.name + "/config", JSON.stringify({
+          "payload_on": "started",
+          "payload_off": "stopped",
+          "value_template": "{{ value_json.status }}",
+          "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
+          "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
+          "name": serverTitleSanitised + "_" + docker.name,
+          "unique_id": serverTitleSanitised + "_" + dockerId,
+          "device": {
+            "identifiers": [serverTitleSanitised + "_" + docker.name],
+            "name": serverTitleSanitised + "_" + docker.name,
+            "manufacturer": server.serverDetails.motherboard,
+            "model": "Docker"
+          },
+          "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name + "/dockerState"
+        }));
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name, JSON.stringify(docker));
+        client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name + "/dockerState");
       });
     });
   } catch (e) {

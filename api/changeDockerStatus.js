@@ -1,4 +1,4 @@
-import { changeVMState, getCSRFToken } from "../utils/Unraid";
+import { changeDockerState, getCSRFToken } from "../utils/Unraid";
 
 export default function(req, res, next) {
   let body = [];
@@ -10,7 +10,7 @@ export default function(req, res, next) {
     data = JSON.parse(Buffer.concat(body).toString());
     if (data) {
       let token = await getCSRFToken(data.server, data.auth);
-      response.message = await changeVMState(data.id, data.action, data.server, data.auth, token);
+      response.message = await changeDockerState(data.id, data.action, data.server, data.auth, token);
       response.status = 200;
       res.send(response);
     }

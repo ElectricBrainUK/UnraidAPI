@@ -2,11 +2,13 @@
 # Home Assistant Integration
 Use the env variable section to set up MQTT and connect to your MQTT broker. If auto discovery is enabled in home assistant the following will be created:
 - An entity for each of your servers 
-    - Monitor server status
-    - On/Off switch allows you to start stop array
+    - (sensor) Monitor server status
+    - (switch) On/Off switch allows you to start stop array
 - An entity for each of your VMs
-    - On/Off toggle VM state
-    - A seperate entity with a switch to attach / detach any usbs to that vm
+    - (switch) On/Off toggle VM state
+    - (switch) A seperate entity with a switch to attach / detach any usbs to that vm
+- An entity for each of your dockers
+    - (switch) On/Off toggle Docker state
 
 Manual Config Example:
 

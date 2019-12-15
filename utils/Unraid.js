@@ -12,6 +12,7 @@ export function getUnraidDetails(servers, serverAuth) {
   logIn(servers, serverAuth);
   getServerDetails(servers, serverAuth);
   getVMs(servers, serverAuth);
+  getDockers(servers, serverAuth);
   getUSBDetails(servers, serverAuth);
   getPCIDetails(servers);
 }
@@ -33,7 +34,11 @@ function logIn(servers, serverAuth) {
       url: "http://" + ip + "/login",
       method: "POST",
       data,
-      headers: { ...data.getHeaders(), "cache-control" : "no-cache", "Content-Type" : "application/x-www-form-urlencoded" },
+      headers: {
+        ...data.getHeaders(),
+        "cache-control": "no-cache",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       httpAgent: new http.Agent({ keepAlive: true }),
       maxRedirects: 0
     }).then(response => {
@@ -179,6 +184,79 @@ function getVMs(servers, serverAuth) {
       updateFile(servers, ip, "vm");
     }).catch(e => {
       console.log("Get VM Details for ip: " + ip + " Failed with status code: " + e.statusText);
+      authCookies[ip] = undefined;
+      console.log(e.message);
+    });
+  });
+}
+
+function processDockerResponse(details) {
+  let images = {};
+  let containers = {};
+  details.forEach(row => {
+    if (!row.content || !row.content.includes("undefined")) {
+      let docker = {};
+      row.children.forEach((child, index) => {
+        if (child.tags.class) {
+          switch (child.tags.class) {
+            case 'ct-name':
+              docker.imageUrl = child.children[0].children[0].children[0].tags.src.split('?')[0];
+              docker.name = child.children[0].children[1].children[0].children[0].contents;
+              docker.status = child.children[0].children[1].children[1].children[1].contents;
+              docker.containerId = child.children[1].contents.replace('Container ID: ', '');
+              break;
+            case 'updatecolumn':
+              docker.tag = child.children[2].contents.trim();
+              docker.uptoDate = child.children[0].contents.trim();
+              break;
+          }
+          if (docker.containerId) {
+            containers[docker.containerId] = docker;
+          }
+        } else {
+          switch (index) {
+            case 0:
+              docker.imageUrl = child.children[0].children[0].children[0].tags.src;
+              break;
+            case 1:
+              docker.imageId = child.contents.replace('Image ID: ', '');
+              break;
+            case 2:
+              if (child.contents.includes('Created')) {
+                docker.created = child.contents;
+              }
+              break;
+          }
+          if (docker.imageId) {
+            images[docker.imageId] = docker;
+          }
+        }
+      });
+    }
+  });
+  return {images, containers};
+}
+
+function getDockers(servers, serverAuth) {
+  Object.keys(servers).forEach(ip => {
+    if (!serverAuth[ip]) {
+      return;
+    }
+    axios({
+      method: "get",
+      url: "http://" + ip + "/plugins/dynamix.docker.manager/include/DockerContainers.php",
+      headers: {
+        "Authorization": "Basic " + serverAuth[ip],
+        "Cookie": authCookies[ip] ? authCookies[ip] : ""
+      }
+    }).then(async (response) => {
+      let htmlDetails = JSON.stringify(response.data);
+      let details = parseHTML(htmlDetails);
+      servers[ip].docker = {};
+      servers[ip].docker.details = await processDockerResponse(details);
+      updateFile(servers, ip, "docker");
+    }).catch(e => {
+      console.log("Get Docker Details for ip: " + ip + " Failed with status code: " + e.statusText);
       authCookies[ip] = undefined;
       console.log(e.message);
     });
@@ -429,6 +507,33 @@ export function changeVMState(id, action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change VM State for ip: " + server + " Failed with status code: " + e.statusText);
+    authCookies[server] = undefined;
+    console.log(e.message);
+  });
+}
+
+export function changeDockerState(id, action, server, auth, token) {
+  return axios({
+    method: "POST",
+    url: "http://" + server + "/plugins/dynamix.docker.manager/include/Events.php",
+    headers: {
+      "Authorization": "Basic " + auth,
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "X-Requested-With": "XMLHttpRequest",
+      "Cookie": authCookies[server] ? authCookies[server] : ""
+    },
+    data: "container=" + id + "&action=" + action.replace('domain-', '') + "&csrf_token=" + token,
+    httpAgent: new http.Agent({ keepAlive: true })
+  }).then((response) => {
+    if (response.data.state === "running") {
+      response.data.state = "started";
+    }
+    if (response.data.state === "shutoff") {
+      response.data.state = "stopped";
+    }
+    return response.data;
+  }).catch(e => {
+    console.log("Change Docker State for ip: " + server + " Failed with status code: " + e.statusText);
     authCookies[server] = undefined;
     console.log(e.message);
   });

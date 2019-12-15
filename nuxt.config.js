@@ -8,7 +8,8 @@ const URLS = {
   PCI_ATTACH: '/api/pciAttach',
   GPU_SWAP: '/api/gpuSwap',
   VM_EDIT: '/api/editVM',
-  VM_CREATE: '/api/createVM'
+  VM_CREATE: '/api/createVM',
+  DOCKER_STATUS: '/api/dockerStatus'
 };
 
 module.exports = {
@@ -71,6 +72,7 @@ module.exports = {
     {path: URLS.LOGIN, handler: '~/api/login.js'},
     {path: URLS.GET_SERVERS, handler: '~/api/getServers.js'},
     {path: URLS.VM_STATUS, handler: '~/api/changeVMStatus.js'},
+    {path: URLS.DOCKER_STATUS, handler: '~/api/changeDockerStatus.js'},
     {path: URLS.ARRAY_STATUS, handler: '~/api/changeArrayStatus.js'},
     {path: URLS.USB_ATTACH, handler: '~/api/usbAttach.js'},
     {path: URLS.PCI_ATTACH, handler: '~/api/pciAttach.js'},

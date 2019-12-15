@@ -342,6 +342,99 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panel-content>
+        <v-expansion-panel-content v-if="server.docker">
+          <template v-slot:header>
+            Dockers
+          </template>
+          <v-expansion-panel>
+            <v-expansion-panel-content
+              v-for="docker in server.docker.details.containers"
+              :key="docker.containerId"
+              style="display: inline-block;"
+            ><template v-slot:header>
+              <div style="width: 50%;">
+                {{ docker.name }}
+                <div>
+                  <v-btn
+                    v-if="docker.status !== 'started'"
+                    :disabled="docker.isBusy"
+                    color="success"
+                    fab
+                    small
+                    dark
+                    @click="startDocker(docker)"
+                  >
+                    <v-icon style="font-size: 28px;">
+                      play_circle_outline
+                    </v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-if="docker.status === 'started'"
+                    :disabled="docker.isBusy"
+                    color="info"
+                    fab
+                    small
+                    dark
+                    @click="pauseDocker(docker)"
+                  >
+                    <v-icon style="font-size: 28px;">
+                      pause_circle_outline
+                    </v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-if="docker.status === 'started'"
+                    :disabled="docker.isBusy"
+                    color="warning"
+                    fab
+                    small
+                    dark
+                    @click="restartDocker(docker)"
+                  >
+                    <v-icon style="font-size: 28px;">
+                      autorenew
+                    </v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-if="docker.status !== 'stopped'"
+                    :disabled="docker.isBusy"
+                    color="error"
+                    fab
+                    small
+                    dark
+                    @click="stopDocker(docker)"
+                  >
+                    <v-icon style="font-size: 28px;">
+                      stop
+                    </v-icon>
+                  </v-btn>
+                </div>
+              </div>
+              <img
+                class="left"
+                :src="'http://' + ip + docker.imageUrl"
+              >
+              <v-chip
+                :class="{success: docker.status === 'started', error: docker.status === 'stopped', warning: docker.status === 'paused'}"
+                style="width: 20px;"
+                right
+                justify-center
+              >
+                <v-progress-circular
+                  v-if="docker.isBusy"
+                  indeterminate
+                  style="width: 20px;"
+                />
+                <div v-if="!docker.isBusy">
+                  {{ docker.status }}
+                </div>
+              </v-chip>
+            </template>
+            <v-chip>Container ID: {{ docker.containerId }}</v-chip>
+            <v-chip>Tag: {{ docker.tag }}</v-chip>
+            <v-chip>Up to date: {{ docker.uptoDate }}</v-chip>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panel-content>
         <v-expansion-panel-content v-if="server.vm">
           <template v-slot:header>
             Utils
@@ -453,6 +546,54 @@
             } else if (response && response.data && response.data.message && response.data.message.error) {
               if (response.data.message.error === "Requested operation is not valid: domain is not running") {
                 this.server.vm.details[vm.id].status = "stopped";
+              }
+              alert(response.data.message.error);
+            }
+          }
+        });
+      },
+      startDocker(docker) {
+        if (docker.status === "paused") {
+          this.changeDockerStatus(docker, "domain-resume");
+        } else {
+          this.changeDockerStatus(docker, "domain-start");
+        }
+      },
+      restartDocker(docker) {
+        this.changeDockerStatus(docker, "domain-restart");
+      },
+      pauseDocker(docker) {
+        this.changeDockerStatus(docker, "domain-pause");
+      },
+      stopDocker(docker) {
+        this.changeDockerStatus(docker, "domain-stop");
+      },
+      async changeDockerStatus(docker, action) {
+        let auth = await this.checkForServerPassword(this.ip);
+        this.server.docker.details.containers[docker.containerId].isBusy = true;
+        axios({
+          method: "post",
+          url: "api/dockerStatus",
+          data: {
+            id: docker.containerId,
+            action: action,
+            server: this.ip,
+            auth
+          }
+        }).then((response) => {
+          if (response) {
+            this.server.docker.details.containers[docker.containerId].isBusy = false;
+            if (response.data && response.data.message && response.data.includes('success')) {
+              if (action.includes('pause')) {
+                this.server.docker.details.containers[docker.containerId].status = 'paused';
+              } else if (action.includes('stop')) {
+                this.server.docker.details.containers[docker.containerId].status = 'stopped';
+              } else {
+                this.server.docker.details.containers[docker.containerId].status = 'started';
+              }
+            } else if (response && response.data && response.data.message && response.data.message.error) {
+              if (response.data.message.error === "Requested operation is not valid: domain is not running") {
+                this.server.docker.details.containers[docker.containerId].status = "stopped";
               }
               alert(response.data.message.error);
             }
