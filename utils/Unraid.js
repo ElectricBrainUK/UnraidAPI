@@ -44,7 +44,7 @@ function logIn(servers, serverAuth) {
     }).then(response => {
       authCookies[ip] = response.headers["set-cookie"][0];
     }).catch(error => {
-      if (error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
+      if (error.response && error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
         authCookies[ip] = error.response.headers["set-cookie"][0];
       }
     });
@@ -207,8 +207,12 @@ function processDockerResponse(details) {
                 docker.containerId = child.children[1].contents.replace("Container ID: ", "");
                 break;
               case "updatecolumn":
-                docker.tag = child.children[2].contents.trim();
-                docker.uptoDate = child.children[0].contents.trim();
+                if (child.children[2].contents) {
+                  docker.tag = child.children[2].contents.trim();
+                }
+                if (child.children[0].contents) {
+                  docker.uptoDate = child.children[0].contents.trim();
+                }
                 break;
             }
             if (docker.containerId) {
@@ -672,7 +676,7 @@ function extractUSBData(response, vmObject, ip) {
   if (servers[ip].vm.details[vmObject.id]) {
     oldUsbs = servers[ip].vm.details[vmObject.id].edit.usbs;
   }
-  if (oldUsbs.length > 0 && oldUsbs.length > usbs.length) {
+  if (oldUsbs && oldUsbs.length > usbs.length) {
     oldUsbs.forEach(usb => {
       if (usbs.filter(usbInner => usbInner.id === usb.id).length === 0) {
         usb.connected = false;
