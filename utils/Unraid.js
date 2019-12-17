@@ -200,13 +200,13 @@ function processDockerResponse(details) {
         try {
           if (child.tags.class) {
             switch (child.tags.class) {
-              case 'ct-name':
-                docker.imageUrl = child.children[0].children[0].children[0].tags.src.split('?')[0];
+              case "ct-name":
+                docker.imageUrl = child.children[0].children[0].children[0].tags.src.split("?")[0];
                 docker.name = child.children[0].children[1].children[0].children[0].contents;
                 docker.status = child.children[0].children[1].children[1].children[1].contents;
-                docker.containerId = child.children[1].contents.replace('Container ID: ', '');
+                docker.containerId = child.children[1].contents.replace("Container ID: ", "");
                 break;
-              case 'updatecolumn':
+              case "updatecolumn":
                 docker.tag = child.children[2].contents.trim();
                 docker.uptoDate = child.children[0].contents.trim();
                 break;
@@ -220,10 +220,10 @@ function processDockerResponse(details) {
                 docker.imageUrl = child.children[0].children[0].children[0].tags.src;
                 break;
               case 1:
-                docker.imageId = child.contents.replace('Image ID: ', '');
+                docker.imageId = child.contents.replace("Image ID: ", "");
                 break;
               case 2:
-                if (child.contents.includes('Created')) {
+                if (child.contents.includes("Created")) {
                   docker.created = child.contents;
                 }
                 break;
@@ -239,7 +239,7 @@ function processDockerResponse(details) {
       });
     }
   });
-  return {images, containers};
+  return { images, containers };
 }
 
 function getDockers(servers, serverAuth) {
@@ -527,7 +527,7 @@ export function changeDockerState(id, action, server, auth, token) {
       "X-Requested-With": "XMLHttpRequest",
       "Cookie": authCookies[server] ? authCookies[server] : ""
     },
-    data: "container=" + id + "&action=" + action.replace('domain-', '') + "&csrf_token=" + token,
+    data: "container=" + id + "&action=" + action.replace("domain-", "") + "&csrf_token=" + token,
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
     if (response.data.state === "running") {
@@ -558,7 +558,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
       "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then(response => {
-    return extractVMDetails(vmObject, response);
+    return extractVMDetails(vmObject, response, ip);
   }).catch(e => {
     console.log("Get VM Edit details for ip: " + ip + " Failed with status code: " + e.statusText);
     authCookies[ip] = undefined;
@@ -650,7 +650,7 @@ function extractShareData(response) {
   return shares;
 }
 
-function extractUSBData(response) {
+function extractUSBData(response, vmObject, ip) {
   let usbs = [];
   let usbInfo = extractValue(response.data, "<td>USB Devices:</td>", "</td>");
   while (usbInfo.includes("value=\"")) {
@@ -661,9 +661,24 @@ function extractUSBData(response) {
     }
     usb.id = row.substring(0, row.indexOf("\""));
     usb.name = row.substring(row.indexOf("/") + 3);
+    usb.connected = true;
     usbs.push(usb);
 
     usbInfo = usbInfo.replace("value=\"", "");
+  }
+  let rawdata = fs.readFileSync("config/servers.json");
+  let servers = JSON.parse(rawdata);
+  let oldUsbs = [];
+  if (servers[ip].vm.details[vmObject.id]) {
+    oldUsbs = servers[ip].vm.details[vmObject.id].edit.usbs;
+  }
+  if (oldUsbs.length > 0 && oldUsbs.length > usbs.length) {
+    oldUsbs.forEach(usb => {
+      if (usbs.filter(usbInner => usbInner.id === usb.id).length === 0) {
+        usb.connected = false;
+        usbs.push(usb);
+      }
+    });
   }
   return usbs;
 }
@@ -764,7 +779,7 @@ function extractNICInformation(response) {
   return nics;
 }
 
-function extractVMDetails(vmObject, response) {
+function extractVMDetails(vmObject, response, ip) {
   vmObject.xml = extractValue(response.data, "<textarea id=\"addcode\" name=\"xmldesc\" placeholder=\"Copy &amp; Paste Domain XML Configuration Here.\" autofocus>", "</textarea>").split("&lt;").join("<").split("&gt;").join(">");
 
   vmObject.edit = getVMStaticData(response);
@@ -775,7 +790,7 @@ function extractVMDetails(vmObject, response) {
 
   vmObject.edit.shares = extractShareData(response);
 
-  vmObject.edit.usbs = extractUSBData(response);
+  vmObject.edit.usbs = extractUSBData(response, vmObject, ip);
 
   vmObject.edit.pcis = extractPCIData(response);
 

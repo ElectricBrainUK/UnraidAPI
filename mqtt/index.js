@@ -122,7 +122,7 @@ export default function startMQTTClient() {
           await detachUSB(data);
         }
         const usbDetails = vmDetails.edit.usbs.filter((usb) => sanitise(usb.id) === topicParts[3])[0];
-        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + topicParts[3], JSON.stringify({id: topicParts[3], attached: message.toString().toLowerCase() !== "false", name: sanitise(usbDetails.name)}));
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + topicParts[3], JSON.stringify({id: topicParts[3], attached: message.toString().toLowerCase() !== "false", name: sanitise(usbDetails.name), connected: !!usbDetails.connected}));
       } else if (topic.includes("array")) {
         let command = "start";
         if (message.toString() === "Stopped") {
@@ -245,6 +245,7 @@ function updateMQTT(client) {
             usbDetails.name = sanitiseUSBName;
             usbDetails.attached = !!device.checked;
             usbDetails.id = device.id;
+            usbDetails.connected = !!device.connected;
 
             client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/" + vmSanitisedName + "_" + sanitiseUSBId + "/config", JSON.stringify({
               "payload_on": true,
@@ -261,6 +262,21 @@ function updateMQTT(client) {
                 "model": "USB Device"
               },
               "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId + "/attach"
+            }));
+            client.publish(process.env.MQTTBaseTopic + "/binary_sensor/" + serverTitleSanitised + "/" + vmSanitisedName + "_" + sanitiseUSBId + "/config", JSON.stringify({
+              "payload_on": true,
+              "payload_off": false,
+              "value_template": "{{ value_json.connected }}",
+              "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
+              "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
+              "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBName + "_connected",
+              "unique_id": serverTitleSanitised + "_" + vmId + "_" + sanitiseUSBId + "_connected",
+              "device": {
+                "identifiers": [serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId],
+                "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId,
+                "manufacturer": sanitiseUSBName,
+                "model": "USB Device"
+              }
             }));
             client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId, JSON.stringify(usbDetails));
             client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId + "/attach");
