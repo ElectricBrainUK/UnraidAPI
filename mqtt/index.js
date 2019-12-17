@@ -49,6 +49,10 @@ export default function startMQTTClient() {
         }
       }
 
+      if (ip === "") {
+        console.log("Failed to process message, servers not loaded. If the API just started this should go away after a minute, otherwise log into servers in the UI");
+        return;
+      }
       let token = await getCSRFToken(ip, keys[ip]);
 
       let vmIdentifier = "";
@@ -58,7 +62,7 @@ export default function startMQTTClient() {
       let dockerDetails = {};
 
       if (topicParts.length >= 3) {
-        if (!topic.includes("docker")) {
+        if (!topic.includes("docker") && serverDetails.vm) {
           Object.keys(serverDetails.vm.details).forEach(vmId => {
             const vm = serverDetails.vm.details[vmId];
             if (sanitise(vm.name) === topicParts[2]) {
@@ -78,14 +82,19 @@ export default function startMQTTClient() {
         }
       }
 
-
       if (topic.toLowerCase().includes("state")) {
         let command = "";
         switch (message.toString()) {
           case "started":
             command = "domain-start";
             break;
+          case "\"started\"":
+            command = "domain-start";
+            break;
           case "stopped":
+            command = "domain-stop";
+            break;
+          case "\"stopped\"":
             command = "domain-stop";
             break;
         }
