@@ -409,10 +409,6 @@
                   </v-btn>
                 </div>
               </div>
-              <img
-                class="left"
-                :src="'http://' + ip + docker.imageUrl"
-              >
               <v-chip
                 :class="{success: docker.status === 'started', error: docker.status === 'stopped', warning: docker.status === 'paused'}"
                 style="width: 20px;"
@@ -432,6 +428,10 @@
             <v-chip>Container ID: {{ docker.containerId }}</v-chip>
             <v-chip>Tag: {{ docker.tag }}</v-chip>
             <v-chip>Up to date: {{ docker.uptoDate }}</v-chip>
+            <img
+              class="left"
+              :src="'http://' + ip + docker.imageUrl"
+            >
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panel-content>
@@ -508,7 +508,7 @@
         });
       },
       startVM(vm) {
-        if (vm.status === "paused") {
+        if (vm.status === "paused" || vm.status === "pmsuspended") {
           this.changeVMStatus(vm, "domain-resume");
         } else {
           this.changeVMStatus(vm, "domain-start");

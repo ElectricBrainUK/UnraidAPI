@@ -39,8 +39,10 @@ export default function startMQTTClient() {
       let ip = "";
       let serverDetails = {};
 
+      let serverTitleSanitised;
       for (let [serverIp, server] of Object.entries(servers)) {
-        if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
+        serverTitleSanitised = server.serverDetails.title;
+        if (server.serverDetails && serverTitleSanitised === topicParts[1]) {
           ip = serverIp;
           serverDetails = server;
           break;
@@ -51,7 +53,9 @@ export default function startMQTTClient() {
 
       let vmIdentifier = "";
       let vmDetails = {};
+      let vmSanitisedName = "";
       let dockerIdentifier = "";
+      let dockerDetails = {};
 
       if (topicParts.length >= 3) {
         if (!topic.includes("docker")) {
@@ -60,13 +64,15 @@ export default function startMQTTClient() {
             if (sanitise(vm.name) === topicParts[2]) {
               vmIdentifier = vmId;
               vmDetails = vm;
+              vmSanitisedName = sanitise(vm.name);
             }
           });
-        } else {
+        } else if (serverDetails.docker) {
           Object.keys(serverDetails.docker.details.containers).forEach(dockerId => {
             const docker = serverDetails.docker.details.containers[dockerId];
             if (sanitise(docker.name) === topicParts[2]) {
               dockerIdentifier = dockerId;
+              dockerDetails = docker;
             }
           });
         }
@@ -86,8 +92,21 @@ export default function startMQTTClient() {
 
         if (!topic.includes("docker")) {
           await changeVMState(vmIdentifier, command, ip, keys[ip], token);
+          const vmDetailsToSend = {
+            id: vmIdentifier,
+            status: message.toString(),
+            coreCount: vmDetails.coreCount,
+            ram: vmDetails.ramAllocation,
+            primaryGPU: vmDetails.primaryGPU,
+            name: vmSanitisedName,
+            description: vmDetails.edit.description,
+            mac: vmDetails.edit.nics[0] ? vmDetails.edit.nics[0].mac : undefined
+          };
+          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName, JSON.stringify(vmDetailsToSend));
         } else {
           await changeDockerState(dockerIdentifier, command, ip, keys[ip], token);
+          dockerDetails.status = message.toString();
+          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + sanitise(dockerDetails.name), JSON.stringify(dockerDetails));
         }
       } else if (topic.includes("attach")) {
         let data = {
@@ -102,12 +121,16 @@ export default function startMQTTClient() {
         } else {
           await detachUSB(data);
         }
+        const usbDetails = vmDetails.edit.usbs.filter((usb) => sanitise(usb.id) === topicParts[3])[0];
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + topicParts[3], JSON.stringify({id: topicParts[3], attached: message.toString().toLowerCase() !== "false", name: sanitise(usbDetails.name)}));
       } else if (topic.includes("array")) {
         let command = "start";
         if (message.toString() === "Stopped") {
           command = "stop";
         }
         await changeArrayState(command, ip, keys[ip], token);
+        serverDetails.arrayStatus = message.toString();
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
       }
     });
 
@@ -245,29 +268,31 @@ function updateMQTT(client) {
         }
       });
 
-      Object.keys(server.docker.details.containers).forEach(dockerId => {
-        let docker = server.docker.details.containers[dockerId];
-        docker.name = sanitise(docker.name);
+      if (server.docker && server.docker.details) {
+        Object.keys(server.docker.details.containers).forEach(dockerId => {
+          let docker = server.docker.details.containers[dockerId];
+          docker.name = sanitise(docker.name);
 
-        client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/" + docker.name + "/config", JSON.stringify({
-          "payload_on": "started",
-          "payload_off": "stopped",
-          "value_template": "{{ value_json.status }}",
-          "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
-          "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
-          "name": serverTitleSanitised + "_" + docker.name,
-          "unique_id": serverTitleSanitised + "_" + dockerId,
-          "device": {
-            "identifiers": [serverTitleSanitised + "_" + docker.name],
+          client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/" + docker.name + "/config", JSON.stringify({
+            "payload_on": "started",
+            "payload_off": "stopped",
+            "value_template": "{{ value_json.status }}",
+            "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
+            "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
             "name": serverTitleSanitised + "_" + docker.name,
-            "manufacturer": server.serverDetails.motherboard,
-            "model": "Docker"
-          },
-          "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name + "/dockerState"
-        }));
-        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name, JSON.stringify(docker));
-        client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name + "/dockerState");
-      });
+            "unique_id": serverTitleSanitised + "_" + dockerId,
+            "device": {
+              "identifiers": [serverTitleSanitised + "_" + docker.name],
+              "name": serverTitleSanitised + "_" + docker.name,
+              "manufacturer": server.serverDetails.motherboard,
+              "model": "Docker"
+            },
+            "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name + "/dockerState"
+          }));
+          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name, JSON.stringify(docker));
+          client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name + "/dockerState");
+        });
+      }
     });
   } catch (e) {
     console.log(e);

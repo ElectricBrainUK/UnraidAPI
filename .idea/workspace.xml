@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/changeDockerStatus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/changeVMStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/changeVMStatus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/ServerCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/ServerCard.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mqtt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/mqtt/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/nuxt.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Unraid.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,23 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/unit/utils/Unraid.spec.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="317" column="7" selection-start-line="317" selection-start-column="7" selection-end-line="317" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#256#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mqtt/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="257">
+              <caret line="104" column="135" selection-start-line="104" selection-start-column="135" selection-end-line="104" selection-end-column="135" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -47,10 +31,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/usbAttach.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="520">
+              <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#73#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/mqtt/lib/client.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="476" column="13" selection-start-line="476" selection-start-column="13" selection-end-line="476" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/Unraid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="527" selection-start-line="527" selection-end-line="527" />
+            <state relative-caret-position="244">
+              <caret line="801" column="10" selection-start-line="801" selection-start-column="10" selection-end-line="801" selection-end-column="10" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -59,10 +64,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/10.12.0/core-modules/internal/process/next_tick.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="151">
+              <caret line="67" column="6" selection-start-line="67" selection-start-column="6" selection-end-line="67" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/components/ServerCard.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="591" column="93" selection-start-line="591" selection-start-column="93" selection-end-line="591" selection-end-column="93" />
+            <state relative-caret-position="705">
+              <caret line="510" column="64" selection-start-line="510" selection-start-column="64" selection-end-line="510" selection-end-column="64" />
               <folding>
                 <element signature="n#style#0;n#v-expansion-panel-content#0;n#v-expansion-panel#0;n#v-expansion-panel-content#1;n#v-expansion-panel#0;n#v-card#0;n#v-flex#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#v-expansion-panel-content#0;n#v-expansion-panel#0;n#v-expansion-panel-content#4;n#v-expansion-panel#0;n#v-card#0;n#v-flex#0;n#template#0;n#!!top" expanded="true" />
@@ -72,8 +86,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/changeDockerStatus.js">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/.babelrc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -82,215 +100,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="150">
-                <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="513" selection-start-line="513" selection-end-line="513" />
-              <folding>
-                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#3;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#2;n#span#0;n#td#3;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#2;n#span#0;n#td#4;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#3;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#3;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#2;n#span#0;n#td#3;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#4;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#5;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#6;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#2;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#3;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#4;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#5;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#6;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#7;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#8;n#span#0;n#td#3;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#7;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#8;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#9;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#2;n#span#0;n#td#4;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#3;n#span#0;n#td#4;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#10;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#3;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#11;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#3;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#12;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#1;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#0;n#td#1;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#3;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#3;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#3;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#td#4;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#span#0;n#td#4;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#td#5;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#6;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#a#0;n#td#7;n#tr#13;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#14;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#15;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#16;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#17;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#18;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#19;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nuxt.config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/getServers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
+            <state relative-caret-position="180">
               <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/servers.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret column="105362" selection-start-column="105362" selection-end-column="105362" />
             </state>
           </provider>
         </entry>
@@ -307,11 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>1</find>
-      <find>.254</find>
-      <find>.254/</find>
-      <find>&quot;Cookie&quot;: authCookies[ip] ? authCookies[ip] : &quot;&quot;</find>
-      <find>254/</find>
       <find>19</find>
       <find>192.168.1.231</find>
       <find>Failed with status code:</find>
@@ -334,9 +154,14 @@
       <find>changeVM</find>
       <find>authCookies[server] = undefined;</find>
       <find>changedock</find>
-      <find>docker</find>
       <find>connected</find>
       <find>connect</find>
+      <find>docker</find>
+      <find>status</find>
+      <find>xml</find>
+      <find>.details</find>
+      <find>vmObject</find>
+      <find>console.</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;Failed with status code: &quot; + e.statusText</replace>
@@ -392,7 +217,6 @@
         <option value="$PROJECT_DIR$/api/login.js" />
         <option value="$PROJECT_DIR$/.dockerignore" />
         <option value="$PROJECT_DIR$/.github/workflows/dockerimage.yml" />
-        <option value="$PROJECT_DIR$/api/usbAttach.js" />
         <option value="$PROJECT_DIR$/api/arrayStatus.js" />
         <option value="$PROJECT_DIR$/components/SetupCard.vue" />
         <option value="$PROJECT_DIR$/api/getServers.js" />
@@ -402,9 +226,10 @@
         <option value="$PROJECT_DIR$/api/changeDockerStatus.js" />
         <option value="$PROJECT_DIR$/api/changeVMStatus.js" />
         <option value="$PROJECT_DIR$/nuxt.config.js" />
-        <option value="$PROJECT_DIR$/utils/Unraid.js" />
-        <option value="$PROJECT_DIR$/components/ServerCard.vue" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/components/ServerCard.vue" />
+        <option value="$PROJECT_DIR$/api/usbAttach.js" />
+        <option value="$PROJECT_DIR$/utils/Unraid.js" />
         <option value="$PROJECT_DIR$/mqtt/index.js" />
       </list>
     </option>
@@ -653,14 +478,8 @@
       <workItem from="1575537158959" duration="25934000" />
       <workItem from="1575934824370" duration="1079000" />
       <workItem from="1576141553128" duration="171000" />
-      <workItem from="1576415739578" duration="10115000" />
-    </task>
-    <task id="LOCAL-00034" summary="Rename function more appropriately">
-      <created>1561290908355</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1561290908355</updated>
+      <workItem from="1576415739578" duration="11270000" />
+      <workItem from="1576612398862" duration="4445000" />
     </task>
     <task id="LOCAL-00035" summary="Add vm edit">
       <created>1561295439955</created>
@@ -998,7 +817,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576415832957</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="Add docker support">
+      <created>1576449852220</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1576449852220</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1034,7 +860,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="280290000" />
+    <option name="totallyTimeSpent" value="285890000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1084,7 +910,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add xml support" />
     <MESSAGE value="Add MQTT and home assistant discovery" />
     <MESSAGE value="Missing checks" />
     <MESSAGE value="Fix mistake" />
@@ -1109,11 +934,10 @@
     <MESSAGE value="Support new auth" />
     <MESSAGE value="Fix naming bug" />
     <MESSAGE value="Fix old auth bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix old auth bug" />
+    <MESSAGE value="Add docker support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add docker support" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/components/UsbDetail.vue" />
-    <entry file="file://$PROJECT_DIR$/app/jest.config.js" />
     <entry file="file://$PROJECT_DIR$/app/.babelrc" />
     <entry file="file://$PROJECT_DIR$/app/test/Logo.spec.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/renderkid/test/mochaHelpers.coffee">
@@ -1147,13 +971,6 @@
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.babelrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1234,16 +1051,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/usbAttach.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="60" column="7" selection-start-line="60" selection-start-column="7" selection-end-line="60" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#73#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-827">
@@ -1303,13 +1110,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/unit/utils/Unraid.spec.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="472">
@@ -1320,9 +1120,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/changeDockerStatus.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="150">
+            <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
+        <state relative-caret-position="7695">
           <caret line="513" selection-start-line="513" selection-end-line="513" />
           <folding>
             <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
@@ -1499,23 +1319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/servers.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret column="101199" selection-start-column="101107" selection-end-column="101199" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/getServers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nuxt.config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1523,26 +1326,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/Unraid.js">
+    <entry file="file://$PROJECT_DIR$/api/getServers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="527" selection-start-line="527" selection-end-line="527" />
+        <state relative-caret-position="180">
+          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/changeDockerStatus.js">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/api/changeVMStatus.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/components/ServerCard.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="591" column="93" selection-start-line="591" selection-start-column="93" selection-end-line="591" selection-end-column="93" />
+        <state relative-caret-position="705">
+          <caret line="510" column="64" selection-start-line="510" selection-start-column="64" selection-end-line="510" selection-end-column="64" />
           <folding>
             <element signature="n#style#0;n#v-expansion-panel-content#0;n#v-expansion-panel#0;n#v-expansion-panel-content#1;n#v-expansion-panel#0;n#v-card#0;n#v-flex#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#v-expansion-panel-content#0;n#v-expansion-panel#0;n#v-expansion-panel-content#4;n#v-expansion-panel#0;n#v-card#0;n#v-flex#0;n#template#0;n#!!top" expanded="true" />
@@ -1550,20 +1350,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="150">
-            <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/.babelrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/servers.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret column="105362" selection-start-column="105362" selection-end-column="105362" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mqtt/lib/client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="476" column="13" selection-start-line="476" selection-start-column="13" selection-end-line="476" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/nodejs/10.12.0/core-modules/internal/process/next_tick.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="67" column="6" selection-start-line="67" selection-start-column="6" selection-end-line="67" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/Unraid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="801" column="10" selection-start-line="801" selection-start-column="10" selection-end-line="801" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/usbAttach.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#73#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mqtt/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="257">
+          <caret line="104" column="135" selection-start-line="104" selection-start-column="135" selection-end-line="104" selection-end-column="135" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>

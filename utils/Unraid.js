@@ -197,39 +197,44 @@ function processDockerResponse(details) {
     if (!row.content || !row.content.includes("undefined")) {
       let docker = {};
       row.children.forEach((child, index) => {
-        if (child.tags.class) {
-          switch (child.tags.class) {
-            case 'ct-name':
-              docker.imageUrl = child.children[0].children[0].children[0].tags.src.split('?')[0];
-              docker.name = child.children[0].children[1].children[0].children[0].contents;
-              docker.status = child.children[0].children[1].children[1].children[1].contents;
-              docker.containerId = child.children[1].contents.replace('Container ID: ', '');
-              break;
-            case 'updatecolumn':
-              docker.tag = child.children[2].contents.trim();
-              docker.uptoDate = child.children[0].contents.trim();
-              break;
+        try {
+          if (child.tags.class) {
+            switch (child.tags.class) {
+              case 'ct-name':
+                docker.imageUrl = child.children[0].children[0].children[0].tags.src.split('?')[0];
+                docker.name = child.children[0].children[1].children[0].children[0].contents;
+                docker.status = child.children[0].children[1].children[1].children[1].contents;
+                docker.containerId = child.children[1].contents.replace('Container ID: ', '');
+                break;
+              case 'updatecolumn':
+                docker.tag = child.children[2].contents.trim();
+                docker.uptoDate = child.children[0].contents.trim();
+                break;
+            }
+            if (docker.containerId) {
+              containers[docker.containerId] = docker;
+            }
+          } else {
+            switch (index) {
+              case 0:
+                docker.imageUrl = child.children[0].children[0].children[0].tags.src;
+                break;
+              case 1:
+                docker.imageId = child.contents.replace('Image ID: ', '');
+                break;
+              case 2:
+                if (child.contents.includes('Created')) {
+                  docker.created = child.contents;
+                }
+                break;
+            }
+            if (docker.imageId) {
+              images[docker.imageId] = docker;
+            }
           }
-          if (docker.containerId) {
-            containers[docker.containerId] = docker;
-          }
-        } else {
-          switch (index) {
-            case 0:
-              docker.imageUrl = child.children[0].children[0].children[0].tags.src;
-              break;
-            case 1:
-              docker.imageId = child.contents.replace('Image ID: ', '');
-              break;
-            case 2:
-              if (child.contents.includes('Created')) {
-                docker.created = child.contents;
-              }
-              break;
-          }
-          if (docker.imageId) {
-            images[docker.imageId] = docker;
-          }
+        } catch (e) {
+          console.log("There was a problem retrieving a field for a docker image");
+          console.log(e.message);
         }
       });
     }
@@ -789,7 +794,8 @@ export async function requestChange(ip, id, auth, vmObject, create) {
     headers: {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      "X-Requested-With": "XMLHttpRequest"
+      "X-Requested-With": "XMLHttpRequest",
+      "Cookie": authCookies[ip] ? authCookies[ip] : ""
     },
     data: await buildForm(ip, auth, id, vmObject, create),
     httpAgent: new http.Agent({ keepAlive: true })
