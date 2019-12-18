@@ -35,6 +35,14 @@ export default function startMQTTClient() {
     });
 
     client.on("message", async (topic, message) => {
+      let tempServers = JSON.parse(fs.readFileSync("config/servers.json"));
+      if (tempServers.length > 0) {
+        servers = tempServers;
+      }
+      let tempKeys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
+      if (tempKeys.length > 0) {
+        keys = tempKeys;
+      }
       const topicParts = topic.split("/");
       let ip = "";
       let serverDetails = {};
