@@ -673,7 +673,7 @@ function extractUSBData(response, vmObject, ip) {
   let rawdata = fs.readFileSync("config/servers.json");
   let servers = JSON.parse(rawdata);
   let oldUsbs = [];
-  if (servers[ip].vm.details[vmObject.id]) {
+  if (servers[ip].vm && servers[ip].vm.details[vmObject.id]) {
     oldUsbs = servers[ip].vm.details[vmObject.id].edit.usbs;
   }
   if (oldUsbs && oldUsbs.length > usbs.length) {
