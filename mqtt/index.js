@@ -20,9 +20,6 @@ export default function startMQTTClient() {
   const client = mqtt.connect("mqtt://" + process.env.MQTTBroker, options);
 
   try {
-    let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
-    let servers = JSON.parse(fs.readFileSync("config/servers.json"));
-
     client.on("connect", () => {
       console.log("Connected to mqtt broker");
       updateMQTT(client);
@@ -35,14 +32,9 @@ export default function startMQTTClient() {
     });
 
     client.on("message", async (topic, message) => {
-      let tempServers = JSON.parse(fs.readFileSync("config/servers.json"));
-      if (tempServers.length > 0) {
-        servers = tempServers;
-      }
-      let tempKeys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
-      if (tempKeys.length > 0) {
-        keys = tempKeys;
-      }
+      let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
+      let servers = JSON.parse(fs.readFileSync("config/servers.json"));
+      
       const topicParts = topic.split("/");
       let ip = "";
       let serverDetails = {};
