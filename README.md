@@ -7,6 +7,7 @@ Use the env variable section to set up the MQTT client and connect to your MQTT 
 - An entity for each of your VMs
     - (switch) On/Off toggle VM state
     - (switch) A seperate entity with a switch to attach / detach any usbs to that vm
+    - (sensor) Whether or not a particular usb device is connected to the machine (can be used to automate hotplugging e.g. when connected toggle the usb switch off and on again)
 - An entity for each of your dockers
     - (switch) On/Off toggle Docker state
 
