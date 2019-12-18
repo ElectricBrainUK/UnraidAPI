@@ -10,7 +10,7 @@ export default function(req, res, next) {
     if (!fs.existsSync("config/")){
       fs.mkdirSync("config/");
     }
-    fs.writeFileSync("config/servers.json", servers);
+    fs.writeFileSync("config/servers.json", JSON.stringify(servers));
   }
   if (!req.headers.authorization || Object.keys(req.headers.authorization).length < Object.keys(servers).length) {
     let response = {};
