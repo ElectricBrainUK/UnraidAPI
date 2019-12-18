@@ -49,8 +49,8 @@ export default function startMQTTClient() {
 
       let serverTitleSanitised;
       for (let [serverIp, server] of Object.entries(servers)) {
-        serverTitleSanitised = server.serverDetails.title;
-        if (server.serverDetails && serverTitleSanitised === topicParts[1]) {
+        if (server.serverDetails && sanitise(server.serverDetails.title) === topicParts[1]) {
+          serverTitleSanitised = sanitise(server.serverDetails.title);
           ip = serverIp;
           serverDetails = server;
           break;
