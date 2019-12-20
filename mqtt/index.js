@@ -242,6 +242,20 @@ function updateMQTT(client) {
           },
           "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state"
         }));
+        client.publish(process.env.MQTTBaseTopic + "/sensor/" + serverTitleSanitised + "/" + vmSanitisedName + "/config", JSON.stringify({
+          "value_template": "{{ value_json.status }}",
+          "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName,
+          "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName,
+          "name": serverTitleSanitised + "_" + vmSanitisedName + "_status",
+          "unique_id": serverTitleSanitised + "_" + vmId + "_status",
+          "device": {
+            "identifiers": [serverTitleSanitised + "_" + vmSanitisedName],
+            "name": serverTitleSanitised + "_" + vmSanitisedName,
+            "manufacturer": server.serverDetails.motherboard,
+            "model": "VM"
+          },
+          "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state"
+        }));
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName, JSON.stringify(vmDetails));
         client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state");
 
