@@ -6,7 +6,7 @@
   >
     <v-card>
       <v-card-title class="headline">
-        Setup Server
+        Setup Unraid Server
       </v-card-title>
       <v-card-text>
         <v-form>
