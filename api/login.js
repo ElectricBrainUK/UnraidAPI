@@ -20,10 +20,16 @@ async function connectToServer(data) {
   let response = {};
   let servers = {};
   try {
-    let rawdata = fs.readFileSync("config/servers.json");
-    servers = JSON.parse(rawdata);
+    if (!fs.existsSync("config/")){
+      fs.mkdirSync("config/");
+    } else {
+      let rawdata = fs.readFileSync("config/servers.json");
+      servers = JSON.parse(rawdata);
+    }
     if (!fs.existsSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/")){
       fs.mkdirSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/");
+    }
+    if (!fs.existsSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys")) {
       fs.writeFileSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/mqttKeys", {});
     }
   } catch (e) {
@@ -33,9 +39,7 @@ async function connectToServer(data) {
     if (data.ip) {
       servers[data.ip] = {};
       keys[data.ip] = data.authToken;
-    }
-    if (!fs.existsSync("config/")){
-      fs.mkdirSync("config/");
+      fs.writeFileSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/mqttKeys", keys);
     }
 
     fs.writeFileSync("config/servers.json", JSON.stringify(servers));
