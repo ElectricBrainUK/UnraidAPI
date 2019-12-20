@@ -86,16 +86,33 @@ export default function startMQTTClient() {
         let command = "";
         switch (message.toString()) {
           case "started":
-            command = "domain-start";
+            if (vmDetails.status === 'paused' || vmDetails.status === 'pmsuspended') {
+              command = "domain-resume";
+            } else {
+              command = "domain-start";
+            }
             break;
           case "\"started\"":
-            command = "domain-start";
+            if (vmDetails.status === 'paused' || vmDetails.status === 'pmsuspended') {
+              command = "domain-resume";
+            } else {
+              command = "domain-start";
+            }
             break;
           case "stopped":
             command = "domain-stop";
             break;
           case "\"stopped\"":
             command = "domain-stop";
+            break;
+          case "paused":
+            command = "domain-pause";
+            break;
+          case "kill":
+            command = "domain-destroy";
+            break;
+          case "restart":
+            command = "domain-restart";
             break;
         }
 
