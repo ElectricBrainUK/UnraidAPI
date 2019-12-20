@@ -86,14 +86,14 @@ export default function startMQTTClient() {
         let command = "";
         switch (message.toString()) {
           case "started":
-            if (vmDetails.status === 'paused' || vmDetails.status === 'pmsuspended') {
+            if (vmDetails.status === 'paused' || vmDetails.status === 'pmsuspended' || dockerDetails.status === 'paused') {
               command = "domain-resume";
             } else {
               command = "domain-start";
             }
             break;
           case "\"started\"":
-            if (vmDetails.status === 'paused' || vmDetails.status === 'pmsuspended') {
+            if (vmDetails.status === 'paused' || vmDetails.status === 'pmsuspended' || dockerDetails.status === 'paused') {
               command = "domain-resume";
             } else {
               command = "domain-start";
