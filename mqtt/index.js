@@ -351,7 +351,6 @@ function updateMQTT(client) {
       }
     });
   } catch (e) {
-    console.log(e);
     console.log("The secure keys for mqtt have not been generated, you need to make 1 authenticated request via the API first for this to work");
   }
 }

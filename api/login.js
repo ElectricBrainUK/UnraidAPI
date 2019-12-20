@@ -33,17 +33,23 @@ async function connectToServer(data) {
       fs.writeFileSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/mqttKeys", {});
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   } finally {
-    let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
-    if (data.ip) {
-      servers[data.ip] = {};
-      keys[data.ip] = data.authToken;
-      fs.writeFileSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/mqttKeys", keys);
-    }
+    let keys = {};
+    try {
+      keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
+    } catch (e) {
+      // console.log(e);
+    } finally {
+      if (data.ip) {
+        servers[data.ip] = {};
+        keys[data.ip] = data.authToken;
+        fs.writeFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys", JSON.stringify(keys));
+      }
 
-    fs.writeFileSync("config/servers.json", JSON.stringify(servers));
-    response.message = "Connected";
+      fs.writeFileSync("config/servers.json", JSON.stringify(servers));
+      response.message = "Connected";
+    }
   }
   return response;
 }
