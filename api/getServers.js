@@ -12,7 +12,7 @@ export default function(req, res, next) {
     }
     fs.writeFileSync("config/servers.json", JSON.stringify(servers));
   }
-  if (!req.headers.authorization || Object.keys(req.headers.authorization).length < Object.keys(servers).length) {
+  if ((!req.headers.authorization || Object.keys(req.headers.authorization).length < Object.keys(servers).length) && process.env.KeyStorage !== "config") {
     let response = {};
     Object.keys(servers).forEach(ip => {
       response[ip] = true;
@@ -23,7 +23,7 @@ export default function(req, res, next) {
   let response = {};
   response.servers = servers;
 
-  if (process.env.MQTTBroker) {
+  if (process.env.MQTTBroker && req.headers.authorization && req.headers.authorization.length > 2) {
     try {
       if (!fs.existsSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/")){
         fs.mkdirSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/");
@@ -32,6 +32,10 @@ export default function(req, res, next) {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  if (process.env.KeyStorage === "config" && (!req.headers.authorization || req.headers.authorization.length <= 2)) {
+    req.headers.authorization = fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys");
   }
 
   getUnraidDetails(response.servers, JSON.parse(req.headers.authorization));
