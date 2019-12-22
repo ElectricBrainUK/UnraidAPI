@@ -117,7 +117,6 @@ export default function startMQTTClient() {
         }
 
         if (!topic.includes("docker")) {
-          await changeVMState(vmIdentifier, command, ip, keys[ip], token);
           const vmDetailsToSend = {
             id: vmIdentifier,
             status: message.toString(),
@@ -129,10 +128,11 @@ export default function startMQTTClient() {
             mac: vmDetails.edit.nics[0] ? vmDetails.edit.nics[0].mac : undefined
           };
           client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName, JSON.stringify(vmDetailsToSend));
+          await changeVMState(vmIdentifier, command, ip, keys[ip], token);
         } else {
-          await changeDockerState(dockerIdentifier, command, ip, keys[ip], token);
           dockerDetails.status = message.toString();
           client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + sanitise(dockerDetails.name), JSON.stringify(dockerDetails));
+          await changeDockerState(dockerIdentifier, command, ip, keys[ip], token);
         }
       } else if (topic.includes("attach")) {
         let data = {
@@ -154,9 +154,9 @@ export default function startMQTTClient() {
         if (message.toString() === "Stopped") {
           command = "stop";
         }
-        await changeArrayState(command, ip, keys[ip], token);
         serverDetails.arrayStatus = message.toString();
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        await changeArrayState(command, ip, keys[ip], token);
       }
     });
 
@@ -270,8 +270,7 @@ function updateMQTT(client) {
             "name": serverTitleSanitised + "_" + vmSanitisedName,
             "manufacturer": server.serverDetails.motherboard,
             "model": "VM"
-          },
-          "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state"
+          }
         }));
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName, JSON.stringify(vmDetails));
         client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/state");
@@ -336,7 +335,7 @@ function updateMQTT(client) {
             "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
             "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
             "name": serverTitleSanitised + "_" + docker.name,
-            "unique_id": serverTitleSanitised + "_" + dockerId,
+            "unique_id": serverTitleSanitised + "_" + docker.name,
             "device": {
               "identifiers": [serverTitleSanitised + "_" + docker.name],
               "name": serverTitleSanitised + "_" + docker.name,
