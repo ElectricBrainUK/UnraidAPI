@@ -31,7 +31,7 @@ function logIn(servers, serverAuth) {
     data.append("password", details);
 
     axios({
-      url: "http://" + ip + "/login",
+      url: (ip.includes("http") ? ip : "http://" + ip) + "/login",
       method: "POST",
       data,
       headers: {
@@ -70,7 +70,7 @@ function getUSBDetails(servers, serverAuth) {
     if (servers[ip].vm && servers[ip].vm.details && Object.keys(servers[ip].vm.details).length > 0) {
       axios({
         method: "get",
-        url: "http://" + ip + "/VMs/UpdateVM?uuid=" + servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,
+        url: (ip.includes("http") ? ip : "http://" + ip) + "/VMs/UpdateVM?uuid=" + servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,
         headers: {
           "Authorization": "Basic " + serverAuth[ip],
           "Cookie": authCookies[ip] ? authCookies[ip] : ""
@@ -119,7 +119,7 @@ function getServerDetails(servers, serverAuth) {
 function scrapeHTML(ip, serverAuth) {
   return axios({
     method: "get",
-    url: "http://" + ip + "/Dashboard",
+    url: (ip.includes("http") ? ip : "http://" + ip) + "/Dashboard",
     headers: {
       "Authorization": "Basic " + serverAuth[ip],
       "Cookie": authCookies[ip] ? authCookies[ip] : ""
@@ -143,7 +143,7 @@ function scrapeHTML(ip, serverAuth) {
 function scrapeMainHTML(ip, serverAuth) {
   return axios({
     method: "get",
-    url: "http://" + ip + "/Main",
+    url: (ip.includes("http") ? ip : "http://" + ip) + "/Main",
     headers: {
       "Authorization": "Basic " + serverAuth[ip],
       "Cookie": authCookies[ip] ? authCookies[ip] : ""
@@ -168,7 +168,7 @@ function getVMs(servers, serverAuth) {
     }
     axios({
       method: "get",
-      url: "http://" + ip + "/plugins/dynamix.vm.manager/include/VMMachines.php",
+      url: (ip.includes("http") ? ip : "http://" + ip) + "/plugins/dynamix.vm.manager/include/VMMachines.php",
       headers: {
         "Authorization": "Basic " + serverAuth[ip],
         "Cookie": authCookies[ip] ? authCookies[ip] : ""
@@ -253,7 +253,7 @@ function getDockers(servers, serverAuth) {
     }
     axios({
       method: "get",
-      url: "http://" + ip + "/plugins/dynamix.docker.manager/include/DockerContainers.php",
+      url: (ip.includes("http") ? ip : "http://" + ip) + "/plugins/dynamix.docker.manager/include/DockerContainers.php",
       headers: {
         "Authorization": "Basic " + serverAuth[ip],
         "Cookie": authCookies[ip] ? authCookies[ip] : ""
@@ -450,7 +450,7 @@ async function simplifyResponse(object, ip, auth) {
 export function getCSRFToken(server, auth) {
   return axios({
     method: "get",
-    url: "http://" + server + "/Dashboard",
+    url: (server.includes("http") ? server : "http://" + server) + "/Dashboard",
     headers: {
       "Authorization": "Basic " + auth,
       "Cookie": authCookies[server] ? authCookies[server] : ""
@@ -476,7 +476,7 @@ export function extractValue(data, value, terminator) {
 export function changeArrayState(action, server, auth, token) {
   return axios({
     method: "POST",
-    url: "http://" + server + "/update.htm",
+    url: (server.includes("http") ? server : "http://" + server) + "/update.htm",
     headers: {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -497,7 +497,7 @@ export function changeArrayState(action, server, auth, token) {
 export function changeVMState(id, action, server, auth, token) {
   return axios({
     method: "POST",
-    url: "http://" + server + "/plugins/dynamix.vm.manager/include/VMajax.php",
+    url: (server.includes("http") ? server : "http://" + server) + "/plugins/dynamix.vm.manager/include/VMajax.php",
     headers: {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -524,7 +524,7 @@ export function changeVMState(id, action, server, auth, token) {
 export function changeDockerState(id, action, server, auth, token) {
   return axios({
     method: "POST",
-    url: "http://" + server + "/plugins/dynamix.docker.manager/include/Events.php",
+    url: (server.includes("http") ? server : "http://" + server) + "/plugins/dynamix.docker.manager/include/Events.php",
     headers: {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -556,7 +556,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
   }
   return axios({
     method: "get",
-    url: "http://" + ip + "/VMs/UpdateVM?uuid=" + id,
+    url: (ip.includes("http") ? ip : "http://" + ip) + "/VMs/UpdateVM?uuid=" + id,
     headers: {
       "Authorization": "Basic " + auth,
       "Cookie": authCookies[ip] ? authCookies[ip] : ""
@@ -809,7 +809,7 @@ function extractVMDetails(vmObject, response, ip) {
 export async function requestChange(ip, id, auth, vmObject, create) {
   return axios({
     method: "POST",
-    url: "http://" + ip + "/plugins/dynamix.vm.manager/templates/Custom.form.php",
+    url: (ip.includes("http") ? ip : "http://" + ip) + "/plugins/dynamix.vm.manager/templates/Custom.form.php",
     headers: {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
