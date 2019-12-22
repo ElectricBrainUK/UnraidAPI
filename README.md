@@ -12,14 +12,18 @@ Use the env variable section to set up the MQTT client and connect to your MQTT 
     - (switch) On/Off toggle Docker state
 
 Manual Config Example:
+The server and VM names are as they are in MQTT (spaces are underscores and all lower case)
+The payload options are started, stopped, paused, restart, kill
 
-\- platform: mqtt
+```
+- platform: mqtt
 
   command_topic: "homeassistant/servername/vmname/state"
   
   payload_on: "started"
  
   payload_off: "stopped"
+```
 
 When connecting the unraid api to an mqtt broker config details for all the various api functions is posted under the various homeassistant entity types. For example under homeassistant/switch/server/vm/config.
 
