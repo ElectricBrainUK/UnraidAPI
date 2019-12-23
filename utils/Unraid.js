@@ -174,13 +174,19 @@ function getVMs(servers, serverAuth) {
         "Cookie": authCookies[ip] ? authCookies[ip] : ""
       }
     }).then(async (response) => {
-      let parts = response.data.toString().split("\u0000");
-      let htmlDetails = JSON.stringify(parts[0]);
-      let details = parseHTML(htmlDetails);
-      let extras = parts[1];
       servers[ip].vm = {};
+      let htmlDetails;
+      if (response.data.toString().includes("\u0000")) {
+        let parts = response.data.toString().split("\u0000");
+        htmlDetails = JSON.stringify(parts[0]);
+
+        servers[ip].vm.extras = parts[1];
+      } else {
+        htmlDetails = response.data.toString();
+      }
+
+      let details = parseHTML(htmlDetails);
       servers[ip].vm.details = await processVMResponse(details, ip, serverAuth[ip]);
-      servers[ip].vm.extras = extras;
       updateFile(servers, ip, "vm");
     }).catch(e => {
       console.log("Get VM Details for ip: " + ip + " Failed with status code: " + e.statusText);
@@ -357,12 +363,14 @@ function processTags(tag, object) {
   let tagParts = tag.split(" ");
   let open = tagParts.shift().substring(1);
   object.tags = {};
-  tagParts.map(part => {
-    let tags = part.split("=");
-    return { name: clean(tags[0]), value: clean(tags[1]) };
-  }).forEach(tag => {
-    object.tags[tag.name] = tag.value;
-  });
+  if (tagParts && tagParts.length > 0) {
+    tagParts.map(part => {
+      let tags = part.split("=");
+      return { name: clean(tags[0]), value: clean(tags[1]) };
+    }).forEach(tag => {
+      object.tags[tag.name] = tag.value;
+    });
+  }
   object.tags.html = open;
   return open;
 }
@@ -433,13 +441,15 @@ async function simplifyResponse(object, ip, auth) {
     newVMObject.hddAllocation = {};
     newVMObject.hddAllocation.all = [];
     newVMObject.hddAllocation.total = vm.parent.children[4].contents;
-    vm.child.children[0].children[0].children[1].children.forEach(driveDetails => {
-      let detailsArr = driveDetails.children.map(drive => {
-        return drive.contents;
+    if (vm.child.children[0].children[0].children[1].children) {
+      vm.child.children[0].children[0].children[1].children.forEach(driveDetails => {
+        let detailsArr = driveDetails.children.map(drive => {
+          return drive.contents;
+        });
+        let details = { path: detailsArr[0], interface: detailsArr[1], allocated: detailsArr[2], used: detailsArr[3] };
+        newVMObject.hddAllocation.all.push(details);
       });
-      let details = { path: detailsArr[0], interface: detailsArr[1], allocated: detailsArr[2], used: detailsArr[3] };
-      newVMObject.hddAllocation.all.push(details);
-    });
+    }
     newVMObject.primaryGPU = vm.parent.children[5].contents;
     newVMObject = await gatherDetailsFromEditVM(ip, newVMObject.id, newVMObject, auth);
     temp[newVMObject.id] = newVMObject;
@@ -714,7 +724,7 @@ function extractIndividualGPU(gpuInfo, gpuNo, vmObject, response) {
     if (row.includes("selected")) {
       gpu.checked = true;
       gpu.position = gpuNo;
-      if (gpuNo > 0) {
+      if (gpuNo > 0 && vmObject.edit.pcis && vmObject.edit.pcis.length > 0) {
         vmObject.edit.pcis.forEach((device, index) => {
           if (device.id === gpu.id) {
             vmObject.edit.pcis.splice(index, 1);
@@ -868,67 +878,79 @@ export function getStaticPart(vmObject, id, create) {
 }
 
 export function getCPUPart(vmObject, form) {
-  vmObject.vcpus.forEach(cpu => {
-    form += "&domain%5Bvcpu%5D%5B%5D=" + cpu;
-  });
+  if (vmObject.vcpus && vmObject.vcpus.length > 0) {
+    vmObject.vcpus.forEach(cpu => {
+      form += "&domain%5Bvcpu%5D%5B%5D=" + cpu;
+    });
+  }
   return form;
 }
 
 export function getDiskPart(vmObject, form) {
-  vmObject.disks.forEach((disk, index) => {
-    form += "&disk%5B" + index + "%5D%5Bimage%5D=" + disk.image;
-    form += "&disk%5B" + index + "%5D%5Bselect%5D=" + disk.select;
-    form += "&disk%5B" + index + "%5D%5Bsize%5D=" + disk.size;
-    form += "&disk%5B" + index + "%5D%5Bdriver%5D=" + disk.driver;
-    form += "&disk%5B" + index + "%5D%5Bbus%5D=" + disk.bus;
-  });
+  if (vmObject.disks && vmObject.disks.length > 0) {
+    vmObject.disks.forEach((disk, index) => {
+      form += "&disk%5B" + index + "%5D%5Bimage%5D=" + disk.image;
+      form += "&disk%5B" + index + "%5D%5Bselect%5D=" + disk.select;
+      form += "&disk%5B" + index + "%5D%5Bsize%5D=" + disk.size;
+      form += "&disk%5B" + index + "%5D%5Bdriver%5D=" + disk.driver;
+      form += "&disk%5B" + index + "%5D%5Bbus%5D=" + disk.bus;
+    });
+  }
   return form;
 }
 
 export function getSharePart(vmObject, form) {
-  vmObject.shares.forEach((share, index) => {
-    form += "&shares%5B" + index + "%5D%5Bsource%5D=" + share.source;
-    form += "&shares%5B" + index + "%5D%5Btarget%5D=" + share.target;
-  });
+  if (vmObject.shares && vmObject.shares.length > 0) {
+    vmObject.shares.forEach((share, index) => {
+      form += "&shares%5B" + index + "%5D%5Bsource%5D=" + share.source;
+      form += "&shares%5B" + index + "%5D%5Btarget%5D=" + share.target;
+    });
+  }
   return form;
 }
 
 export function getPCIPart(vmObject, form) {
   let audioDevices = 0;
   let gpus = 0;
-  vmObject.pcis.forEach(pciDevice => {
-    if (pciDevice.id === "vnc" || !pciDevice.id) {
-      return;
-    }
+  if (vmObject.pcis && vmObject.pcis.length > 0) {
+    vmObject.pcis.forEach(pciDevice => {
+      if (pciDevice.id === "vnc" || !pciDevice.id) {
+        return;
+      }
 
-    if (pciDevice.gpu && pciDevice.checked) {
-      form += "&gpu%5B" + gpus + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
-      form += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI("qxl");
-      form += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + (pciDevice.keymap ? encodeURI(pciDevice.keymap) : "");
-      form += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + (pciDevice.bios ? encodeURI(pciDevice.bios) : "");
-      gpus++;
-    } else if (pciDevice.audio && pciDevice.checked) {
-      form += "&audio%5B" + audioDevices + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
-      audioDevices++;
-    } else {
-      form += "&pci%5B%5D=" + encodeURI(pciDevice.id) + (pciDevice.checked ? "" : "%23remove");
-    }
-  });
+      if (pciDevice.gpu && pciDevice.checked) {
+        form += "&gpu%5B" + gpus + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
+        form += "&gpu%5B" + gpus + "%5D%5Bmodel%5D=" + encodeURI("qxl");
+        form += "&gpu%5B" + gpus + "%5D%5Bkeymap%5D=" + (pciDevice.keymap ? encodeURI(pciDevice.keymap) : "");
+        form += "&gpu%5B" + gpus + "%5D%5Bbios%5D=" + (pciDevice.bios ? encodeURI(pciDevice.bios) : "");
+        gpus++;
+      } else if (pciDevice.audio && pciDevice.checked) {
+        form += "&audio%5B" + audioDevices + "%5D%5Bid%5D=" + encodeURI(pciDevice.id);
+        audioDevices++;
+      } else {
+        form += "&pci%5B%5D=" + encodeURI(pciDevice.id) + (pciDevice.checked ? "" : "%23remove");
+      }
+    });
+  }
   return form;
 }
 
 export function getUSBPart(vmObject, form) {
-  vmObject.usbs.forEach(usbDevice => {
-    form += "&usb%5B%5D=" + encodeURI(usbDevice.id) + (usbDevice.checked ? "" : "%23remove");
-  });
+  if (vmObject.usbs && vmObject.usbs.length > 0) {
+    vmObject.usbs.forEach(usbDevice => {
+      form += "&usb%5B%5D=" + encodeURI(usbDevice.id) + (usbDevice.checked ? "" : "%23remove");
+    });
+  }
   return form;
 }
 
 export function getNetworkPart(vmObject, form) {
-  vmObject.nics.forEach((nicDevice, index) => {
-    form += "&nic%5B" + index + "%5D%5Bmac%5D=" + nicDevice.mac;
-    form += "&nic%5B" + index + "%5D%5Bnetwork%5D=" + nicDevice.network;
-  });
+  if (vmObject.nics && vmObject.nics.length > 0) {
+    vmObject.nics.forEach((nicDevice, index) => {
+      form += "&nic%5B" + index + "%5D%5Bmac%5D=" + nicDevice.mac;
+      form += "&nic%5B" + index + "%5D%5Bnetwork%5D=" + nicDevice.network;
+    });
+  }
   return form;
 }
 
