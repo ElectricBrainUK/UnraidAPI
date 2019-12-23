@@ -24,11 +24,11 @@ function logIn(servers, serverAuth) {
     }
     const buff = Buffer.from(serverAuth[ip], "base64");
 
-    let details = buff.toString("ascii").substring(5);
+    let details = buff.toString("ascii");
 
     let data = new FormData();
-    data.append("username", "root");
-    data.append("password", details);
+    data.append("username", details.substring(0, details.indexOf(":")));
+    data.append("password", details.substring(details.indexOf(":") + 1));
 
     axios({
       url: (ip.includes("http") ? ip : "http://" + ip) + "/login",
