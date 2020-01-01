@@ -392,9 +392,15 @@ function updateMQTT(client) {
 }
 
 let repeater;
+let count = 0;
 
 function mqttRepeat(client) {
   repeater = setTimeout(function() {
+    count++;
+    if (count > 19) {
+      count = 0;
+      updated = {};
+    }
     updateMQTT(client);
     mqttRepeat(client);
   }, 20000);
