@@ -212,11 +212,11 @@ function updateMQTT(client) {
           "device_class": "power",
           "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
           "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
-          "name": serverTitleSanitised,
+          "name": serverTitleSanitised + "_server",
           "unique_id": serverTitleSanitised + " unraid api server",
           "device": {
             "identifiers": [serverTitleSanitised],
-            "name": serverTitleSanitised,
+            "name": serverTitleSanitised + "_server",
             "manufacturer": server.serverDetails.motherboard,
             "model": "Unraid Server"
           }
@@ -231,7 +231,7 @@ function updateMQTT(client) {
           "unique_id": serverTitleSanitised + " unraid api array",
           "device": {
             "identifiers": [serverTitleSanitised],
-            "name": serverTitleSanitised,
+            "name": serverTitleSanitised + "_server",
             "manufacturer": server.serverDetails.motherboard,
             "model": "Unraid Server"
           },
@@ -268,11 +268,11 @@ function updateMQTT(client) {
             "value_template": "{{ value_json.status }}",
             "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName,
             "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName,
-            "name": serverTitleSanitised + "_" + vmSanitisedName,
+            "name": serverTitleSanitised + "_VM_" + vmSanitisedName,
             "unique_id": serverTitleSanitised + "_" + vmId,
             "device": {
               "identifiers": [serverTitleSanitised + "_" + vmSanitisedName],
-              "name": serverTitleSanitised + "_" + vmSanitisedName,
+              "name": serverTitleSanitised + "_VM_" + vmSanitisedName,
               "manufacturer": server.serverDetails.motherboard,
               "model": "VM"
             },
@@ -282,11 +282,11 @@ function updateMQTT(client) {
             "value_template": "{{ value_json.status }}",
             "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName,
             "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName,
-            "name": serverTitleSanitised + "_" + vmSanitisedName + "_status",
+            "name": serverTitleSanitised + "_VM_" + vmSanitisedName + "_status",
             "unique_id": serverTitleSanitised + "_" + vmId + "_status",
             "device": {
               "identifiers": [serverTitleSanitised + "_" + vmSanitisedName],
-              "name": serverTitleSanitised + "_" + vmSanitisedName,
+              "name": serverTitleSanitised + "_VM_" + vmSanitisedName,
               "manufacturer": server.serverDetails.motherboard,
               "model": "VM"
             }
@@ -321,11 +321,11 @@ function updateMQTT(client) {
                 "value_template": "{{ value_json.attached }}",
                 "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
                 "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
-                "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBName,
+                "name": serverTitleSanitised + "_VM_" + vmSanitisedName + "_USB_" + sanitiseUSBName,
                 "unique_id": serverTitleSanitised + "_" + vmId + "_" + sanitiseUSBId,
                 "device": {
                   "identifiers": [serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId],
-                  "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId,
+                  "name": serverTitleSanitised + "_VM_" + vmSanitisedName + "_USB_" + sanitiseUSBId,
                   "manufacturer": sanitiseUSBName,
                   "model": "USB Device"
                 },
@@ -337,11 +337,11 @@ function updateMQTT(client) {
                 "value_template": "{{ value_json.connected }}",
                 "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
                 "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + sanitiseUSBId,
-                "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBName + "_connected",
+                "name": serverTitleSanitised + "_VM_" + vmSanitisedName + "_USB_" + sanitiseUSBName + "_connected",
                 "unique_id": serverTitleSanitised + "_" + vmId + "_" + sanitiseUSBId + "_connected",
                 "device": {
                   "identifiers": [serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId],
-                  "name": serverTitleSanitised + "_" + vmSanitisedName + "_" + sanitiseUSBId,
+                  "name": serverTitleSanitised + "_VM_" + vmSanitisedName + "_USB_" + sanitiseUSBId,
                   "manufacturer": sanitiseUSBName,
                   "model": "USB Device"
                 }
@@ -370,11 +370,11 @@ function updateMQTT(client) {
               "value_template": "{{ value_json.status }}",
               "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
               "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + docker.name,
-              "name": serverTitleSanitised + "_" + docker.name,
+              "name": serverTitleSanitised + "_docker_" + docker.name,
               "unique_id": serverTitleSanitised + "_" + docker.name,
               "device": {
                 "identifiers": [serverTitleSanitised + "_" + docker.name],
-                "name": serverTitleSanitised + "_" + docker.name,
+                "name": serverTitleSanitised + "_docker_" + docker.name,
                 "manufacturer": server.serverDetails.motherboard,
                 "model": "Docker"
               },
