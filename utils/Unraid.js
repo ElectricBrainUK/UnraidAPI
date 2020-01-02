@@ -1,10 +1,12 @@
 import axios from "axios";
 import fs from "fs";
 import http from "http";
+import https from "https";
 
 const FormData = require("form-data");
 
 axios.defaults.withCredentials = true;
+axios.defaults.httpsAgent = new https.Agent({ keepAlive: true, rejectUnauthorized: false });
 
 let authCookies = {};
 
@@ -30,24 +32,30 @@ function logIn(servers, serverAuth) {
     data.append("username", details.substring(0, details.indexOf(":")));
     data.append("password", details.substring(details.indexOf(":") + 1));
 
-    axios({
-      url: (ip.includes("http") ? ip : "http://" + ip) + "/login",
-      method: "POST",
-      data,
-      headers: {
-        ...data.getHeaders(),
-        "cache-control": "no-cache",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      httpAgent: new http.Agent({ keepAlive: true }),
-      maxRedirects: 0
-    }).then(response => {
-      authCookies[ip] = response.headers["set-cookie"][0];
-    }).catch(error => {
-      if (error.response && error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
-        authCookies[ip] = error.response.headers["set-cookie"][0];
-      }
-    });
+    logInToUrl((ip.includes("http") ? ip : "http://" + ip) + "/login", data, ip);
+  });
+}
+
+function logInToUrl(url, data, ip) {
+  axios({
+    url,
+    method: "POST",
+    data,
+    headers: {
+      ...data.getHeaders(),
+      "cache-control": "no-cache",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    httpAgent: new http.Agent({ keepAlive: true }),
+    maxRedirects: 0
+  }).then(response => {
+    authCookies[ip] = response.headers["set-cookie"][0];
+  }).catch(error => {
+    if (error.response && error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
+      authCookies[ip] = error.response.headers["set-cookie"][0];
+    } else if (error.response && error.response.headers.location) {
+      logInToUrl(error.response.headers.location, data, ip);
+    }
   });
 }
 

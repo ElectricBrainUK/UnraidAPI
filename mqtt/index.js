@@ -17,9 +17,10 @@ export default function startMQTTClient() {
     username: process.env.MQTTUser,
     password: process.env.MQTTPass,
     port: process.env.MQTTPort,
-    host: process.env.MQTTBroker
+    host: process.env.MQTTBroker,
+    rejectUnauthorized: !!process.env.MQTTSelfSigned
   };
-  const client = mqtt.connect("mqtt://" + process.env.MQTTBroker, options);
+  const client = mqtt.connect(process.env.MQTTSecure ? "mqtts://" : "mqtt://" + process.env.MQTTBroker, options);
 
   try {
     client.on("connect", () => {

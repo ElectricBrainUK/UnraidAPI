@@ -51,6 +51,11 @@ MQTTUser e.g. mqtt
 MQTTPass e.g. password
 MQTTBaseTopic the base topic for all MQTT publishes e.g. homeassistant
 
+For MQTT Over SSL:
+MQTTSecure true
+If using self signed:
+MQTTSelfSigned true
+
 ``` 
 Where to store the secure keys. If left blank the keys are kept in memory and will be destroyed each time the container is updated.
 Set to config to have the data persisted
