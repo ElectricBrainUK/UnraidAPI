@@ -397,7 +397,7 @@ let count = 0;
 function mqttRepeat(client) {
   repeater = setTimeout(function() {
     count++;
-    if (count > 19) {
+    if (count > 3 * 60) {
       count = 0;
       updated = {};
     }
