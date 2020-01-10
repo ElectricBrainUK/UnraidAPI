@@ -13,7 +13,7 @@ Use the env variable section to set up the MQTT client and connect to your MQTT 
 
 Manual Config Example:
 The server and VM names are as they are in MQTT (spaces are underscores and all lower case)
-The payload options are started, stopped, paused, restart, kill
+The payload options are started, stopped, paused, restart, kill, hibernate
 
 ```
 - platform: mqtt
