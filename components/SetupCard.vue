@@ -17,6 +17,13 @@
             label="Server IP"
             type="text"
           />
+          <v-checkbox
+            v-model="https"
+            prepend-icon="lock"
+            name="https"
+            label="HTTPS"
+            color="blue">
+          </v-checkbox>
           <v-text-field
             v-model="user"
             prepend-icon="person"
@@ -59,7 +66,8 @@
         loginMessage: "",
         user: "",
         password: "",
-        ip: ""
+        ip: "",
+        https: false
       };
     },
     methods: {
@@ -67,7 +75,7 @@
         axios({
           method: "post",
           data: {
-            ip: this.ip,
+            ip: (this.https ? "https://" : "") + this.ip,
             authToken: Base64.encode(this.user.concat(":", this.password))
           },
           url: "/api/login"
