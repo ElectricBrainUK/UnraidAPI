@@ -55,6 +55,8 @@ For MQTT Over SSL:
 MQTTSecure true
 If using self signed:
 MQTTSelfSigned true
+MQTTRefreshRate time in seconds to poll for updates (default 20)
+MQTTCacheTime time in minutes after which all entities will be updated in mqtt (default 1 hour)
 
 ``` 
 Where to store the secure keys. If left blank the keys are kept in memory and will be destroyed each time the container is updated.

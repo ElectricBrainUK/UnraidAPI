@@ -398,13 +398,13 @@ let count = 0;
 function mqttRepeat(client) {
   repeater = setTimeout(function() {
     count++;
-    if (count > 3 * 60) {
+    if (count > (60 / (process.env.MQTTRefreshRate ? process.env.MQTTRefreshRate : 20)) * (process.env.MQTTCacheTime ? process.env.MQTTCacheTime : 60)) {
       count = 0;
       updated = {};
     }
     updateMQTT(client);
     mqttRepeat(client);
-  }, 20000);
+  }, process.env.MQTTRefreshRate ? process.env.MQTTRefreshRate * 1000 : 20000);
 }
 
 function sanitise(string) {
