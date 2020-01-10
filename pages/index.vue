@@ -84,7 +84,7 @@
             "Authorization": JSON.stringify(this.authentication)
           }
         }).then(async (response) => {
-          if (Object.keys(response.data.servers).length > Object.keys(this.authentication).length) {
+          if (Object.keys(response.data.servers).length > Object.keys(this.authentication).length && !response.data.servers[Object.keys(response.data.servers)[0]].status) {
             let returnedServers = Object.keys(response.data.servers);
             for (let i = 0; i< returnedServers.length; i++){
               let serverIp = returnedServers[i];
