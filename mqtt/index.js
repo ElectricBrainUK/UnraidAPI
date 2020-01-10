@@ -117,6 +117,9 @@ export default function startMQTTClient() {
           case "restart":
             command = "domain-restart";
             break;
+          case "hibernate":
+            command = "domain-pmsuspend";
+            break;
         }
 
         if (!topic.includes("docker")) {

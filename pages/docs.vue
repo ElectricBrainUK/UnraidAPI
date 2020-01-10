@@ -147,7 +147,18 @@
                   <v-card>
                     Restart
                     <v-text-field
-                      value="Coming soon"
+                      value="domain-restart"
+                      solo
+                      readonly
+                      light
+                    ></v-text-field>
+                  </v-card>
+                </v-flex>
+                <v-flex>
+                  <v-card>
+                    Hibernate
+                    <v-text-field
+                      value="domain-pmsuspend"
                       solo
                       readonly
                       light
