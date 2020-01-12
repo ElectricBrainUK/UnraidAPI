@@ -193,7 +193,12 @@ function updateMQTT(client) {
   try {
     let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
     let servers = JSON.parse(fs.readFileSync("config/servers.json"));
-    let disabledDevices = JSON.parse(fs.readFileSync("config/mqttDisabledDevices.json"));
+    let disabledDevices = [];
+    try {
+      disabledDevices = JSON.parse(fs.readFileSync("config/mqttDisabledDevices.json"));
+    } catch (e) {
+
+    }
 
     getUnraidDetails(servers, keys);
 
