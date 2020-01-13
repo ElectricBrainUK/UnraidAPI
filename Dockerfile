@@ -12,7 +12,6 @@ WORKDIR ${APP_ROOT}
 
 COPY package.json ${APP_ROOT}
 RUN npm install
-RUN apt-get update && apt-get install -y glances
 RUN apt-get update && \
     apt-get install -y \
         python3 \
