@@ -5,13 +5,15 @@
 3. [Lovelace config](https://github.com/ElectricBrainUK/UnraidAPI/wiki/Lovelace-Config)
 4. [Web-UI](https://github.com/ElectricBrainUK/UnraidAPI/wiki/Web-UI)
 5. [FAQ's](https://github.com/ElectricBrainUK/UnraidAPI/wiki/FAQ)
-6. [Unraid forum support topic](https://forums.unraid.net/topic/86354-support-electric-brain-unraid-api/)
-7. [Docker hub](https://hub.docker.com/r/electricbrainuk/unraidapi)
+6. [Submit a feature request](https://github.com/ElectricBrainUK/UnraidAPI/issues/new?assignees=&labels=Review+needed&template=feature_request.md&title=)
+7. [Open an issue](https://github.com/ElectricBrainUK/UnraidAPI/issues/new?assignees=&labels=Review+needed&template=bug_report.md&title=)
+
+### External links
+* [Unraid forum support topic](https://forums.unraid.net/topic/86354-support-electric-brain-unraid-api/)
+* [Docker hub](https://hub.docker.com/r/electricbrainuk/unraidapi)
 
 ### Support
 For support please go to our discord channel: https://discord.gg/Qa3Bjr9
-
-For missing features please raise an issue (or a PR if you feel like giving it a go!)
 
 ***
 
