@@ -13,10 +13,20 @@ WORKDIR ${APP_ROOT}
 COPY package.json ${APP_ROOT}
 RUN npm install
 RUN apt-get update && apt-get install -y glances
+RUN apt-get update && \
+    apt-get install -y \
+        python3 \
+        python3-dev \
+        python3-pip \
+        python3-setuptools \
+     && pip3 install --upgrade pip \
+        pip3 install glances
 COPY . ${APP_ROOT}
+
+COPY glances.conf /etc/glances/glances.conf
 
 # Expose the app port
 EXPOSE 80
 
 RUN npm run build
-CMD ["npm", "start"]
+CMD ["npm", "start", "glances --export mqtt"]
