@@ -1,4 +1,9 @@
 # UnraidAPI
+
+<p align="center"> 
+<img src="https://github.com/ElectricBrainUK/UnraidAPI/blob/master/static/iconx64.png">
+</p>
+
 > A new UI and API for controlling multiple unraid instances and connecting them to the Home Assistant
 1. [Docker installation](https://github.com/ElectricBrainUK/UnraidAPI/wiki/Docker-installation)
 2. [Home Assistant Integration](https://github.com/ElectricBrainUK/UnraidAPI/wiki/Home-Assistant-Integration)
@@ -19,3 +24,9 @@ For support please go to our discord channel: https://discord.gg/Qa3Bjr9
 
 We develop all of our apps in our spare time so if you feel like supporting us please donate:
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9EC6MMLG7KLNA&source=url)
+
+***
+
+<p align="center"> 
+Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a>
+</p>
