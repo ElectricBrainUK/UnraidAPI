@@ -5,6 +5,7 @@
     md4
   >
     <v-card>
+      <div>Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a></div>
       <v-card-title class="headline">
         Setup Unraid Server
       </v-card-title>
