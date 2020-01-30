@@ -23,17 +23,6 @@ export default function(req, res, next) {
   let response = {};
   response.servers = servers;
 
-  if (process.env.MQTTBroker && req.headers.authorization && req.headers.authorization.length > 2) {
-    try {
-      if (!fs.existsSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/")){
-        fs.mkdirSync(process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/");
-      }
-      fs.writeFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys", req.headers.authorization);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   if (process.env.KeyStorage === "config" && (!req.headers.authorization || req.headers.authorization.length <= 2)) {
     req.headers.authorization = fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys");
   }
