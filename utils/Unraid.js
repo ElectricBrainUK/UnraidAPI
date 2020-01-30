@@ -54,7 +54,8 @@ function logInToUrl(url, data, ip) {
     if (error.response && error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
       authCookies[ip] = error.response.headers["set-cookie"][0];
     } else if (error.response && error.response.headers.location) {
-      logInToUrl(error.response.headers.location, data, ip);
+      authCookies[ip] = undefined;
+      logInToUrl(error.response.headers.location, data, error.response.headers.location);
     }
   });
 }
@@ -115,8 +116,8 @@ function getServerDetails(servers, serverAuth) {
     if (!serverAuth[ip]) {
       return;
     }
-    servers[ip].serverDetails = await scrapeHTML(ip, serverAuth);
-    servers[ip].serverDetails = { ...await scrapeMainHTML(ip, serverAuth), ...servers[ip].serverDetails };
+    servers[ip].serverDetails = await scrapeHTML(ip, serverAuth) || servers[ip].serverDetails;
+    servers[ip].serverDetails = { ...await scrapeMainHTML(ip, serverAuth), ...servers[ip].serverDetails } || servers[ip].serverDetails;
 
     servers[ip].serverDetails.on = !!servers[ip].status;
 
