@@ -267,7 +267,7 @@ function updateMQTT(client) {
             primaryGPU: vm.primaryGPU,
             name: vmSanitisedName,
             description: vm.edit ? vm.edit.description : 'Unknown',
-            mac: vm.edit.nics ? vm.edit.nics[0].mac : undefined
+            mac: vm.edit && vm.edit.nics ? vm.edit.nics[0].mac : undefined
           };
 
           if (!updated[ip].vms) {
