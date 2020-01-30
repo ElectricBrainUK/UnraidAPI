@@ -2,6 +2,7 @@ import mqtt from "mqtt";
 import { changeArrayState, changeDockerState, changeVMState, getCSRFToken, getUnraidDetails } from "../utils/Unraid";
 import fs from "fs";
 import { attachUSB, detachUSB } from "../api/usbAttach";
+import uniqid from "uniqid";
 
 let retry;
 
@@ -35,6 +36,9 @@ export default function startMQTTClient() {
     });
 
     client.on("message", async (topic, message) => {
+      let queryID = await uniqid.time("MQTT-R-","");
+      console.log("Received MQTT Topic: " + topic + " and Message: " + message + " assigning ID: " + queryID);
+
       let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
       let servers = JSON.parse(fs.readFileSync("config/servers.json"));
 
@@ -53,7 +57,7 @@ export default function startMQTTClient() {
       }
 
       if (ip === "") {
-        console.log("Failed to process message, servers not loaded. If the API just started this should go away after a minute, otherwise log into servers in the UI");
+        console.log("Failed to process " + queryID + ", servers not loaded. If the API just started this should go away after a minute, otherwise log into servers in the UI");
         return;
       }
       let token = await getCSRFToken(ip, keys[ip]);
@@ -84,6 +88,8 @@ export default function startMQTTClient() {
           });
         }
       }
+
+      let responses = [];
 
       if (topic.toLowerCase().includes("state")) {
         let command = "";
@@ -133,12 +139,14 @@ export default function startMQTTClient() {
             description: vmDetails.edit.description,
             mac: vmDetails.edit.nics[0] ? vmDetails.edit.nics[0].mac : undefined
           };
+          console.log("Updating MQTT for: " + queryID);
           client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName, JSON.stringify(vmDetailsToSend));
-          await changeVMState(vmIdentifier, command, ip, keys[ip], token);
+
+          responses.push(await changeVMState(vmIdentifier, command, ip, keys[ip], token));
         } else {
           dockerDetails.status = message.toString();
           client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + sanitise(dockerDetails.name), JSON.stringify(dockerDetails));
-          await changeDockerState(dockerIdentifier, command, ip, keys[ip], token);
+          responses.push(await changeDockerState(dockerIdentifier, command, ip, keys[ip], token));
         }
       } else if (topic.includes("attach")) {
         let data = {
@@ -149,9 +157,9 @@ export default function startMQTTClient() {
         };
 
         if (message.toString() && message.toString() !== "false" && message.toString() !== "False") {
-          await attachUSB(data);
+          responses.push(await attachUSB(data));
         } else {
-          await detachUSB(data);
+          responses.push(await detachUSB(data));
         }
         const usbDetails = vmDetails.edit.usbs.filter((usb) => sanitise(usb.id) === topicParts[3])[0];
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/" + vmSanitisedName + "/" + topicParts[3], JSON.stringify({
@@ -167,7 +175,23 @@ export default function startMQTTClient() {
         }
         serverDetails.arrayStatus = message.toString();
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
-        await changeArrayState(command, ip, keys[ip], token);
+        responses.push(await changeArrayState(command, ip, keys[ip], token));
+      }
+      let success = true;
+      responses.forEach(response => {
+        if (response && success) {
+          success = !!response.success;
+        } else if (!response) {
+          success = false;
+          console.log("Part of " + queryID + " failed.");
+        }
+        if (response && response.error) {
+          success = false;
+          console.log("Part of " + queryID + " failed with response: " + response.error);
+        }
+      });
+      if (success) {
+        console.log(queryID + " succeeded");
       }
     });
 
