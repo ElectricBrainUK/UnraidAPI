@@ -568,9 +568,9 @@ export function changeDockerState(id, action, server, auth, token) {
 }
 
 export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
+  let rawdata = fs.readFileSync("config/servers.json");
+  let servers = JSON.parse(rawdata);
   if (!vmObject) {
-    let rawdata = fs.readFileSync("config/servers.json");
-    let servers = JSON.parse(rawdata);
     vmObject = servers[ip].vm.details[id];
   }
   return axios({
@@ -586,6 +586,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
     console.log("Get VM Edit details for ip: " + ip + " Failed with status code: " + e.statusText);
     authCookies[ip] = undefined;
     console.log(e.message);
+    vmObject.edit = servers[ip].vm.details[id].edit;
     return vmObject;
   });
 }
