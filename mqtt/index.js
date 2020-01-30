@@ -267,7 +267,7 @@ function updateMQTT(client) {
             primaryGPU: vm.primaryGPU,
             name: vmSanitisedName,
             description: vm.edit ? vm.edit.description : 'Unknown',
-            mac: vm.edit && vm.edit.nics ? vm.edit.nics[0].mac : undefined
+            mac: vm.edit && vm.edit.nics && vm.edit.nics[0] ? vm.edit.nics[0].mac : undefined
           };
 
           if (!updated[ip].vms) {
@@ -312,7 +312,7 @@ function updateMQTT(client) {
             updated[ip].vms[vmId].details = JSON.stringify(vmDetails);
           }
 
-          if (vm.edit.usbs && vm.edit.usbs.length > 0 && !disabledDevices.includes(ip + "|" + vmId + "|USBs")) {
+          if (vm.edit && vm.edit.usbs && vm.edit.usbs.length > 0 && !disabledDevices.includes(ip + "|" + vmId + "|USBs")) {
             vm.edit.usbs.map(device => {
               if (disabledDevices.includes(ip + "|" + vmId + "|" + device.id)) {
                 return;
