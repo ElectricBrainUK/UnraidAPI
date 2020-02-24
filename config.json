@@ -31,6 +31,6 @@
     "KeyStorage": "str"
   },
   "ports": {
-    "3005/tcp": 80
+    "80/tcp": 3005
   }
 }
