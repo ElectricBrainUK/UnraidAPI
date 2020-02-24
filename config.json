@@ -1,0 +1,36 @@
+{
+  "name": "Unraid API",
+  "version": "1",
+  "slug": "unraid_api",
+  "description": "An Unraid REST/MQTT Bridge for HA and other IOT platforms",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "before",
+  "boot": "auto",
+  "options": {
+    "MQTTBroker": null,
+    "MQTTPort": null,
+    "MQTTUser": null,
+    "MQTTPass": null,
+    "MQTTBaseTopic": null,
+    "MQTTSecure": null,
+    "MQTTSelfSigned": null,
+    "MQTTRefreshRate": null,
+    "MQTTCacheTime": null,
+    "KeyStorage": null
+  },
+  "schema": {
+    "MQTTBroker": "str",
+    "MQTTPort": "int",
+    "MQTTUser": "str",
+    "MQTTPass": "str",
+    "MQTTBaseTopic": "str",
+    "MQTTSecure": "bool",
+    "MQTTSelfSigned": "bool",
+    "MQTTRefreshRate": "int",
+    "MQTTCacheTime": "int",
+    "KeyStorage": "str"
+  },
+  "ports": {
+    "3005/tcp": 80
+  }
+}
