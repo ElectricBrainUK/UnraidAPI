@@ -14,6 +14,10 @@ export default function startMQTTClient() {
     return;
   }
 
+  getVMDetails = getVMDetails.bind(this);
+  getDockerDetails = getDockerDetails.bind(this);
+  getServerDetails = getServerDetails.bind(this);
+
   const options = {
     username: process.env.MQTTUser,
     password: process.env.MQTTPass,
@@ -342,6 +346,11 @@ function getVMDetails(client, vm, disabledDevices, vmId, serverTitleSanitised, i
     mac: vm.edit && vm.edit.nics && vm.edit.nics[0] ? vm.edit.nics[0].mac : undefined
   };
 
+  if (!updated[ip]) {
+    updated[ip] = {};
+  }
+
+
   if (!updated[ip].vms) {
     updated[ip].vms = {};
   }
@@ -451,6 +460,10 @@ function getDockerDetails(client, serverTitleSanitised, disabledDevices, dockerI
     return;
   }
   docker.name = sanitise(docker.name);
+
+  if (!updated[ip]) {
+    updated[ip] = {};
+  }
 
   if (!updated[ip].dockers) {
     updated[ip].dockers = {};
