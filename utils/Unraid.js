@@ -54,7 +54,6 @@ function logInToUrl(url, data, ip) {
     if (error.response && error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
       authCookies[ip] = error.response.headers["set-cookie"][0];
     } else if (error.response && error.response.headers.location) {
-      callFailed(ip);
       logInToUrl(error.response.headers.location, data, error.response.headers.location);
     }
   });
@@ -85,6 +84,7 @@ function getUSBDetails(servers, serverAuth) {
           "Cookie": authCookies[ip] ? authCookies[ip] : ""
         }
       }).then(response => {
+        callSucceeded(ip);
         servers[ip].status = "online";
         updateFile(servers, ip, "status");
 
@@ -134,6 +134,7 @@ function scrapeHTML(ip, serverAuth) {
       "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then((response) => {
+    callSucceeded(ip);
     return {
       title: extractValue(response.data, "title>", "/"),
       cpu: extractReverseValue(extractValue(response.data, "cpu_view'>", "</tr"), "<br>", ">"),
@@ -158,6 +159,7 @@ function scrapeMainHTML(ip, serverAuth) {
       "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then((response) => {
+    callSucceeded(ip);
     let protection = extractValue(response.data, "</td></tr>\n          <tr><td>", "</td><td>");
     return {
       arrayStatus: extractReverseValue(extractValue(response.data, "<table class=\"array_status\">", "/span>"), "<", ">").split(",")[0],
@@ -183,6 +185,7 @@ function getVMs(servers, serverAuth) {
         "Cookie": authCookies[ip] ? authCookies[ip] : ""
       }
     }).then(async (response) => {
+      callSucceeded(ip);
       servers[ip].vm = {};
       let htmlDetails;
       if (response.data.toString().includes("\u0000")) {
@@ -274,6 +277,7 @@ function getDockers(servers, serverAuth) {
         "Cookie": authCookies[ip] ? authCookies[ip] : ""
       }
     }).then(async (response) => {
+      callSucceeded(ip);
       let htmlDetails = JSON.stringify(response.data);
       let details = parseHTML(htmlDetails);
       servers[ip].docker = {};
@@ -475,6 +479,7 @@ export function getCSRFToken(server, auth) {
       "Cookie": authCookies[server] ? authCookies[server] : ""
     }
   }).then(response => {
+    callSucceeded(ip);
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
     console.log("Get CSRF Token for server: " + server + " Failed with status code: " + e.statusText);
@@ -505,6 +510,7 @@ export function changeArrayState(action, server, auth, token) {
     data: action === "start" ? "startState=STOPPED&file=&csrf_token=" + token + "&cmdStart=Start" : "startState=STARTED&file=&csrf_token=" + token + "&cmdStop=Stop",
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
+    callSucceeded(ip);
     return response.data;
   }).catch(e => {
     console.log("Change Array State for ip: " + ip + " Failed with status code: " + e.statusText);
@@ -526,6 +532,7 @@ export function changeVMState(id, action, server, auth, token) {
     data: "uuid=" + id + "&action=" + action + "&csrf_token=" + token,
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
+    callSucceeded(ip);
     if (response.data.state === "running") {
       response.data.state = "started";
     }
@@ -553,6 +560,7 @@ export function changeDockerState(id, action, server, auth, token) {
     data: "container=" + id + "&action=" + action.replace("domain-", "") + "&csrf_token=" + token,
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
+    callSucceeded(ip);
     if (response.data.state === "running") {
       response.data.state = "started";
     }
@@ -581,6 +589,7 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
       "Cookie": authCookies[ip] ? authCookies[ip] : ""
     }
   }).then(response => {
+    callSucceeded(ip);
     return extractVMDetails(vmObject, response, ip);
   }).catch(e => {
     console.log("Get VM Edit details for ip: " + ip + " Failed with status code: " + e.statusText);
@@ -839,6 +848,7 @@ export async function requestChange(ip, id, auth, vmObject, create) {
     data: await buildForm(ip, auth, id, vmObject, create),
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
+    callSucceeded(ip);
     return response.data;
   }).catch(e => {
     console.log("Make Edit for ip: " + ip + " Failed with status code: " + e.statusText);
@@ -983,6 +993,10 @@ export function flipPCICheck(details, id) {
 }
 
 let failed = {};
+
+function callSucceeded(ip) {
+  failed[ip] = 0;
+}
 
 function callFailed(ip) {
   if (!failed[ip]) {
