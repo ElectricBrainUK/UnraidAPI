@@ -230,11 +230,10 @@ function updateMQTT(client) {
 
     getUnraidDetails(servers, keys);
 
-
     let timer = 1000;
     Object.keys(servers).forEach(ip => {
       setTimeout(getServerDetails, timer, client, servers, disabledDevices, ip, timer);
-      timer = timer + 5000;
+      timer = timer + (process.env.MQTTRefreshRate ? process.env.MQTTRefreshRate * 1000 : 20000) / 4;
     });
   } catch (e) {
     console.log(e);
@@ -254,7 +253,7 @@ function mqttRepeat(client) {
     }
     updateMQTT(client);
     mqttRepeat(client);
-  }, process.env.MQTTRefreshRate ? process.env.MQTTRefreshRate * 1000 : 5000);
+  }, process.env.MQTTRefreshRate ? process.env.MQTTRefreshRate * 1000 : 20000);
 }
 
 function sanitise(string) {
@@ -317,14 +316,14 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
     Object.keys(server.vm.details).forEach(vmId => {
       let vm = server.vm.details[vmId];
       setTimeout(getVMDetails, timer, client, vm, disabledDevices, vmId, serverTitleSanitised, ip, server);
-      timer = timer + 1000;
+      timer = timer + (process.env.MQTTRefreshRate ? process.env.MQTTRefreshRate * 1000 : 20000) / 20;
     });
   }
 
   if (server.docker && server.docker.details && !disabledDevices.includes(ip + "|Dockers")) {
     Object.keys(server.docker.details.containers).forEach(dockerId => {
       setTimeout(getDockerDetails, timer, client, serverTitleSanitised, disabledDevices, dockerId, ip, server);
-      timer = timer + 1000;
+      timer = timer + (process.env.MQTTRefreshRate ? process.env.MQTTRefreshRate * 1000 : 20000) / 20;
     });
   }
 }
