@@ -479,7 +479,7 @@ export function getCSRFToken(server, auth) {
       "Cookie": authCookies[server] ? authCookies[server] : ""
     }
   }).then(response => {
-    callSucceeded(ip);
+    callSucceeded(server);
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
     console.log("Get CSRF Token for server: " + server + " Failed with status code: " + e.statusText);
@@ -510,11 +510,11 @@ export function changeArrayState(action, server, auth, token) {
     data: action === "start" ? "startState=STOPPED&file=&csrf_token=" + token + "&cmdStart=Start" : "startState=STARTED&file=&csrf_token=" + token + "&cmdStop=Stop",
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
-    callSucceeded(ip);
+    callSucceeded(server);
     return response.data;
   }).catch(e => {
     console.log("Change Array State for ip: " + ip + " Failed with status code: " + e.statusText);
-    callFailed(ip);
+    callFailed(server);
     console.log(e.message);
   });
 }
@@ -532,7 +532,7 @@ export function changeVMState(id, action, server, auth, token) {
     data: "uuid=" + id + "&action=" + action + "&csrf_token=" + token,
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
-    callSucceeded(ip);
+    callSucceeded(server);
     if (response.data.state === "running") {
       response.data.state = "started";
     }
@@ -560,7 +560,7 @@ export function changeDockerState(id, action, server, auth, token) {
     data: "container=" + id + "&action=" + action.replace("domain-", "") + "&csrf_token=" + token,
     httpAgent: new http.Agent({ keepAlive: true })
   }).then((response) => {
-    callSucceeded(ip);
+    callSucceeded(server);
     if (response.data.state === "running") {
       response.data.state = "started";
     }
