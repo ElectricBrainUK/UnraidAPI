@@ -2,31 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/changeServerStatus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/no-ssr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/nuxt-build-indicator.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/nuxt-child.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/components/nuxt-child.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/nuxt-error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/components/nuxt-error.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/nuxt-link.client.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/components/nuxt-link.client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/nuxt-link.server.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/components/nuxt-link.server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/nuxt-loading.vue" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/components/nuxt-loading.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/components/nuxt.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/components/nuxt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/loading.html" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/loading.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/nuxt-icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/nuxt-icons.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.nuxt/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/.nuxt/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/getServers.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/getServers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/default.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mqtt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/mqtt/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/nuxt.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Unraid.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,8 +157,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.dev" />
         <item itemvalue="Docker.Dockerfile" />
+        <item itemvalue="npm.dev" />
         <item itemvalue="Jest.Unraid.spec.js" />
         <item itemvalue="npm.start" />
         <item itemvalue="Jest.PCI Check Changes" />
@@ -226,14 +205,8 @@
       <workItem from="1576141553128" duration="171000" />
       <workItem from="1576415739578" duration="11270000" />
       <workItem from="1576612398862" duration="6962000" />
-      <workItem from="1589885362553" duration="4655000" />
-    </task>
-    <task id="LOCAL-00036" summary="Add vm create">
-      <created>1561296417475</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1561296417475</updated>
+      <workItem from="1589885362553" duration="6055000" />
+      <workItem from="1589905269676" duration="201000" />
     </task>
     <task id="LOCAL-00037" summary="Fix edit and create bugs">
       <created>1561399555092</created>
@@ -571,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576617024470</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="Start adding shutdown and reboot - finished move and check">
+      <created>1589903385148</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1589903385148</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -629,7 +609,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Missing checks" />
     <MESSAGE value="Fix mistake" />
     <MESSAGE value="Auto reconnect" />
     <MESSAGE value="Update readmen" />
@@ -654,25 +633,46 @@
     <MESSAGE value="Fix old auth bug" />
     <MESSAGE value="Add docker support" />
     <MESSAGE value="Fix some bugs and update switch information on success" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix some bugs and update switch information on success" />
+    <MESSAGE value="Start adding shutdown and reboot - finished move and check" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start adding shutdown and reboot - finished move and check" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1771" height="414" key="GridCell.Tab.0.bottom" timestamp="1589903351743">
+    <state x="725" y="392" width="341" height="383" key="#Docker_Registry" timestamp="1589904280374">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1589903351743" />
-    <state width="1771" height="414" key="GridCell.Tab.0.center" timestamp="1589903351741">
+    <state x="725" y="392" width="341" height="383" key="#Docker_Registry/0.0.1792.1120@0.0.1792.1120" timestamp="1589904280374" />
+    <state x="725" y="392" key="#Docker_Registry2" timestamp="1589904284725">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1589903351741" />
-    <state width="1771" height="414" key="GridCell.Tab.0.left" timestamp="1589903351739">
+    <state x="725" y="392" key="#Docker_Registry2/0.0.1792.1120@0.0.1792.1120" timestamp="1589904284725" />
+    <state x="496" y="225" key="#Push_Image" timestamp="1589904667551">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1589903351739" />
-    <state width="1771" height="414" key="GridCell.Tab.0.right" timestamp="1589903351741">
+    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1589904667551" />
+    <state x="479" y="162" key="CommitChangelistDialog2" timestamp="1589905838363">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1589903351741" />
+    <state x="479" y="162" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1589905838363" />
+    <state width="1771" height="414" key="GridCell.Tab.0.bottom" timestamp="1589903403353">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1771" height="414" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403353" />
+    <state width="1771" height="414" key="GridCell.Tab.0.center" timestamp="1589903403352">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1771" height="414" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403352" />
+    <state width="1771" height="414" key="GridCell.Tab.0.left" timestamp="1589903403351">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1771" height="414" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403351" />
+    <state width="1771" height="414" key="GridCell.Tab.0.right" timestamp="1589903403352">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1771" height="414" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403352" />
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1589903386323">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1589903386323" />
     <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1589902156317">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>

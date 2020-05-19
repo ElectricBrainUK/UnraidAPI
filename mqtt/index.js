@@ -344,7 +344,8 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_power_off",
       "unique_id": serverTitleSanitised + " unraid server power off",
-      "device": serverDevice
+      "device": serverDevice,
+      "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/powerOff"
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/powerOff");
 
@@ -357,7 +358,8 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_reboot",
       "unique_id": serverTitleSanitised + " unraid server reboot",
-      "device": serverDevice
+      "device": serverDevice,
+      "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/reboot"
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/reboot");
 
@@ -370,7 +372,8 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_partityCheck",
       "unique_id": serverTitleSanitised + " unraid server parity check",
-      "device": serverDevice
+      "device": serverDevice,
+      "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/check"
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/check");
 
@@ -383,7 +386,8 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_mover",
       "unique_id": serverTitleSanitised + " unraid server mover",
-      "device": serverDevice
+      "device": serverDevice,
+      "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/move"
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/move");
 
