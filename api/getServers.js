@@ -6,7 +6,7 @@ export default function(req, res, next) {
   try {
     servers = JSON.parse(fs.readFileSync("config/servers.json"));
   } catch (e) {
-    console.log("Failed to retrieve config file, creating new. Error message: ", e);
+    console.log("Failed to retrieve config file, creating new.");
     if (!fs.existsSync("config/")){
       fs.mkdirSync("config/");
     }

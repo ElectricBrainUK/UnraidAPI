@@ -163,7 +163,9 @@ function scrapeMainHTML(ip, serverAuth) {
     let protection = extractValue(response.data, "</td></tr>\n          <tr><td>", "</td><td>");
     return {
       arrayStatus: extractReverseValue(extractValue(response.data, "<table class=\"array_status\">", "/span>"), "<", ">").split(",")[0],
-      arrayProtection: protection.includes(">") ? undefined : protection
+      arrayProtection: protection.includes(">") ? undefined : protection,
+      moverRunning: response.data.includes("Disabled - Mover is running."),
+      parityCheckRunning: response.data.includes("Parity-Check in progress.")
     };
   }).catch(e => {
     console.log("Get Main Details for ip: " + ip + " Failed with status code: " + e.statusText);
@@ -517,6 +519,56 @@ export function changeArrayState(action, server, auth, token) {
     callFailed(server);
     console.log(e.message);
   });
+}
+
+export function changeServerState(action, server, auth, token) {
+  switch (action) {
+    case "shutdown":
+      break;
+    case "reboot":
+      break;
+    case "move":
+      return axios({
+        method: "POST",
+        url: (server.includes("http") ? server : "http://" + server) + "/update.htm",
+        headers: {
+          "Authorization": "Basic " + auth,
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cookie": authCookies[server] ? authCookies[server] : ""
+        },
+        data: "cmdStartMover=Move&csrf_token=" + token,
+        httpAgent: new http.Agent({ keepAlive: true })
+      });
+    case "check":
+      return axios({
+        method: "POST",
+        url: (server.includes("http") ? server : "http://" + server) + "/update.htm",
+        headers: {
+          "Authorization": "Basic " + auth,
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cookie": authCookies[server] ? authCookies[server] : ""
+        },
+        data: "startState=STARTED&file=&cmdCheck=Check&optionCorrect=correct&csrf_token=" + token,
+        httpAgent: new http.Agent({ keepAlive: true })
+      });
+    case "check-cancel":
+      return axios({
+        method: "POST",
+        url: (server.includes("http") ? server : "http://" + server) + "/update.htm",
+        headers: {
+          "Authorization": "Basic " + auth,
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cookie": authCookies[server] ? authCookies[server] : ""
+        },
+        data: "startState=STARTED&file=&csrf_token=" + token + "&cmdNoCheck=Cancel",
+        httpAgent: new http.Agent({ keepAlive: true })
+      });
+    default:
+      console.log("Looks like you tried to change the server state but without describing how.");
+  }
 }
 
 export function changeVMState(id, action, server, auth, token) {

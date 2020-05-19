@@ -1,5 +1,12 @@
 import mqtt from "mqtt";
-import { changeArrayState, changeDockerState, changeVMState, getCSRFToken, getUnraidDetails } from "../utils/Unraid";
+import {
+  changeArrayState,
+  changeDockerState,
+  changeServerState,
+  changeVMState,
+  getCSRFToken,
+  getUnraidDetails
+} from "../utils/Unraid";
 import fs from "fs";
 import { attachUSB, detachUSB } from "../api/usbAttach";
 import uniqid from "uniqid";
@@ -180,7 +187,30 @@ export default function startMQTTClient() {
         serverDetails.arrayStatus = message.toString();
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
         responses.push(await changeArrayState(command, ip, keys[ip], token));
+      } else if (topic.includes("powerOff")) {
+        serverDetails.on = false;
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        responses.push(await changeServerState("shutdown", ip, keys[ip], token));
+      } else if (topic.includes("reboot")) {
+        serverDetails.on = false;
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        responses.push(await changeServerState("reboot", ip, keys[ip], token));
+      } else if (topic.includes("check")) {
+        if (!serverDetails.parityCheckRunning) {
+          serverDetails.parityCheckRunning = true;
+          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+          responses.push(await changeServerState("check", ip, keys[ip], token));
+        } else {
+          serverDetails.parityCheckRunning = false;
+          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+          responses.push(await changeServerState("check-cancel", ip, keys[ip], token));
+        }
+      } else if (topic.includes("move")) {
+        serverDetails.moverRunning = true;
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        responses.push(await changeServerState("move", ip, keys[ip], token));
       }
+
       let success = true;
       responses.forEach(response => {
         if (response && success) {
@@ -275,6 +305,12 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
   }
 
   if (updated[ip].details !== JSON.stringify(server.serverDetails)) {
+    const serverDevice = {
+      "identifiers": [serverTitleSanitised],
+      "name": serverTitleSanitised + "_server",
+      "manufacturer": server.serverDetails.motherboard,
+      "model": "Unraid Server"
+    };
     client.publish(process.env.MQTTBaseTopic + "/binary_sensor/" + serverTitleSanitised + "/config", JSON.stringify({
       "payload_on": true,
       "payload_off": false,
@@ -284,12 +320,7 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_server",
       "unique_id": serverTitleSanitised + " unraid api server",
-      "device": {
-        "identifiers": [serverTitleSanitised],
-        "name": serverTitleSanitised + "_server",
-        "manufacturer": server.serverDetails.motherboard,
-        "model": "Unraid Server"
-      }
+      "device": serverDevice
     }));
     client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/config", JSON.stringify({
       "payload_on": "Started",
@@ -299,15 +330,63 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_array",
       "unique_id": serverTitleSanitised + " unraid api array",
-      "device": {
-        "identifiers": [serverTitleSanitised],
-        "name": serverTitleSanitised + "_server",
-        "manufacturer": server.serverDetails.motherboard,
-        "model": "Unraid Server"
-      },
+      "device": serverDevice,
       "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/array"
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/array");
+
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "PowerOff/config", JSON.stringify({
+      "payload_on": false,
+      "payload_off": true,
+      "value_template": "{{ value_json.on }}",
+      "device_class": "power",
+      "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "name": serverTitleSanitised + "_power_off",
+      "unique_id": serverTitleSanitised + " unraid server power off",
+      "device": serverDevice
+    }));
+    client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/powerOff");
+
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "Reboot/config", JSON.stringify({
+      "payload_on": false,
+      "payload_off": true,
+      "value_template": "{{ value_json.on }}",
+      "device_class": "power",
+      "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "name": serverTitleSanitised + "_reboot",
+      "unique_id": serverTitleSanitised + " unraid server reboot",
+      "device": serverDevice
+    }));
+    client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/reboot");
+
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "ParityCheck/config", JSON.stringify({
+      "payload_on": true,
+      "payload_off": false,
+      "value_template": "{{ value_json.parityCheckRunning }}",
+      "device_class": "power",
+      "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "name": serverTitleSanitised + "_partityCheck",
+      "unique_id": serverTitleSanitised + " unraid server parity check",
+      "device": serverDevice
+    }));
+    client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/check");
+
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "Mover/config", JSON.stringify({
+      "payload_on": true,
+      "payload_off": false,
+      "value_template": "{{ value_json.moverRunning }}",
+      "device_class": "power",
+      "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
+      "name": serverTitleSanitised + "_mover",
+      "unique_id": serverTitleSanitised + " unraid server mover",
+      "device": serverDevice
+    }));
+    client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/move");
+
     client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
     updated[ip].details = JSON.stringify(server.serverDetails);
   }

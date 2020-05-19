@@ -35,7 +35,7 @@
       </v-container>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+      <span>&copy; 2020 Electric Brain Ltd</span>
     </v-footer>
   </v-app>
 </template>
