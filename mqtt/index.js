@@ -37,6 +37,7 @@ export default function startMQTTClient() {
   try {
     client.on("connect", () => {
       console.log("Connected to mqtt broker");
+      client.subscribe(process.env.MQTTBaseTopic + "/bridge/state");
       updateMQTT(client);
       if (repeater) {
         repeater = clearTimeout(repeater);
@@ -49,6 +50,13 @@ export default function startMQTTClient() {
     client.on("message", async (topic, message) => {
       let queryID = await uniqid.time("MQTT-R-", "");
       console.log("Received MQTT Topic: " + topic + " and Message: " + message + " assigning ID: " + queryID);
+
+      if (topic === (process.env.MQTTBaseTopic + "/bridge/state")) {
+        updated = {};
+        console.log("Invalidating caches as the MQTT Bridge just restarted");
+        console.log(queryID + " succeeded");
+        return;
+      }
 
       let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
       let servers = JSON.parse(fs.readFileSync("config/servers.json"));
@@ -185,29 +193,29 @@ export default function startMQTTClient() {
           command = "stop";
         }
         serverDetails.arrayStatus = message.toString();
-        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
         responses.push(await changeArrayState(command, ip, keys[ip], token));
       } else if (topic.includes("powerOff")) {
         serverDetails.on = false;
-        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
         responses.push(await changeServerState("shutdown", ip, keys[ip], token));
       } else if (topic.includes("reboot")) {
         serverDetails.on = false;
-        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
         responses.push(await changeServerState("reboot", ip, keys[ip], token));
       } else if (topic.includes("check")) {
         if (!serverDetails.parityCheckRunning) {
           serverDetails.parityCheckRunning = true;
-          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
           responses.push(await changeServerState("check", ip, keys[ip], token));
         } else {
           serverDetails.parityCheckRunning = false;
-          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+          client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
           responses.push(await changeServerState("check-cancel", ip, keys[ip], token));
         }
       } else if (topic.includes("move")) {
         serverDetails.moverRunning = true;
-        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
         responses.push(await changeServerState("move", ip, keys[ip], token));
       }
 
@@ -315,7 +323,6 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "payload_on": true,
       "payload_off": false,
       "value_template": "{{ value_json.on }}",
-      "device_class": "power",
       "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_server",
@@ -335,13 +342,11 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/array");
 
-    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "PowerOff/config", JSON.stringify({
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/powerOff/config", JSON.stringify({
       "payload_on": false,
       "payload_off": true,
       "value_template": "{{ value_json.on }}",
-      "device_class": "power",
       "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
-      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_power_off",
       "unique_id": serverTitleSanitised + " unraid server power off",
       "device": serverDevice,
@@ -349,13 +354,11 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/powerOff");
 
-    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "Reboot/config", JSON.stringify({
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/reboot/config", JSON.stringify({
       "payload_on": false,
       "payload_off": true,
       "value_template": "{{ value_json.on }}",
-      "device_class": "power",
       "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
-      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_reboot",
       "unique_id": serverTitleSanitised + " unraid server reboot",
       "device": serverDevice,
@@ -363,13 +366,11 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/reboot");
 
-    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "ParityCheck/config", JSON.stringify({
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/parityCheck/config", JSON.stringify({
       "payload_on": true,
       "payload_off": false,
       "value_template": "{{ value_json.parityCheckRunning }}",
-      "device_class": "power",
       "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
-      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_partityCheck",
       "unique_id": serverTitleSanitised + " unraid server parity check",
       "device": serverDevice,
@@ -377,13 +378,11 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/check");
 
-    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "Mover/config", JSON.stringify({
+    client.publish(process.env.MQTTBaseTopic + "/switch/" + serverTitleSanitised + "/mover/config", JSON.stringify({
       "payload_on": true,
       "payload_off": false,
       "value_template": "{{ value_json.moverRunning }}",
-      "device_class": "power",
       "state_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
-      "json_attributes_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised,
       "name": serverTitleSanitised + "_mover",
       "unique_id": serverTitleSanitised + " unraid server mover",
       "device": serverDevice,
