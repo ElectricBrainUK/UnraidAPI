@@ -60,7 +60,7 @@ export default {
         },
         {
           icon: 'bubble_chart',
-          title: 'Disable MQTT Devices',
+          title: 'Manual Config',
           to: '/mqtt'
         }
       ],
