@@ -9,10 +9,10 @@ export default function(req, res, next) {
   }).on("end", async () => {
     const ip = Buffer.concat(body).toString();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       setTimeout(() => {
         deleteIP(ip)
-      }, 5000 * i);
+      }, 10000 * i);
     }
 
     response.status = 200;
