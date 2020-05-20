@@ -16,7 +16,11 @@ export default function(req, res, next) {
         res.send(response);
       }
     } catch (e) {
-      res.send(fs.readFileSync("config/mqttDisabledDevices.json"));
+      try {
+        res.send(fs.readFileSync("config/mqttDisabledDevices.json"));
+      } catch (e) {
+        fs.writeFileSync("config/mqttDisabledDevices.json", JSON.stringify([]));
+      }
     }
   });
 };

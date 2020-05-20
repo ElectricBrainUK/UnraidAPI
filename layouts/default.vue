@@ -57,6 +57,11 @@ export default {
           icon: 'bubble_chart',
           title: 'API Docs',
           to: '/docs'
+        },
+        {
+          icon: 'bubble_chart',
+          title: 'Disable MQTT Devices',
+          to: '/mqtt'
         }
       ],
       miniVariant: false,

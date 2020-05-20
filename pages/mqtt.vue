@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-expansion-panel v-if="servers">
+    <v-expansion-panel v-if="servers && Object.keys(servers).length > 0">
       <template v-slot:header>
         Servers
       </template>
@@ -12,6 +12,7 @@
           {{ip}}
 
           <v-spacer></v-spacer>
+          <v-btn @click="deleteServer(ip)">Delete</v-btn>
           <v-switch
             v-model="serversActive[ip]"
             label="Hide"
@@ -19,7 +20,7 @@
           ></v-switch>
         </template>
 
-        <v-expansion-panel v-if="server.vm">
+        <v-expansion-panel v-if="server && server.vm">
           <v-expansion-panel-content>
             <template v-slot:header>
               VMs
@@ -79,7 +80,7 @@
             </v-expansion-panel>
           </v-expansion-panel-content>
         </v-expansion-panel>
-        <v-expansion-panel v-if="server.docker">
+        <v-expansion-panel v-if="server && server.docker">
           <v-expansion-panel-content>
             <template v-slot:header>
               Docker
@@ -141,12 +142,26 @@
       };
     },
     methods: {
+      deleteServer(ip) {
+        axios({
+          method: "post",
+          url: "api/deleteServer",
+          data: ip
+        }).then(response => {
+          console.log(response);
+          this.servers[ip] = undefined;
+          this.getServers();
+        });
+      },
       getServers() {
         axios({
           method: "get",
           url: "api/getServers"
         }).then(async (response) => {
           this.servers = response.data.servers;
+          console.log(this.servers);
+        }).catch((e) => {
+          console.log(e);
         });
         axios({
           method: "get",
