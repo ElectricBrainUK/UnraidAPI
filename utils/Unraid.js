@@ -99,8 +99,10 @@ function getUSBDetails(servers, serverAuth) {
         }
         updateFile(servers, ip, "usbDetails");
       }).catch(e => {
-        console.log("Get USB Details for ip: " + ip + " Failed with status code: " + e.statusText);
-        callFailed(ip);
+        console.log("Get USB Details for ip: " + ip + " Failed");
+        if (!e.response || !e.response.status || e.response.status !== 503) {
+          callFailed(ip);
+        }
         console.log(e.message);
         if (e.message.includes("ETIMEDOUT")) {
           servers[ip].status = "offline";
@@ -144,8 +146,10 @@ function scrapeHTML(ip, serverAuth) {
         "<span class='info'>", "<")
     };
   }).catch(e => {
-    console.log("Get Dashboard Details for ip: " + ip + " Failed with status code: " + e.statusText);
-    callFailed(ip);
+    console.log("Get Dashboard Details for ip: " + ip + " Failed with status code: " + e.response);
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(ip);
+    }
     console.log(e.message);
   });
 }
@@ -168,8 +172,10 @@ function scrapeMainHTML(ip, serverAuth) {
       parityCheckRunning: response.data.includes("Parity-Check in progress.")
     };
   }).catch(e => {
-    console.log("Get Main Details for ip: " + ip + " Failed with status code: " + e.statusText);
-    callFailed(ip);
+    console.log("Get Main Details for ip: " + ip + " Failed");
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(ip);
+    }
     console.log(e.message);
   });
 }
@@ -203,8 +209,10 @@ function getVMs(servers, serverAuth) {
       servers[ip].vm.details = await processVMResponse(details, ip, serverAuth[ip]);
       updateFile(servers, ip, "vm");
     }).catch(e => {
-      console.log("Get VM Details for ip: " + ip + " Failed with status code: " + e.statusText);
-      callFailed(ip);
+      console.log("Get VM Details for ip: " + ip + " Failed");
+      if (!e.response || !e.response.status || e.response.status !== 503) {
+        callFailed(ip);
+      }
       console.log(e.message);
     });
   });
@@ -286,8 +294,10 @@ function getDockers(servers, serverAuth) {
       servers[ip].docker.details = await processDockerResponse(details);
       updateFile(servers, ip, "docker");
     }).catch(e => {
-      console.log("Get Docker Details for ip: " + ip + " Failed with status code: " + e.statusText);
-      callFailed(ip);
+      console.log("Get Docker Details for ip: " + ip + " Failed");
+      if (!e.response || !e.response.status || e.response.status !== 503) {
+        callFailed(ip);
+      }
       console.log(e.message);
     });
   });
@@ -484,8 +494,10 @@ export function getCSRFToken(server, auth) {
     callSucceeded(server);
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
-    console.log("Get CSRF Token for server: " + server + " Failed with status code: " + e.statusText);
-    callFailed(server);
+    console.log("Get CSRF Token for server: " + server + " Failed");
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(server);
+    }
     console.log(e.message);
   });
 }
@@ -515,8 +527,10 @@ export function changeArrayState(action, server, auth, token) {
     callSucceeded(server);
     return response.data;
   }).catch(e => {
-    console.log("Change Array State for ip: " + ip + " Failed with status code: " + e.statusText);
-    callFailed(server);
+    console.log("Change Array State for ip: " + ip + " Failed");
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(server);
+    }
     console.log(e.message);
   });
 }
@@ -524,9 +538,41 @@ export function changeArrayState(action, server, auth, token) {
 export function changeServerState(action, server, auth, token) {
   switch (action) {
     case "shutdown":
-      break;
+      return axios({
+        method: "POST",
+        url: (server.includes("http") ? server : "http://" + server) + "/webGui/include/Boot.php",
+        headers: {
+          "Authorization": "Basic " + auth,
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cookie": authCookies[server] ? authCookies[server] : ""
+        },
+        data: "csrf_token=" + token + "&cmd=shutdown",
+        httpAgent: new http.Agent({ keepAlive: true })
+      }).then(() => {
+        return {success: true}
+      }).catch(e => {
+        console.log(e);
+        return {success: false}
+      });
     case "reboot":
-      break;
+      return axios({
+        method: "POST",
+        url: (server.includes("http") ? server : "http://" + server) + "/webGui/include/Boot.php",
+        headers: {
+          "Authorization": "Basic " + auth,
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cookie": authCookies[server] ? authCookies[server] : ""
+        },
+        data: "csrf_token=" + token + "&cmd=reboot",
+        httpAgent: new http.Agent({ keepAlive: true })
+      }).then(() => {
+        return {success: true}
+      }).catch(e => {
+        console.log(e);
+        return {success: false}
+      });
     case "move":
       return axios({
         method: "POST",
@@ -539,6 +585,11 @@ export function changeServerState(action, server, auth, token) {
         },
         data: "cmdStartMover=Move&csrf_token=" + token,
         httpAgent: new http.Agent({ keepAlive: true })
+      }).then(() => {
+        return {success: true}
+      }).catch(e => {
+        console.log(e);
+        return {success: false}
       });
     case "check":
       return axios({
@@ -552,6 +603,11 @@ export function changeServerState(action, server, auth, token) {
         },
         data: "startState=STARTED&file=&cmdCheck=Check&optionCorrect=correct&csrf_token=" + token,
         httpAgent: new http.Agent({ keepAlive: true })
+      }).then(() => {
+        return {success: true}
+      }).catch(e => {
+        console.log(e);
+        return {success: false}
       });
     case "check-cancel":
       return axios({
@@ -565,6 +621,11 @@ export function changeServerState(action, server, auth, token) {
         },
         data: "startState=STARTED&file=&csrf_token=" + token + "&cmdNoCheck=Cancel",
         httpAgent: new http.Agent({ keepAlive: true })
+      }).then(() => {
+        return {success: true}
+      }).catch(e => {
+        console.log(e);
+        return {success: false}
       });
     default:
       console.log("Looks like you tried to change the server state but without describing how.");
@@ -593,8 +654,10 @@ export function changeVMState(id, action, server, auth, token) {
     }
     return response.data;
   }).catch(e => {
-    console.log("Change VM State for ip: " + server + " Failed with status code: " + e.statusText);
-    callFailed(server);
+    console.log("Change VM State for ip: " + server + " Failed");
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(server);
+    }
     console.log(e.message);
   });
 }
@@ -621,8 +684,10 @@ export function changeDockerState(id, action, server, auth, token) {
     }
     return response.data;
   }).catch(e => {
-    console.log("Change Docker State for ip: " + server + " Failed with status code: " + e.statusText);
-    callFailed(server);
+    console.log("Change Docker State for ip: " + server + " Failed");
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(server);
+    }
     console.log(e.message);
   });
 }
@@ -644,8 +709,10 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
     callSucceeded(ip);
     return extractVMDetails(vmObject, response, ip);
   }).catch(e => {
-    console.log("Get VM Edit details for ip: " + ip + " Failed with status code: " + e.statusText);
-    callFailed(ip);
+    console.log("Get VM Edit details for ip: " + ip + " Failed");
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(ip);
+    }
     console.log(e.message);
     vmObject.edit = servers[ip].vm.details[id].edit;
     return vmObject;
@@ -903,8 +970,10 @@ export async function requestChange(ip, id, auth, vmObject, create) {
     callSucceeded(ip);
     return response.data;
   }).catch(e => {
-    console.log("Make Edit for ip: " + ip + " Failed with status code: " + e.statusText);
-    callFailed(ip);
+    console.log("Make Edit for ip: " + ip + " Failed");
+    if (!e.response || !e.response.status || e.response.status !== 503) {
+      callFailed(ip);
+    }
     console.log(e.message);
   });
 }
