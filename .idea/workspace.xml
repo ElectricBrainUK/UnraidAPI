@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mqtt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/mqtt/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,20 +64,20 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/api" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/app/api" />
-      <recent name="$PROJECT_DIR$/config" />
-    </key>
-    <key name="es6.move.members.recent.items">
-      <recent name="$PROJECT_DIR$/utils/Unraid.js" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/test/unit" />
       <recent name="$PROJECT_DIR$/app/components/documentation" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/utils/Unraid.js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/app/api" />
+      <recent name="$PROJECT_DIR$/config" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -206,56 +207,13 @@
       <workItem from="1576415739578" duration="11270000" />
       <workItem from="1576612398862" duration="6962000" />
       <workItem from="1589885362553" duration="6055000" />
-      <workItem from="1589905269676" duration="201000" />
-    </task>
-    <task id="LOCAL-00037" summary="Fix edit and create bugs">
-      <created>1561399555092</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1561399555092</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Added pci device selection">
-      <created>1561411940881</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1561411940881</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Added pci device selector">
-      <created>1561415276753</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1561415276753</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Fix pci selector bug">
-      <created>1561416010326</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1561416010326</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Add bios carry over">
-      <created>1561416476614</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1561416476614</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Visual update">
-      <created>1561499641091</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1561499641091</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Add auth to UI">
-      <created>1561992712763</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1561992712764</updated>
+      <workItem from="1589905269676" duration="12536000" />
+      <workItem from="1590364705487" duration="3219000" />
+      <workItem from="1590434712088" duration="1859000" />
+      <workItem from="1590617012038" duration="343000" />
+      <workItem from="1590751612253" duration="587000" />
+      <workItem from="1591632220037" duration="795000" />
+      <workItem from="1593089905173" duration="1430000" />
     </task>
     <task id="LOCAL-00044" summary="Add new auth changes throughout">
       <created>1561995849836</created>
@@ -551,7 +509,56 @@
       <option name="project" value="LOCAL" />
       <updated>1589903385148</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Forgot to add new switches to broadcast">
+      <created>1589905852559</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1589905852559</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Some fixes and realisations on device discovery">
+      <created>1589924469143</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1589924469143</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Add delete server">
+      <created>1589968891954</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1589968891954</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Ensure proper deletion">
+      <created>1589969980231</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1589969980231</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Just to be safe">
+      <created>1589970442774</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1589970442774</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Reword">
+      <created>1589970561648</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1589970561648</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Reduce retries and improve delete">
+      <created>1590448451566</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1590448451567</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -609,13 +616,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix mistake" />
-    <MESSAGE value="Auto reconnect" />
-    <MESSAGE value="Update readmen" />
-    <MESSAGE value="Try github CI" />
-    <MESSAGE value="Add usb controls" />
-    <MESSAGE value="Add usb id" />
-    <MESSAGE value="Add array controls" />
     <MESSAGE value="Fix some urls" />
     <MESSAGE value="Add small detail" />
     <MESSAGE value="Add some details to readme" />
@@ -634,7 +634,14 @@
     <MESSAGE value="Add docker support" />
     <MESSAGE value="Fix some bugs and update switch information on success" />
     <MESSAGE value="Start adding shutdown and reboot - finished move and check" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start adding shutdown and reboot - finished move and check" />
+    <MESSAGE value="Forgot to add new switches to broadcast" />
+    <MESSAGE value="Some fixes and realisations on device discovery" />
+    <MESSAGE value="Add delete server" />
+    <MESSAGE value="Ensure proper deletion" />
+    <MESSAGE value="Just to be safe" />
+    <MESSAGE value="Reword" />
+    <MESSAGE value="Reduce retries and improve delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reduce retries and improve delete" />
   </component>
   <component name="WindowStateProjectService">
     <state x="725" y="392" width="341" height="383" key="#Docker_Registry" timestamp="1589904280374">
@@ -645,37 +652,89 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="725" y="392" key="#Docker_Registry2/0.0.1792.1120@0.0.1792.1120" timestamp="1589904284725" />
-    <state x="496" y="225" key="#Push_Image" timestamp="1589904667551">
+    <state x="496" y="225" key="#Push_Image" timestamp="1590452615806">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1589904667551" />
-    <state x="479" y="162" key="CommitChangelistDialog2" timestamp="1589905838363">
+    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1590452615806" />
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1590448451388">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="479" y="162" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1589905838363" />
-    <state width="1771" height="414" key="GridCell.Tab.0.bottom" timestamp="1589903403353">
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1590448451388" />
+    <state width="856" height="414" key="GridCell.Tab.0.bottom" timestamp="1590448426515">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403353" />
-    <state width="1771" height="414" key="GridCell.Tab.0.center" timestamp="1589903403352">
+    <state width="856" height="414" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426515" />
+    <state width="856" height="414" key="GridCell.Tab.0.center" timestamp="1590448426510">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403352" />
-    <state width="1771" height="414" key="GridCell.Tab.0.left" timestamp="1589903403351">
+    <state width="856" height="414" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426510" />
+    <state width="856" height="414" key="GridCell.Tab.0.left" timestamp="1590448426499">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403351" />
-    <state width="1771" height="414" key="GridCell.Tab.0.right" timestamp="1589903403352">
+    <state width="856" height="414" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426499" />
+    <state width="856" height="414" key="GridCell.Tab.0.right" timestamp="1590448426514">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1771" height="414" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1589903403352" />
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1589903386323">
+    <state width="856" height="414" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426514" />
+    <state width="885" height="391" key="GridCell.Tab.1.bottom" timestamp="1590405055078">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1589903386323" />
-    <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1589902156317">
+    <state width="885" height="391" key="GridCell.Tab.1.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055078" />
+    <state width="885" height="391" key="GridCell.Tab.1.center" timestamp="1590405055077">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="554" y="322" width="683" height="476" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1589902156317" />
+    <state width="885" height="391" key="GridCell.Tab.1.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055077" />
+    <state width="885" height="391" key="GridCell.Tab.1.left" timestamp="1590405055076">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.1.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055076" />
+    <state width="885" height="391" key="GridCell.Tab.1.right" timestamp="1590405055077">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.1.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055077" />
+    <state width="885" height="391" key="GridCell.Tab.2.bottom" timestamp="1590405055080">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.2.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055080" />
+    <state width="885" height="391" key="GridCell.Tab.2.center" timestamp="1590405055079">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.2.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055079" />
+    <state width="885" height="391" key="GridCell.Tab.2.left" timestamp="1590405055079">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.2.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055079" />
+    <state width="885" height="391" key="GridCell.Tab.2.right" timestamp="1590405055080">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.2.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055080" />
+    <state width="885" height="391" key="GridCell.Tab.3.bottom" timestamp="1590405055082">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.3.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055082" />
+    <state width="885" height="391" key="GridCell.Tab.3.center" timestamp="1590405055081">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.3.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055081" />
+    <state width="885" height="391" key="GridCell.Tab.3.left" timestamp="1590405055081">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.3.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055081" />
+    <state width="885" height="391" key="GridCell.Tab.3.right" timestamp="1590405055082">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="885" height="391" key="GridCell.Tab.3.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055082" />
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1590448452699">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1590448452699" />
+    <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1589970151972">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="554" y="322" width="683" height="476" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1589970151972" />
+    <state x="561" y="251" key="search.everywhere.popup" timestamp="1589966430561">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="561" y="251" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1589966430561" />
   </component>
 </project>

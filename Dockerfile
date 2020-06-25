@@ -3,7 +3,7 @@ FROM node:latest
 ENV NODE_ENV=production
 ENV HOST 0.0.0.0
 ENV PORT 80
-ENV NODE_OPTIONS="--max_old_space_size=4096"
+ENV NODE_OPTIONS="--max_old_space_size=256"
 
 ENV APP_ROOT /app
 

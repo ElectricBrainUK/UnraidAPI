@@ -19,16 +19,16 @@
     "KeyStorage": null
   },
   "schema": {
-    "MQTTBroker": "str",
-    "MQTTPort": "int",
-    "MQTTUser": "str",
-    "MQTTPass": "str",
-    "MQTTBaseTopic": "str",
-    "MQTTSecure": "bool",
-    "MQTTSelfSigned": "bool",
-    "MQTTRefreshRate": "int",
-    "MQTTCacheTime": "int",
-    "KeyStorage": "str"
+    "MQTTBroker": "str?",
+    "MQTTPort": "int?",
+    "MQTTUser": "str?",
+    "MQTTPass": "str?",
+    "MQTTBaseTopic": "str?",
+    "MQTTSecure": "bool?",
+    "MQTTSelfSigned": "bool?",
+    "MQTTRefreshRate": "int?",
+    "MQTTCacheTime": "int?",
+    "KeyStorage": "str?"
   },
   "ports": {
     "80/tcp": 3005
