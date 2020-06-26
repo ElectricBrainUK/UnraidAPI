@@ -6,6 +6,7 @@
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "before",
   "boot": "auto",
+  "webui": "http://[HOST]:[PORT:80]",
   "options": {
     "MQTTBroker": null,
     "MQTTPort": null,

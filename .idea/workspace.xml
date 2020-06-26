@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mqtt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/mqtt/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +42,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML&#10;JSON&#10;JavaScript" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON&#10;HTML&#10;JavaScript" />
     <property name="editorconfig.notification" value="tab;" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.13.1" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/static" />
@@ -213,14 +211,10 @@
       <workItem from="1590617012038" duration="343000" />
       <workItem from="1590751612253" duration="587000" />
       <workItem from="1591632220037" duration="795000" />
-      <workItem from="1593089905173" duration="1430000" />
-    </task>
-    <task id="LOCAL-00044" summary="Add new auth changes throughout">
-      <created>1561995849836</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1561995849836</updated>
+      <workItem from="1593089905173" duration="2053000" />
+      <workItem from="1593118821543" duration="1271000" />
+      <workItem from="1593171533121" duration="107000" />
+      <workItem from="1593176071031" duration="4471000" />
     </task>
     <task id="LOCAL-00045" summary="Fix check for server password refs">
       <created>1562020531273</created>
@@ -558,7 +552,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590448451567</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="HA Addon support">
+      <created>1593096203066</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1593096203066</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -616,7 +617,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix some urls" />
     <MESSAGE value="Add small detail" />
     <MESSAGE value="Add some details to readme" />
     <MESSAGE value="Add some details to device" />
@@ -641,7 +641,8 @@
     <MESSAGE value="Just to be safe" />
     <MESSAGE value="Reword" />
     <MESSAGE value="Reduce retries and improve delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reduce retries and improve delete" />
+    <MESSAGE value="HA Addon support" />
+    <option name="LAST_COMMIT_MESSAGE" value="HA Addon support" />
   </component>
   <component name="WindowStateProjectService">
     <state x="725" y="392" width="341" height="383" key="#Docker_Registry" timestamp="1589904280374">
@@ -656,10 +657,10 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1590452615806" />
-    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1590448451388">
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1593096202649">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1590448451388" />
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1593096202649" />
     <state width="856" height="414" key="GridCell.Tab.0.bottom" timestamp="1590448426515">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
@@ -724,14 +725,18 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state width="885" height="391" key="GridCell.Tab.3.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055082" />
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1590448452699">
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1593096204060">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1590448452699" />
-    <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1589970151972">
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1593096204060" />
+    <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1593180783694">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="554" y="322" width="683" height="476" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1589970151972" />
+    <state x="554" y="322" width="683" height="476" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1593180783694" />
+    <state x="561" y="265" key="run.anything.popup" timestamp="1593120127256">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="561" y="265" key="run.anything.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1593120127256" />
     <state x="561" y="251" key="search.everywhere.popup" timestamp="1589966430561">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>

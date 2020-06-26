@@ -16,6 +16,14 @@ let retry;
 let updated = {};
 
 export default function startMQTTClient() {
+  try {
+    let haOptions = JSON.parse(fs.readFileSync("data/options.json"));
+    Object.keys(haOptions).forEach(key => {
+      process.env[key] = haOptions[key];
+    })
+  } catch (e) {
+    //do nothing
+  }
   if (!process.env.MQTTBroker) {
     console.log("mqtt disabled");
     return;
