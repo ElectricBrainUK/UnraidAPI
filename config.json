@@ -1,6 +1,6 @@
 {
   "name": "Unraid API",
-  "version": "1",
+  "version": "1.1",
   "slug": "unraid_api",
   "description": "An Unraid REST/MQTT Bridge for HA and other IOT platforms",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
