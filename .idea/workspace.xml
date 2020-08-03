@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/DockerfilePI" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mqtt/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/mqtt/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Unraid.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +47,7 @@
     <property name="editorconfig.notification" value="tab;" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.13.1" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/static" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -62,20 +63,20 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/api" />
+      <recent name="$PROJECT_DIR$/app/api" />
+      <recent name="$PROJECT_DIR$/config" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/utils/Unraid.js" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/test/unit" />
       <recent name="$PROJECT_DIR$/app/components/documentation" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="es6.move.members.recent.items">
-      <recent name="$PROJECT_DIR$/utils/Unraid.js" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/api" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/app/api" />
-      <recent name="$PROJECT_DIR$/config" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -169,7 +170,22 @@
       <list>
         <serviceView>
           <treeState>
-            <expand />
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="Containers" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="Images" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+            </expand>
             <select />
           </treeState>
         </serviceView>
@@ -214,28 +230,12 @@
       <workItem from="1593089905173" duration="2053000" />
       <workItem from="1593118821543" duration="1271000" />
       <workItem from="1593171533121" duration="107000" />
-      <workItem from="1593176071031" duration="4471000" />
-    </task>
-    <task id="LOCAL-00045" summary="Fix check for server password refs">
-      <created>1562020531273</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1562020531273</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Add reattach">
-      <created>1562102937801</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1562102937801</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Add detach">
-      <created>1562332128859</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1562332128859</updated>
+      <workItem from="1593176071031" duration="5957000" />
+      <workItem from="1593533777332" duration="992000" />
+      <workItem from="1593718362468" duration="9146000" />
+      <workItem from="1594040211265" duration="13988000" />
+      <workItem from="1595807660637" duration="197000" />
+      <workItem from="1595869887437" duration="3464000" />
     </task>
     <task id="LOCAL-00048" summary="Fix gathering bugs">
       <created>1562532684341</created>
@@ -559,7 +559,28 @@
       <option name="project" value="LOCAL" />
       <updated>1593096203066</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="Fix HA Env variables">
+      <created>1593187833299</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1593187833300</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Fix HA Env variables">
+      <created>1593191046560</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1593191046560</updated>
+    </task>
+    <task id="LOCAL-00096" summary="Update ver">
+      <created>1593192098131</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1593192098131</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -594,15 +615,6 @@
       <configuration name="Unraid.spec.js" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
@@ -617,8 +629,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add small detail" />
-    <MESSAGE value="Add some details to readme" />
     <MESSAGE value="Add some details to device" />
     <MESSAGE value="Updated error message" />
     <MESSAGE value="Allow key persistence" />
@@ -642,9 +652,15 @@
     <MESSAGE value="Reword" />
     <MESSAGE value="Reduce retries and improve delete" />
     <MESSAGE value="HA Addon support" />
-    <option name="LAST_COMMIT_MESSAGE" value="HA Addon support" />
+    <MESSAGE value="Fix HA Env variables" />
+    <MESSAGE value="Update ver" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update ver" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="496" y="225" key="#Docker" timestamp="1596484865491">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="496" y="225" key="#Docker/0.0.1792.1120@0.0.1792.1120" timestamp="1596484865491" />
     <state x="725" y="392" width="341" height="383" key="#Docker_Registry" timestamp="1589904280374">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
@@ -653,14 +669,22 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="725" y="392" key="#Docker_Registry2/0.0.1792.1120@0.0.1792.1120" timestamp="1589904284725" />
-    <state x="496" y="225" key="#Push_Image" timestamp="1590452615806">
+    <state x="496" y="225" key="#New_Docker_Connection" timestamp="1596484853646">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1590452615806" />
-    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1593096202649">
+    <state x="496" y="225" key="#New_Docker_Connection/0.0.1792.1120@0.0.1792.1120" timestamp="1596484853646" />
+    <state x="496" y="225" key="#Push_Image" timestamp="1596485769093">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1593096202649" />
+    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1596485769093" />
+    <state x="604" y="370" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1596484768872">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="604" y="370" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1792.1120@0.0.1792.1120" timestamp="1596484768872" />
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1593192098019">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1593192098019" />
     <state width="856" height="414" key="GridCell.Tab.0.bottom" timestamp="1590448426515">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
@@ -725,14 +749,14 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state width="885" height="391" key="GridCell.Tab.3.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055082" />
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1593096204060">
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1593192099098">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1593096204060" />
-    <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1593180783694">
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1593192099098" />
+    <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1596487207760">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="554" y="322" width="683" height="476" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1593180783694" />
+    <state x="554" y="322" width="683" height="476" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1596487207760" />
     <state x="561" y="265" key="run.anything.popup" timestamp="1593120127256">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>

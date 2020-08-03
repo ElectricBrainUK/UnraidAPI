@@ -230,15 +230,21 @@ function processDockerResponse(details) {
             switch (child.tags.class) {
               case "ct-name":
                 docker.imageUrl = child.children[0].children[0].children[0].tags.src.split("?")[0];
-                docker.name = child.children[0].children[1].children[0].children[0].contents;
-                docker.status = child.children[0].children[1].children[1].children[1].contents;
-                docker.containerId = child.children[1].contents.replace("Container ID: ", "");
+                if (child.children[0].children[1].children[0].children[0]) {
+                  docker.name = child.children[0].children[1].children[0].children[0].contents;
+                }
+                if (child.children[0].children[1].children[1].children[1]) {
+                  docker.status = child.children[0].children[1].children[1].children[1].contents;
+                }
+                if (child.children[1] && child.children[1].contents) {
+                  docker.containerId = child.children[1].contents.replace("Container ID: ", "");
+                }
                 break;
               case "updatecolumn":
-                if (child.children[2].contents) {
+                if (child.children[2] && child.children[2].contents) {
                   docker.tag = child.children[2].contents.trim();
                 }
-                if (child.children[0].contents) {
+                if (child.children[0] && child.children[0].contents) {
                   docker.uptoDate = child.children[0].contents.trim();
                 }
                 break;
@@ -252,10 +258,12 @@ function processDockerResponse(details) {
                 docker.imageUrl = child.children[0].children[0].children[0].tags.src;
                 break;
               case 1:
-                docker.imageId = child.contents.replace("Image ID: ", "");
+                if (child && child.contents) {
+                  docker.imageId = child.contents.replace("Image ID: ", "");
+                }
                 break;
               case 2:
-                if (child.contents.includes("Created")) {
+                if (child && child.contents && child.contents.includes("Created")) {
                   docker.created = child.contents;
                 }
                 break;
