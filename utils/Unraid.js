@@ -230,9 +230,7 @@ function processDockerResponse(details) {
             switch (child.tags.class) {
               case "ct-name":
                 docker.imageUrl = child.children[0].children[0].children[0].tags.src.split("?")[0];
-                if (child.children[0].children[1].children[0].children[0]) {
-                  docker.name = child.children[0].children[1].children[0].children[0].contents;
-                }
+                docker.name = child.children[0].children[1].children[0].children[0].contents;
                 if (child.children[0].children[1].children[1].children[1]) {
                   docker.status = child.children[0].children[1].children[1].children[1].contents;
                 }
@@ -558,10 +556,10 @@ export function changeServerState(action, server, auth, token) {
         data: "csrf_token=" + token + "&cmd=shutdown",
         httpAgent: new http.Agent({ keepAlive: true })
       }).then(() => {
-        return {success: true}
+        return { success: true };
       }).catch(e => {
         console.log(e);
-        return {success: false}
+        return { success: false };
       });
     case "reboot":
       return axios({
@@ -576,10 +574,10 @@ export function changeServerState(action, server, auth, token) {
         data: "csrf_token=" + token + "&cmd=reboot",
         httpAgent: new http.Agent({ keepAlive: true })
       }).then(() => {
-        return {success: true}
+        return { success: true };
       }).catch(e => {
         console.log(e);
-        return {success: false}
+        return { success: false };
       });
     case "move":
       return axios({
@@ -594,10 +592,10 @@ export function changeServerState(action, server, auth, token) {
         data: "cmdStartMover=Move&csrf_token=" + token,
         httpAgent: new http.Agent({ keepAlive: true })
       }).then(() => {
-        return {success: true}
+        return { success: true };
       }).catch(e => {
         console.log(e);
-        return {success: false}
+        return { success: false };
       });
     case "check":
       return axios({
@@ -612,10 +610,10 @@ export function changeServerState(action, server, auth, token) {
         data: "startState=STARTED&file=&cmdCheck=Check&optionCorrect=correct&csrf_token=" + token,
         httpAgent: new http.Agent({ keepAlive: true })
       }).then(() => {
-        return {success: true}
+        return { success: true };
       }).catch(e => {
         console.log(e);
-        return {success: false}
+        return { success: false };
       });
     case "check-cancel":
       return axios({
@@ -630,10 +628,10 @@ export function changeServerState(action, server, auth, token) {
         data: "startState=STARTED&file=&csrf_token=" + token + "&cmdNoCheck=Cancel",
         httpAgent: new http.Agent({ keepAlive: true })
       }).then(() => {
-        return {success: true}
+        return { success: true };
       }).catch(e => {
         console.log(e);
-        return {success: false}
+        return { success: false };
       });
     default:
       console.log("Looks like you tried to change the server state but without describing how.");
