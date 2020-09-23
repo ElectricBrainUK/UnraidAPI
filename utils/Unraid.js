@@ -21,9 +21,15 @@ export function getUnraidDetails(servers, serverAuth) {
 
 function logIn(servers, serverAuth) {
   Object.keys(servers).forEach(ip => {
-    if (!serverAuth[ip] || authCookies[ip]) {
+    if (!serverAuth[ip] || (authCookies[ip] && authCookies[ip] !== undefined)) {
+      if (!serverAuth[ip]) {
+        servers[ip].status = "offline";
+      } else {
+        servers[ip].status = "online";
+      }
       return;
     }
+    servers[ip].status = "offline";
     const buff = Buffer.from(serverAuth[ip], "base64");
 
     let details = buff.toString("ascii");
@@ -85,7 +91,6 @@ function getUSBDetails(servers, serverAuth) {
         }
       }).then(response => {
         callSucceeded(ip);
-        servers[ip].status = "online";
         updateFile(servers, ip, "status");
 
         servers[ip].usbDetails = [];
@@ -100,12 +105,13 @@ function getUSBDetails(servers, serverAuth) {
         updateFile(servers, ip, "usbDetails");
       }).catch(e => {
         console.log("Get USB Details for ip: " + ip + " Failed");
-        if (!e.response || !e.response.status || e.response.status !== 503) {
-          callFailed(ip);
+        if (e.response && e.response.status) {
+          callFailed(ip, e.response.status);
+        } else {
+          callFailed(ip, 404);
         }
         console.log(e.message);
         if (e.message.includes("ETIMEDOUT")) {
-          servers[ip].status = "offline";
           updateFile(servers, ip, "status");
         }
       });
@@ -115,16 +121,45 @@ function getUSBDetails(servers, serverAuth) {
 
 function getServerDetails(servers, serverAuth) {
   Object.keys(servers).forEach(async ip => {
+    if (servers[ip].serverDetails === undefined) {
+      servers[ip].serverDetails = {};
+    }
+
     if (!serverAuth[ip]) {
+      servers[ip].serverDetails.on = false;
       return;
     }
+
+    servers[ip].serverDetails.on = servers[ip].status === "online";
+
     servers[ip].serverDetails = await scrapeHTML(ip, serverAuth) || servers[ip].serverDetails;
     servers[ip].serverDetails = { ...await scrapeMainHTML(ip, serverAuth), ...servers[ip].serverDetails } || servers[ip].serverDetails;
 
-    servers[ip].serverDetails.on = !!servers[ip].status;
-
     updateFile(servers, ip, "serverDetails");
   });
+}
+
+function extractDiskDetails(details, tag, name) {
+  if (details[tag].includes(" used of ")) {
+    let diskDetails = details[tag].split(" used of ");
+
+    details[name + "UsedSpace"] = diskDetails[0];
+    details[name + "TotalSpace"] = diskDetails[1].substring(0, diskDetails[1].indexOf(" ("));
+
+    let totalSizeAndDenomination = details[name + "TotalSpace"].split(" ");
+    let usedSizeAndDenomination = details[name + "UsedSpace"].split(" ");
+    let usedNumber = usedSizeAndDenomination[0];
+    let totalNumber = totalSizeAndDenomination[0];
+
+    if (usedSizeAndDenomination[1] !== totalSizeAndDenomination[1]) {
+      totalNumber *= 1024;
+    }
+
+    let freeNumber = totalNumber - usedNumber;
+    details[name + "FreeSpace"] = freeNumber + " " + usedSizeAndDenomination[1];
+  } else {
+    details[tag] = undefined;
+  }
 }
 
 function scrapeHTML(ip, serverAuth) {
@@ -137,18 +172,25 @@ function scrapeHTML(ip, serverAuth) {
     }
   }).then((response) => {
     callSucceeded(ip);
-    return {
+    let details = {
       title: extractValue(response.data, "title>", "/"),
       cpu: extractReverseValue(extractValue(response.data, "cpu_view'>", "</tr"), "<br>", ">"),
       memory: extractValue(response.data, "Memory<br><span>", "<"),
       motherboard: extractValue(response.data, "<tr class='mb_view'><td></td><td colspan='3'>", "<"),
-      diskSpace: extractValue(response.data, "title='Go to disk settings'><i class='fa fa-fw fa-cog chevron mt0'></i></a>\n" +
-        "<span class='info'>", "<")
+      diskSpace: extractValue(extractValue(response.data, "Go to disk settings", "/span>"), "<span class='info'>", "<"),
+      cacheSpace: extractValue(extractValue(response.data, "Go to cache settings", "/span>"), "<span class='info'>", "<")
     };
+
+    extractDiskDetails(details, "diskSpace", "array");
+    extractDiskDetails(details, "cacheSpace", "cache");
+
+    return details;
   }).catch(e => {
     console.log("Get Dashboard Details for ip: " + ip + " Failed with status code: " + e.response);
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(ip);
+    if (e.response && e.response.status) {
+      callFailed(ip, e.response.status);
+    } else {
+      callFailed(ip, 404);
     }
     console.log(e.message);
   });
@@ -173,8 +215,10 @@ function scrapeMainHTML(ip, serverAuth) {
     };
   }).catch(e => {
     console.log("Get Main Details for ip: " + ip + " Failed");
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(ip);
+    if (e.response && e.response.status) {
+      callFailed(ip, e.response.status);
+    } else {
+      callFailed(ip, 404);
     }
     console.log(e.message);
   });
@@ -210,8 +254,10 @@ function getVMs(servers, serverAuth) {
       updateFile(servers, ip, "vm");
     }).catch(e => {
       console.log("Get VM Details for ip: " + ip + " Failed");
-      if (!e.response || !e.response.status || e.response.status !== 503) {
-        callFailed(ip);
+      if (e.response && e.response.status) {
+        callFailed(ip, e.response.status);
+      } else {
+        callFailed(ip, 404);
       }
       console.log(e.message);
     });
@@ -301,8 +347,10 @@ function getDockers(servers, serverAuth) {
       updateFile(servers, ip, "docker");
     }).catch(e => {
       console.log("Get Docker Details for ip: " + ip + " Failed");
-      if (!e.response || !e.response.status || e.response.status !== 503) {
-        callFailed(ip);
+      if (e.response && e.response.status) {
+        callFailed(ip, e.response.status);
+      } else {
+        callFailed(ip, 404);
       }
       console.log(e.message);
     });
@@ -501,8 +549,10 @@ export function getCSRFToken(server, auth) {
     return extractValue(response.data, "csrf_token=", "'");
   }).catch(e => {
     console.log("Get CSRF Token for server: " + server + " Failed");
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(server);
+    if (e.response && e.response.status) {
+      callFailed(server, e.response.status);
+    } else {
+      callFailed(server, 404);
     }
     console.log(e.message);
   });
@@ -534,8 +584,10 @@ export function changeArrayState(action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change Array State for ip: " + ip + " Failed");
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(server);
+    if (e.response && e.response.status) {
+      callFailed(server, e.response.status);
+    } else {
+      callFailed(server, 404);
     }
     console.log(e.message);
   });
@@ -661,8 +713,10 @@ export function changeVMState(id, action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change VM State for ip: " + server + " Failed");
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(server);
+    if (e.response && e.response.status) {
+      callFailed(server, e.response.status);
+    } else {
+      callFailed(server, 404);
     }
     console.log(e.message);
   });
@@ -691,8 +745,10 @@ export function changeDockerState(id, action, server, auth, token) {
     return response.data;
   }).catch(e => {
     console.log("Change Docker State for ip: " + server + " Failed");
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(server);
+    if (e.response && e.response.status) {
+      callFailed(server, e.response.status);
+    } else {
+      callFailed(server, 404);
     }
     console.log(e.message);
   });
@@ -716,8 +772,10 @@ export function gatherDetailsFromEditVM(ip, id, vmObject, auth) {
     return extractVMDetails(vmObject, response, ip);
   }).catch(e => {
     console.log("Get VM Edit details for ip: " + ip + " Failed");
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(ip);
+    if (e.response && e.response.status) {
+      callFailed(ip, e.response.status);
+    } else {
+      callFailed(ip, 404);
     }
     console.log(e.message);
     vmObject.edit = servers[ip].vm.details[id].edit;
@@ -977,8 +1035,10 @@ export async function requestChange(ip, id, auth, vmObject, create) {
     return response.data;
   }).catch(e => {
     console.log("Make Edit for ip: " + ip + " Failed");
-    if (!e.response || !e.response.status || e.response.status !== 503) {
-      callFailed(ip);
+    if (e.response && e.response.status) {
+      callFailed(ip, e.response.status);
+    } else {
+      callFailed(ip, 404);
     }
     console.log(e.message);
   });
@@ -1125,13 +1185,19 @@ function callSucceeded(ip) {
   failed[ip] = 0;
 }
 
-function callFailed(ip) {
+function callFailed(ip, status) {
   if (!failed[ip]) {
     failed[ip] = 1;
   } else {
     failed[ip]++;
   }
-  if (failed[ip] > 2) {
+
+  let threshold = 2;
+  if (status === 503) {
+    threshold = 5;
+  }
+
+  if (failed[ip] > threshold) {
     failed[ip] = 0;
     authCookies[ip] = undefined;
   }

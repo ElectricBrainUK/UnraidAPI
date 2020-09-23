@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DockerfilePI" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/Unraid.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Unraid.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -178,11 +177,6 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
-                <item name="Containers" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
                 <item name="Images" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
@@ -235,21 +229,11 @@
       <workItem from="1593718362468" duration="9146000" />
       <workItem from="1594040211265" duration="13988000" />
       <workItem from="1595807660637" duration="197000" />
-      <workItem from="1595869887437" duration="3464000" />
-    </task>
-    <task id="LOCAL-00048" summary="Fix gathering bugs">
-      <created>1562532684341</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1562532684341</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Fix usb bugs">
-      <created>1562535195401</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1562535195401</updated>
+      <workItem from="1595869887437" duration="4382000" />
+      <workItem from="1596728404184" duration="322000" />
+      <workItem from="1599215215809" duration="279000" />
+      <workItem from="1599816584057" duration="22000" />
+      <workItem from="1600849927722" duration="5040000" />
     </task>
     <task id="LOCAL-00050" summary="Init tests">
       <created>1562607771959</created>
@@ -580,7 +564,21 @@
       <option name="project" value="LOCAL" />
       <updated>1593192098131</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="Minor fixes">
+      <created>1596487508933</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1596487508933</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Dont let name fail">
+      <created>1596574893373</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1596574893373</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -629,8 +627,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add some details to device" />
-    <MESSAGE value="Updated error message" />
     <MESSAGE value="Allow key persistence" />
     <MESSAGE value="Add key storage variable to env" />
     <MESSAGE value="Add details to the readme" />
@@ -654,105 +650,51 @@
     <MESSAGE value="HA Addon support" />
     <MESSAGE value="Fix HA Env variables" />
     <MESSAGE value="Update ver" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update ver" />
+    <MESSAGE value="Minor fixes" />
+    <MESSAGE value="Dont let name fail" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dont let name fail" />
   </component>
   <component name="WindowStateProjectService">
     <state x="496" y="225" key="#Docker" timestamp="1596484865491">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="496" y="225" key="#Docker/0.0.1792.1120@0.0.1792.1120" timestamp="1596484865491" />
-    <state x="725" y="392" width="341" height="383" key="#Docker_Registry" timestamp="1589904280374">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state x="725" y="392" width="341" height="383" key="#Docker_Registry/0.0.1792.1120@0.0.1792.1120" timestamp="1589904280374" />
-    <state x="725" y="392" key="#Docker_Registry2" timestamp="1589904284725">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state x="725" y="392" key="#Docker_Registry2/0.0.1792.1120@0.0.1792.1120" timestamp="1589904284725" />
     <state x="496" y="225" key="#New_Docker_Connection" timestamp="1596484853646">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="496" y="225" key="#New_Docker_Connection/0.0.1792.1120@0.0.1792.1120" timestamp="1596484853646" />
-    <state x="496" y="225" key="#Push_Image" timestamp="1596485769093">
+    <state x="496" y="225" key="#Push_Image" timestamp="1600857905161">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1596485769093" />
+    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1600857905161" />
     <state x="604" y="370" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1596484768872">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="604" y="370" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1792.1120@0.0.1792.1120" timestamp="1596484768872" />
-    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1593192098019">
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1596574893214">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1593192098019" />
-    <state width="856" height="414" key="GridCell.Tab.0.bottom" timestamp="1590448426515">
+    <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1596574893214" />
+    <state width="1771" height="414" key="GridCell.Tab.0.bottom" timestamp="1600856998494">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="856" height="414" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426515" />
-    <state width="856" height="414" key="GridCell.Tab.0.center" timestamp="1590448426510">
+    <state width="1771" height="414" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1600856998494" />
+    <state width="1771" height="414" key="GridCell.Tab.0.center" timestamp="1600856998493">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="856" height="414" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426510" />
-    <state width="856" height="414" key="GridCell.Tab.0.left" timestamp="1590448426499">
+    <state width="1771" height="414" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1600856998493" />
+    <state width="1771" height="414" key="GridCell.Tab.0.left" timestamp="1600856998493">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="856" height="414" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426499" />
-    <state width="856" height="414" key="GridCell.Tab.0.right" timestamp="1590448426514">
+    <state width="1771" height="414" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1600856998493" />
+    <state width="1771" height="414" key="GridCell.Tab.0.right" timestamp="1600856998494">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="856" height="414" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590448426514" />
-    <state width="885" height="391" key="GridCell.Tab.1.bottom" timestamp="1590405055078">
+    <state width="1771" height="414" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1600856998494" />
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1596574894477">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="885" height="391" key="GridCell.Tab.1.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055078" />
-    <state width="885" height="391" key="GridCell.Tab.1.center" timestamp="1590405055077">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.1.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055077" />
-    <state width="885" height="391" key="GridCell.Tab.1.left" timestamp="1590405055076">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.1.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055076" />
-    <state width="885" height="391" key="GridCell.Tab.1.right" timestamp="1590405055077">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.1.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055077" />
-    <state width="885" height="391" key="GridCell.Tab.2.bottom" timestamp="1590405055080">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.2.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055080" />
-    <state width="885" height="391" key="GridCell.Tab.2.center" timestamp="1590405055079">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.2.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055079" />
-    <state width="885" height="391" key="GridCell.Tab.2.left" timestamp="1590405055079">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.2.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055079" />
-    <state width="885" height="391" key="GridCell.Tab.2.right" timestamp="1590405055080">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.2.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055080" />
-    <state width="885" height="391" key="GridCell.Tab.3.bottom" timestamp="1590405055082">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.3.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055082" />
-    <state width="885" height="391" key="GridCell.Tab.3.center" timestamp="1590405055081">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.3.center/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055081" />
-    <state width="885" height="391" key="GridCell.Tab.3.left" timestamp="1590405055081">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.3.left/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055081" />
-    <state width="885" height="391" key="GridCell.Tab.3.right" timestamp="1590405055082">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="885" height="391" key="GridCell.Tab.3.right/0.0.1792.1120@0.0.1792.1120" timestamp="1590405055082" />
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2" timestamp="1593192099098">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1593192099098" />
+    <state x="496" y="300" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1596574894477" />
     <state x="554" y="322" width="683" height="476" key="find.popup" timestamp="1596487207760">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
@@ -761,9 +703,5 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="561" y="265" key="run.anything.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1593120127256" />
-    <state x="561" y="251" key="search.everywhere.popup" timestamp="1589966430561">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state x="561" y="251" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1589966430561" />
   </component>
 </project>
