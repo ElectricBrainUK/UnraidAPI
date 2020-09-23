@@ -130,10 +130,11 @@ function getServerDetails(servers, serverAuth) {
       return;
     }
 
-    servers[ip].serverDetails.on = servers[ip].status === "online";
 
     servers[ip].serverDetails = await scrapeHTML(ip, serverAuth) || servers[ip].serverDetails;
     servers[ip].serverDetails = { ...await scrapeMainHTML(ip, serverAuth), ...servers[ip].serverDetails } || servers[ip].serverDetails;
+
+    servers[ip].serverDetails.on = servers[ip].status === "online";
 
     updateFile(servers, ip, "serverDetails");
   });
