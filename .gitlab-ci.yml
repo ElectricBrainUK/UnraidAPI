@@ -5,6 +5,7 @@ build-86:
   stage: build
   script:
     - docker build -t registry.laputr.co.uk/groupserverprojects/unraidapi/master-x86 .
+  allow_failure: true
 
 build-arm:
   tags:
@@ -13,6 +14,7 @@ build-arm:
   stage: build
   script:
     - docker build -f DockerfilePI -t registry.laputr.co.uk/groupserverprojects/unraidapi/master-arm .
+  allow_failure: true
 
 push-86:
   tags:

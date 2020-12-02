@@ -4,7 +4,6 @@
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +229,7 @@
       <workItem from="1600849927722" duration="5813000" />
       <workItem from="1600865141663" duration="29000" />
       <workItem from="1600876576262" duration="372000" />
-      <workItem from="1606913857768" duration="2690000" />
+      <workItem from="1606913857768" duration="2934000" />
     </task>
     <task id="LOCAL-00053" summary="Rearrange">
       <created>1563186266977</created>
