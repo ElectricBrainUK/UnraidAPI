@@ -7,14 +7,13 @@ ENV NODE_OPTIONS="--max_old_space_size=4096"
 
 ENV APP_ROOT /app
 
+RUN ls
 RUN mkdir -p ${APP_ROOT}
 COPY . ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 # Expose the app port
 EXPOSE 80
 
-RUN ls
-RUN pwd
 RUN npm install
 RUN npm run build
 CMD ["npm", "start"]

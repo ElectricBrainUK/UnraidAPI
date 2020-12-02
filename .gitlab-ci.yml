@@ -4,6 +4,7 @@ build-86:
     - x86
   stage: build
   script:
+    - ls
     - docker build - < Dockerfile -t registry.laputr.co.uk/groupserverprojects/unraidapi/master-x86
 
 build-arm:
