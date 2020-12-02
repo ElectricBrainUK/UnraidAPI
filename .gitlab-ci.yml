@@ -1,19 +1,27 @@
 build-86:
+  tags:
+    - machine
   stage: build
   script:
     - docker build - < Dockerfile -t registry.laputr.co.uk/groupserverprojects/unraidapi/master-x86
 
 build-arm:
+  tags:
+    - machine
   stage: build
   script:
     - docker build - < DockerfilePI -t registry.laputr.co.uk/groupserverprojects/unraidapi/master-arm
 
 push-86:
+  tags:
+    - machine
   stage: deploy
   script:
     - docker push registry.laputr.co.uk/groupserverprojects/unraidapi/master-x86
 
 push-arm:
+  tags:
+    - machine
   stage: deploy
   script:
     - docker push registry.laputr.co.uk/groupserverprojects/unraidapi/master-arm
