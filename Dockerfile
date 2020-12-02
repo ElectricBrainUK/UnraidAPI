@@ -14,6 +14,7 @@ WORKDIR ${APP_ROOT}
 EXPOSE 80
 
 RUN ls
+RUN pwd
 RUN npm install
 RUN npm run build
 CMD ["npm", "start"]
