@@ -7,7 +7,6 @@ ENV NODE_OPTIONS="--max_old_space_size=4096"
 
 ENV APP_ROOT /app
 
-RUN ls
 RUN mkdir -p ${APP_ROOT}
 COPY . ${APP_ROOT}
 WORKDIR ${APP_ROOT}
