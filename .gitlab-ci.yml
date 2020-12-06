@@ -1,8 +1,8 @@
 stages:
   - build
+  - deploy
   - test
   - performance
-  - deploy
   - dast
 
 build-86:
