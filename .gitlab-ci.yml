@@ -4,7 +4,7 @@ build-86:
     - x86
   stage: build
   script:
-    - docker build -t registry.laputr.co.uk/groupserverprojects/unraidapi/master-x86 .
+    - docker build -t registry.laputr.co.uk/groupserverprojects/{$CI_PROJECT_NAME}/master-x86 .
   allow_failure: true
 
 build-arm:
@@ -13,7 +13,7 @@ build-arm:
     - arm
   stage: build
   script:
-    - docker build -f DockerfilePI -t registry.laputr.co.uk/groupserverprojects/unraidapi/master-arm .
+    - docker build -f DockerfilePI -t registry.laputr.co.uk/groupserverprojects/{$CI_PROJECT_NAME}/master-arm .
   allow_failure: true
 
 push-86:
@@ -21,14 +21,14 @@ push-86:
     - machine
   stage: deploy
   script:
-    - docker push registry.laputr.co.uk/groupserverprojects/unraidapi/master-x86
+    - docker push registry.laputr.co.uk/groupserverprojects/{$CI_PROJECT_NAME}/master-x86
 
 push-arm:
   tags:
     - machine
   stage: deploy
   script:
-    - docker push registry.laputr.co.uk/groupserverprojects/unraidapi/master-arm
+    - docker push registry.laputr.co.uk/groupserverprojects/{$CI_PROJECT_NAME}/master-arm
 
 include:
 - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
