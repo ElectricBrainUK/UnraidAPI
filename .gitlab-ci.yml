@@ -11,8 +11,9 @@ build-86:
     - x86
   stage: build
   script:
-    - docker build -t registry.laputr.co.uk/groupserverprojects/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH-x86 .
-    - docker push registry.laputr.co.uk/groupserverprojects/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH-x86
+    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_COMMIT_BRANCH-x86 .
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_COMMIT_BRANCH-x86
   allow_failure: true
 
 build-arm:
@@ -21,8 +22,9 @@ build-arm:
     - arm
   stage: build
   script:
-    - docker build -f DockerfilePI -t registry.laputr.co.uk/groupserverprojects/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH-arm .
-    - docker push registry.laputr.co.uk/groupserverprojects/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH-arm
+    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    - docker build -f DockerfilePI -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_COMMIT_BRANCH-arm .
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_COMMIT_BRANCH-arm
 
 include:
 - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
