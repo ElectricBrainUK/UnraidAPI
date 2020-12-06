@@ -5,6 +5,11 @@ stages:
   - performance
   - dast
 
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+  EIGHTY_SIX_TAG: $IMAGE_TAG-86
+  ARM_TAG: $IMAGE_TAG-ARM
+
 build-86:
   tags:
     - machine
@@ -12,8 +17,8 @@ build-86:
   stage: build
   script:
     - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH:x86 .
-    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH:x86
+    - docker build -t $EIGHTY_SIX_TAG .
+    - docker push $EIGHTY_SIX_TAG
   allow_failure: true
 
 build-arm:
@@ -23,8 +28,8 @@ build-arm:
   stage: build
   script:
     - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
-    - docker build -f DockerfilePI -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH:arm .
-    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CI_COMMIT_BRANCH:arm
+    - docker build -f DockerfilePI -t $ARM_TAG .
+    - docker push $ARM_TAG
 
 include:
 - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
