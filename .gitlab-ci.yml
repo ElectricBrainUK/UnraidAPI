@@ -1,3 +1,9 @@
+stages:
+  - build
+  - test
+  - performance
+  - deploy
+
 build-86:
   tags:
     - machine
