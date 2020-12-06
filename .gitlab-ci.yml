@@ -3,6 +3,7 @@ stages:
   - test
   - performance
   - deploy
+  - dast
 
 build-86:
   tags:
