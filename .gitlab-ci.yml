@@ -31,6 +31,8 @@ build-arm:
   allow_failure: true
 
 deploy-dockerhub-beta-86:
+  tags:
+    - machine
   stage: deploy
   only:
     - master
@@ -41,8 +43,9 @@ deploy-dockerhub-beta-86:
     - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
     - docker push electricbrainuk/unraidapi:beta
 
-
 deploy-dockerhub-86:
+  tags:
+    - machine
   stage: deploy
   when: manual
   only:
