@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +105,7 @@
     <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
+          <option name="buildOnly" value="true" />
           <option name="sourceFilePath" value="Dockerfile" />
         </settings>
       </deployment>
@@ -171,6 +174,11 @@
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="Images" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
             </expand>
             <select />
           </treeState>
@@ -228,7 +236,8 @@
       <workItem from="1600849927722" duration="5813000" />
       <workItem from="1600865141663" duration="29000" />
       <workItem from="1600876576262" duration="372000" />
-      <workItem from="1606913857768" duration="3048000" />
+      <workItem from="1606913857768" duration="4576000" />
+      <workItem from="1606987356998" duration="2582000" />
     </task>
     <task id="LOCAL-00053" summary="Rearrange">
       <created>1563186266977</created>
@@ -650,14 +659,22 @@
     <option name="LAST_COMMIT_MESSAGE" value="Add a pipeline" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="725" y="392" key="#Docker_Registry2" timestamp="1606932973965">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="725" y="392" key="#Docker_Registry2/0.0.1792.1120@0.0.1792.1120" timestamp="1606932973965" />
     <state x="591" y="125" key="#Dockerfile" timestamp="1606927427697">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="591" y="125" key="#Dockerfile/0.0.1792.1120@0.0.1792.1120" timestamp="1606927427697" />
-    <state x="496" y="225" key="#Push_Image" timestamp="1600876893577">
+    <state x="496" y="225" key="#Notifications" timestamp="1606995465658">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1600876893577" />
+    <state x="496" y="225" key="#Notifications/0.0.1792.1120@0.0.1792.1120" timestamp="1606995465658" />
+    <state x="496" y="225" key="#Push_Image" timestamp="1606995499790">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="496" y="225" key="#Push_Image/0.0.1792.1120@0.0.1792.1120" timestamp="1606995499790" />
     <state x="479" y="162" width="833" height="897" key="CommitChangelistDialog2" timestamp="1606914419369">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
