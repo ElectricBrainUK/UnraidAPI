@@ -32,7 +32,6 @@ build-arm:
 
 deploy-dockerhub-beta-86:
   stage: deploy
-  when: manual
   only:
     - master
   script:
