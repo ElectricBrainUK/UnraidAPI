@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36841498-76e0-421f-aa20-86def55df961" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +235,7 @@
       <workItem from="1600865141663" duration="29000" />
       <workItem from="1600876576262" duration="372000" />
       <workItem from="1606913857768" duration="4576000" />
-      <workItem from="1606987356998" duration="2741000" />
+      <workItem from="1606987356998" duration="2899000" />
     </task>
     <task id="LOCAL-00053" summary="Rearrange">
       <created>1563186266977</created>
