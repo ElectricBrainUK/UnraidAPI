@@ -30,9 +30,7 @@
     "mqtt": "^3.0.0",
     "nuxt": "^2.12.2",
     "uniqid": "^5.2.0",
-    "vuetify-loader": "^1.2.1",
-    "vue": "^2.0.8",
-    "vue-template-compiler": "^2.1.8"
+    "vuetify-loader": "^1.2.1"
   },
   "devDependencies": {
     "jest-serializer-vue": "^2.0.2",
