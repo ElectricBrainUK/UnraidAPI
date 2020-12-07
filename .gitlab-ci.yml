@@ -1,9 +1,9 @@
 stages:
   - build
-  - deploy
   - test
   - performance
   - dast
+  - deploy
 
 variables:
   EIGHTY_SIX_TAG: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:x86-$CI_COMMIT_SHA
@@ -29,6 +29,32 @@ build-arm:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -f DockerfilePI -t $ARM_TAG .
     - docker push $ARM_TAG
+
+deploy-dockerhub-beta-86:
+  stage: deploy
+  when: manual
+  only:
+    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $EIGHTY_SIX_TAG
+    - docker tag $EIGHTY_SIX_TAG electricbrainuk/unraidapi:beta
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+    - docker push electricbrainuk/unraidapi:beta
+
+
+deploy-dockerhub-86:
+  stage: deploy
+  when: manual
+  only:
+    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $EIGHTY_SIX_TAG
+    - docker tag $EIGHTY_SIX_TAG electricbrainuk/unraidapi:latest
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+    - docker push electricbrainuk/unraidapi:latest
+
 
 include:
 - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
