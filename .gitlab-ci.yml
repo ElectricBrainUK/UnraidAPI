@@ -4,6 +4,7 @@ stages:
   - performance
   - dast
   - deploy
+  - release
 
 variables:
   EIGHTY_SIX_TAG: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:x86-$CI_COMMIT_SHA
@@ -46,7 +47,7 @@ deploy-dockerhub-beta-86:
 deploy-dockerhub-86:
   tags:
     - machine
-  stage: deploy
+  stage: release
   when: manual
   only:
     - master
