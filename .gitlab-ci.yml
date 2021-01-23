@@ -9,6 +9,8 @@ stages:
 variables:
   EIGHTY_SIX_TAG: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:x86-$CI_COMMIT_SHA
   ARM_TAG: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:arm-$CI_COMMIT_SHA
+  EIGHTY_SIX_LATEST_TAG: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:x86-latest
+  ARM_LATEST_TAG: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:arm-latest
 
 build-86:
   tags:
@@ -19,6 +21,8 @@ build-86:
     - docker login -u  $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $EIGHTY_SIX_TAG .
     - docker push $EIGHTY_SIX_TAG
+    - docker tag $EIGHTY_SIX_TAG $EIGHTY_SIX_LATEST_TAG
+    - docker push $EIGHTY_SIX_LATEST_TAG
 
 build-arm:
   tags:
@@ -29,6 +33,8 @@ build-arm:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -f DockerfilePI -t $ARM_TAG .
     - docker push $ARM_TAG
+    - docker tag $ARM_TAG $ARM_LATEST_TAG
+    - docker push $ARM_LATEST_TAG
   allow_failure: true
 
 deploy-dockerhub-beta-86:
