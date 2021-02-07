@@ -225,6 +225,10 @@ export default function startMQTTClient() {
         serverDetails.moverRunning = true;
         client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
         responses.push(await changeServerState("move", ip, keys[ip], token));
+      } else if (topic.includes("sleep")) {
+        serverDetails.on = false;
+        client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(serverDetails));
+        responses.push(await changeServerState("sleep", ip, keys[ip], token));
       }
 
       let success = true;
