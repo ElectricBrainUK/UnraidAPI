@@ -179,7 +179,8 @@ function scrapeHTML(ip, serverAuth) {
       memory: extractValue(response.data, "Memory<br><span>", "<"),
       motherboard: extractValue(response.data, "<tr class='mb_view'><td></td><td colspan='3'>", "<"),
       diskSpace: extractValue(extractValue(response.data, "Go to disk settings", "/span>"), "<span class='info'>", "<"),
-      cacheSpace: extractValue(extractValue(response.data, "Go to cache settings", "/span>"), "<span class='info'>", "<")
+      cacheSpace: extractValue(extractValue(response.data, "Go to cache settings", "/span>"), "<span class='info'>", "<"),
+      version: extractValue(response.data, "Version: ", "&nbsp;")
     };
 
     extractDiskDetails(details, "diskSpace", "array");
