@@ -277,7 +277,11 @@ function processDockerResponse(details) {
             switch (child.tags.class) {
               case "ct-name":
                 docker.imageUrl = child.children[0].children[0].children[0].tags.src.split("?")[0];
-                docker.name = child.children[0].children[1].children[0].children[0].contents;
+                if (child.children[0].children[1].children[0].children[0]) {
+                  docker.name = child.children[0].children[1].children[0].children[0].contents;
+                } else {
+                  docker.name = child.children[0].children[1].children[0].contents;
+                }
                 if (child.children[0].children[1].children[1].children[1]) {
                   docker.status = child.children[0].children[1].children[1].children[1].contents;
                 }
