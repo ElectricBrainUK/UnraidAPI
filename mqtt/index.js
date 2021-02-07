@@ -544,6 +544,9 @@ function getDockerDetails(client, serverTitleSanitised, disabledDevices, dockerI
   if (disabledDevices.includes(ip + "|" + dockerId)) {
     return;
   }
+  if (!server || !server.docker || !server.docker.details || !server.docker.details.containers) {
+    return;
+  }
   let docker = server.docker.details.containers[dockerId];
   if (!docker) {
     return;
