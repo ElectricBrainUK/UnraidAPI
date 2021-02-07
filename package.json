@@ -19,7 +19,7 @@
     "@nuxtjs/eslint-module": "^0.0.1",
     "@nuxtjs/pwa": "^2.6.0",
     "@nuxtjs/vuetify": "0.5.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cross-env": "^5.2.1",
     "express": "^4.16.4",
     "form-data": "^2.5.1",
