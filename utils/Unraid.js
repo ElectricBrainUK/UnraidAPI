@@ -686,6 +686,22 @@ export function changeServerState(action, server, auth, token) {
         console.log(e);
         return { success: false };
       });
+    case "sleep":
+      return axios({
+        method: "GET",
+        url: (server.includes("http") ? server : "http://" + server) + "/plugins/dynamix.s3.sleep/include/SleepMode.php",
+        headers: {
+          "Authorization": "Basic " + auth,
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "X-Requested-With": "XMLHttpRequest",
+          "Cookie": authCookies[server] ? authCookies[server] : ""
+        }
+      }).then(() => {
+        return { success: true };
+      }).catch(e => {
+        console.log(e);
+        return { success: false };
+      });
     default:
       console.log("Looks like you tried to change the server state but without describing how.");
   }
