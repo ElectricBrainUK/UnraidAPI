@@ -401,6 +401,7 @@ function getServerDetails(client, servers, disabledDevices, ip, timer) {
       "command_topic": process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/move"
     }));
     client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/move");
+    client.subscribe(process.env.MQTTBaseTopic + "/" + serverTitleSanitised + "/sleep");
 
     client.publish(process.env.MQTTBaseTopic + "/" + serverTitleSanitised, JSON.stringify(server.serverDetails));
     updated[ip].details = JSON.stringify(server.serverDetails);
