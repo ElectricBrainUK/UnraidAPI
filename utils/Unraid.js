@@ -17,7 +17,7 @@ export async function getImage(servers, res, path) {
   await logIn(servers, serverAuth);
 
   Object.keys(servers).forEach(server => {
-    fetch((server.includes("http") ? server : "http://" + server) + "/state" + path, {
+    fetch((server.includes("http") ? server : "http://" + server) + (path.includes('plugins') ? "/state" : "/plugins") + path, {
       method: "get",
       headers: {
         "Authorization": "Basic " + serverAuth[server],
