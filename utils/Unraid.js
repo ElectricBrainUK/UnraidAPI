@@ -3,6 +3,8 @@ import fs from "fs";
 import http from "http";
 import https from "https";
 
+const fetch = require("node-fetch");
+
 const FormData = require("form-data");
 
 axios.defaults.withCredentials = true;
@@ -10,8 +12,34 @@ axios.defaults.httpsAgent = new https.Agent({ keepAlive: true, rejectUnauthorize
 
 let authCookies = {};
 
-export function getUnraidDetails(servers, serverAuth) {
-  logIn(servers, serverAuth);
+export async function getImage(servers, res, path) {
+  let serverAuth = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
+  await logIn(servers, serverAuth);
+
+  Object.keys(servers).forEach(server => {
+    fetch((server.includes("http") ? server : "http://" + server) + "/state" + path, {
+      method: "get",
+      headers: {
+        "Authorization": "Basic " + serverAuth[server],
+        "Cookie": authCookies[server] ? authCookies[server] : "",
+        "content-type": "image/png"
+      }
+    }).then(image => {
+      image.buffer().then(buffer => {
+        if (buffer.toString().includes("<!DOCTYPE html>")) {
+          return;
+        }
+        res.set({ "content-type": "image/png" });
+        res.send(buffer);
+      });
+    }).catch(err => {
+      console.log(err);
+    });
+  });
+}
+
+export async function getUnraidDetails(servers, serverAuth) {
+  await logIn(servers, serverAuth);
   getServerDetails(servers, serverAuth);
   getVMs(servers, serverAuth);
   getDockers(servers, serverAuth);
@@ -20,6 +48,7 @@ export function getUnraidDetails(servers, serverAuth) {
 }
 
 function logIn(servers, serverAuth) {
+  let promises = [];
   Object.keys(servers).forEach(ip => {
     if (!serverAuth[ip] || (authCookies[ip] && authCookies[ip] !== undefined)) {
       if (!serverAuth[ip]) {
@@ -38,12 +67,15 @@ function logIn(servers, serverAuth) {
     data.append("username", details.substring(0, details.indexOf(":")));
     data.append("password", details.substring(details.indexOf(":") + 1));
 
-    logInToUrl((ip.includes("http") ? ip : "http://" + ip) + "/login", data, ip);
+    promises.push(logInToUrl((ip.includes("http") ? ip : "http://" + ip) + "/login", data, ip));
   });
+
+
+  return Promise.all(promises);
 }
 
 function logInToUrl(url, data, ip) {
-  axios({
+  return axios({
     url,
     method: "POST",
     data,
@@ -60,7 +92,7 @@ function logInToUrl(url, data, ip) {
     if (error.response && error.response.headers["set-cookie"] && error.response.headers["set-cookie"][0]) {
       authCookies[ip] = error.response.headers["set-cookie"][0];
     } else if (error.response && error.response.headers.location) {
-      logInToUrl(error.response.headers.location, data, error.response.headers.location);
+      return logInToUrl(error.response.headers.location, data, error.response.headers.location);
     }
   });
 }

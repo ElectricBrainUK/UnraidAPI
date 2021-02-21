@@ -12,7 +12,8 @@ const URLS = {
   VM_CREATE: '/api/createVM',
   DOCKER_STATUS: '/api/dockerStatus',
   MQTT_DEVICE_CHANGE: '/api/mqttDevices',
-  DELETE_SERVER: '/api/deleteServer'
+  DELETE_SERVER: '/api/deleteServer',
+  PROXY_IMAGE: '/state'
 };
 
 module.exports = {
@@ -84,7 +85,8 @@ module.exports = {
     {path: URLS.VM_EDIT, handler: '~/api/editVM.js'},
     {path: URLS.VM_CREATE, handler: '~/api/createVM.js'},
     {path: URLS.MQTT_DEVICE_CHANGE, handler: '~/api/mqttDevices.js'},
-    {path: URLS.DELETE_SERVER, handler: '~/api/deleteServer.js'}
+    {path: URLS.DELETE_SERVER, handler: '~/api/deleteServer.js'},
+    {path: URLS.PROXY_IMAGE, handler: '~/api/proxyImage.js'}
   ],
   /*
    ** vuetify module configuration
