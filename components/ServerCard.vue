@@ -142,7 +142,7 @@
               </template>
               <img
                 class="left"
-                :src="'http://' + ip + vm.icon"
+                :src="vm.icon"
               >
               <edit-vm-card :vm="vm" />
               <v-btn
@@ -430,7 +430,7 @@
             <v-chip>Up to date: {{ docker.uptoDate }}</v-chip>
             <img
               class="left"
-              :src="'http://' + ip + docker.imageUrl"
+              :src="docker.imageUrl"
             >
             </v-expansion-panel-content>
           </v-expansion-panel>
