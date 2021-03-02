@@ -15,9 +15,10 @@ let authCookies = {};
 export async function getImage(servers, res, path) {
   let serverAuth = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + "/" : "secure/") + "mqttKeys"));
   await logIn(servers, serverAuth);
+  let sent = false;
 
   Object.keys(servers).forEach(server => {
-    fetch((server.includes("http") ? server : "http://" + server) + (path.includes('plugins') ? "/state" : "/plugins") + path, {
+    fetch((server.includes("http") ? server : "http://" + server) + (path.includes("plugins") ? "/state" : "/plugins") + path, {
       method: "get",
       headers: {
         "Authorization": "Basic " + serverAuth[server],
@@ -29,8 +30,15 @@ export async function getImage(servers, res, path) {
         if (buffer.toString().includes("<!DOCTYPE html>")) {
           return;
         }
-        res.set({ "content-type": "image/png" });
-        res.send(buffer);
+        if (!sent) {
+          sent = true;
+          try {
+            res.set({ "content-type": "image/png" });
+            res.send(buffer);
+          } catch (e) {
+
+          }
+        }
       });
     }).catch(err => {
       // console.log(err);
