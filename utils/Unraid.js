@@ -33,7 +33,7 @@ export async function getImage(servers, res, path) {
         res.send(buffer);
       });
     }).catch(err => {
-      console.log(err);
+      // console.log(err);
     });
   });
 }
