@@ -15,3 +15,6 @@
 
 # intellij
 .idea
+
+.DS_Store
+.next
