@@ -2,8 +2,8 @@ import { getUSBDetails } from './unraid/getUSBDetails';
 import { getPCIDetails } from './unraid/getPCIDetails';
 import { logIn } from './unraid/logIn';
 import { getServerDetails } from './unraid/getServerDetails';
-import { getVMs } from './getVMs';
-import { getDockers } from './getDockers';
+import { getDockers } from './docker/getDockers';
+import { getVMs } from './vm/getVMs';
 
 export async function getUnraidDetails(servers, serverAuth) {
   await logIn(servers, serverAuth);
