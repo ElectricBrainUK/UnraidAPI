@@ -6,7 +6,7 @@ export interface UnraidServers {
 
 export interface UnraidServer {
   docker: Docker;
-  serverDetails: ServerDetails;
+  serverDetails?: ServerDetails;
   vm: Vm;
   status: string;
   pciDetails: any;

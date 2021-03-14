@@ -3,7 +3,13 @@ import http from 'http';
 import { callFailed, callSucceeded } from '../api';
 import { authCookies } from '../auth';
 
-export async function changeDockerState(id, action, server, auth, token) {
+export async function changeDockerState(
+  id: string,
+  action,
+  server,
+  auth,
+  token,
+) {
   try {
     const response = await axios({
       method: 'POST',

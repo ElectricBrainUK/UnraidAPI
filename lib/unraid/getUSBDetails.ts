@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { authCookies } from '../Unraid';
-import { callFailed } from '../callFailed';
-import { callSucceeded } from '../callSucceeded';
-import { extractValue } from '../extractValue';
-import { updateFile } from '../updateFile';
+import { callSucceeded, callFailed } from '../api';
+import { authCookies } from '../auth';
+import { extractValue } from '../scraper';
+import { updateFile } from '../storage/updateFile';
 import { ServerMap } from './types';
 
 export function getUSBDetails(servers: ServerMap, serverAuth) {

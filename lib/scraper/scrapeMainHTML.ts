@@ -4,7 +4,17 @@ import { extractReverseValue } from './extractReverseValue';
 import { callSucceeded, callFailed } from '../api';
 import { authCookies } from '../auth';
 
-export async function scrapeMainHTML(ip: string, serverAuth) {
+interface ServerMainDetails {
+  arrayStatus: string;
+  arrayProtection: string;
+  moverRunning: boolean;
+  parityCheckRunning: boolean;
+}
+
+export async function scrapeMainHTML(
+  ip: string,
+  serverAuth,
+): Promise<ServerMainDetails | undefined> {
   try {
     const response = await axios({
       method: 'get',

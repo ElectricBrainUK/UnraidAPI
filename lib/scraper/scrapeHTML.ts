@@ -4,8 +4,20 @@ import { authCookies } from '../auth';
 import { extractValue } from './extractValue';
 import { extractReverseValue } from './extractReverseValue';
 import { callFailed, callSucceeded } from '../api';
+interface ServerCoreDetails {
+  title: string;
+  cpu: string;
+  memory: string;
+  motherboard: string;
+  diskSpace: string;
+  cacheSpace: string;
+  version: string;
+}
 
-export async function scrapeHTML(ip: string, serverAuth) {
+export async function scrapeHTML(
+  ip: string,
+  serverAuth,
+): Promise<ServerCoreDetails | undefined> {
   try {
     const response = await axios({
       method: 'get',

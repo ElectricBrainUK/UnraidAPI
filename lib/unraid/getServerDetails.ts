@@ -1,25 +1,25 @@
-import { updateFile } from '../updateFile';
-import { scrapeMainHTML } from '../scrapeMainHTML';
-import { scrapeHTML } from '../scrapeHTML';
+import { scrapeHTML, scrapeMainHTML } from '../scraper';
+import { updateFile } from '../storage/updateFile';
+import { ServerMap } from './types';
 
-export function getServerDetails(servers, serverAuth) {
+export function getServerDetails(servers: ServerMap, serverAuth) {
   Object.keys(servers).forEach(async (ip) => {
-    if (servers[ip].serverDetails === undefined) {
-      servers[ip].serverDetails = {};
-    }
-
     if (!serverAuth[ip]) {
       servers[ip].serverDetails.on = false;
       return;
     }
 
-    servers[ip].serverDetails =
-      (await scrapeHTML(ip, serverAuth)) || servers[ip].serverDetails;
-    servers[ip].serverDetails =
-      {
-        ...(await scrapeMainHTML(ip, serverAuth)),
-        ...servers[ip].serverDetails,
-      } || servers[ip].serverDetails;
+    const scrapedDetails = await scrapeHTML(ip, serverAuth);
+    const scrapedMainDetails = await scrapeMainHTML(ip, serverAuth);
+
+    const details = {
+      ...scrapedDetails,
+      ...scrapedMainDetails,
+    };
+    servers[ip].serverDetails = {
+      ...servers[ip].serverDetails,
+      ...details,
+    };
 
     servers[ip].serverDetails.on = servers[ip].status === 'online';
 
