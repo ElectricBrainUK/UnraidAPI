@@ -13,7 +13,7 @@ export async function changeArrayState(action, server, auth, token) {
         Authorization: 'Basic ' + auth,
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'X-Requested-With': 'XMLHttpRequest',
-        Cookie: authCookies[ip] ? authCookies[ip] : '',
+        Cookie: authCookies[server] ? authCookies[server] : '',
       },
       data:
         action === 'start'
@@ -24,7 +24,7 @@ export async function changeArrayState(action, server, auth, token) {
     callSucceeded(server);
     return response.data;
   } catch (e) {
-    console.log('Change Array State for ip: ' + ip + ' Failed');
+    console.log('Change Array State for ip: ' + server + ' Failed');
     if (e.response && e.response.status) {
       callFailed(server, e.response.status);
     } else {
