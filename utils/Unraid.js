@@ -621,7 +621,7 @@ export function changeArrayState(action, server, auth, token) {
       "Authorization": "Basic " + auth,
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       "X-Requested-With": "XMLHttpRequest",
-      "Cookie": authCookies[ip] ? authCookies[ip] : ""
+      "Cookie": authCookies[server] ? authCookies[server] : ""
     },
     data: action === "start" ? "startState=STOPPED&file=&csrf_token=" + token + "&cmdStart=Start" : "startState=STARTED&file=&csrf_token=" + token + "&cmdStop=Stop",
     httpAgent: new http.Agent({ keepAlive: true })
