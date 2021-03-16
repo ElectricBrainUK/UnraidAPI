@@ -1,65 +1,82 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import {
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Button,
+  VStack,
+  Heading,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <Flex p="1rem">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <LoginForm />
+    </Flex>
+  );
+}
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+function LoginForm() {
+  const [ip, setIp] = useState('');
+  const [https, setHttps] = useState(false);
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const data = { ip, https, user, password };
+      const resp = await fetch('/api/auth', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+      const body = await resp.json();
+      console.log(body);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  return (
+    <Flex
+      flexDir="column"
+      borderRadius="md"
+      backgroundColor="gray.700"
+      p="1rem"
+    >
+      <Heading size="md">Setup Unraid Server</Heading>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      <Flex flexDir="column" as="form" onSubmit={onSubmit}>
+        <VStack>
+          <FormControl id="serverIp">
+            <FormLabel>Server IP</FormLabel>
+            <Input type="text" onChange={(e) => setIp(e.target.value)} />
+          </FormControl>
+          <FormControl id="https">
+            <Checkbox isChecked={https} onChange={() => setHttps(!https)}>
+              Use HTTPS
+            </Checkbox>
+          </FormControl>
+          <FormControl id="user">
+            <FormLabel>User</FormLabel>
+            <Input type="text" onChange={(e) => setUser(e.target.value)} />
+          </FormControl>
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
+            <Input type="text" onChange={(e) => setPassword(e.target.value)} />
+          </FormControl>
+          <FormControl display="flex" justifyContent="flex-end">
+            <Button colorScheme="blue">Login</Button>
+          </FormControl>
+        </VStack>
+      </Flex>
+    </Flex>
+  );
 }
