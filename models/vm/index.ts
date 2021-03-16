@@ -14,18 +14,19 @@ export interface VmDetailsMap {
 }
 
 export interface VmDetails {
-  name: string;
-  id: string;
-  status: string;
-  icon: string;
-  coreCount: number;
-  ramAllocation: string;
-  hddAllocation: {
+  name?: string;
+  id?: string;
+  status?: string;
+  icon?: string;
+  coreCount?: number;
+  ramAllocation?: string;
+  hddAllocation?: {
     all: VmHddAllocation[];
     total: string;
   };
-  primaryGPU: string;
-  xml: string;
+  primaryGPU?: string;
+  xml?: string;
+  edit?: VmEdit;
 }
 
 export interface VmHddAllocation {
@@ -35,6 +36,7 @@ export interface VmHddAllocation {
 }
 
 export interface VmEdit {
+  description: string;
   template_os: string;
   domain_type: string;
   template_name: string;
@@ -63,6 +65,7 @@ export interface VmEdit {
   shares: VmEditShare[];
   pcis: (GpuVncDetail | GpuPciDetail | SoundPciDetail)[];
   nics: VmEditNic[];
+  usbs: VmEditUsbs[];
 }
 
 export interface VmEditDisk {

@@ -9,11 +9,11 @@ export interface DockerImageMap {
 }
 
 export interface DockerContainer {
-  imageUrl: string;
-  name: string;
-  status: string;
-  containerId: string;
-  tag: string;
+  imageUrl?: string;
+  name?: string;
+  status?: string;
+  containerId?: string;
+  tag?: string;
 }
 
 export interface DockerContainerMap {
