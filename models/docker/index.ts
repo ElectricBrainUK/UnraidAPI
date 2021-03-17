@@ -14,8 +14,18 @@ export interface DockerContainer {
   status?: string;
   containerId?: string;
   tag?: string;
+  uptoDate?: string;
+  imageId?: string;
+  created?: string;
 }
 
 export interface DockerContainerMap {
   [key: string]: DockerContainer;
+}
+
+export interface Docker {
+  details: {
+    images: DockerImageMap;
+    containers: DockerContainerMap;
+  };
 }

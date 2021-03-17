@@ -1,6 +1,6 @@
+import { ServerMap } from 'models/server';
 import { scrapeHTML, scrapeMainHTML } from '../scraper';
 import { updateFile } from '../storage/updateFile';
-import { ServerMap } from './types';
 
 export function getServerDetails(servers: ServerMap, serverAuth) {
   Object.keys(servers).forEach(async (ip) => {

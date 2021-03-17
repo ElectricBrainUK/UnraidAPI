@@ -1,3 +1,4 @@
+import { VmEditNic } from 'models/vm';
 import { extractReverseValue } from './extractReverseValue';
 import { extractValue } from './extractValue';
 
@@ -9,9 +10,12 @@ export function extractNICInformation(response) {
   );
   let nicNo = 0;
 
-  let nics = [];
+  let nics: VmEditNic[] = [];
   while (nicInfo.includes('<td>Network MAC:</td>')) {
-    let nic = {};
+    let nic = {
+      mac: '',
+      network: '',
+    };
     nic.mac = extractValue(
       nicInfo,
       'name="nic[' + nicNo + '][mac]" class="narrow" value="',

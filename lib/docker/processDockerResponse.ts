@@ -1,8 +1,8 @@
-import { Containers } from '../unraid/types';
+import { DockerImage } from 'models/docker';
 
 export function processDockerResponse(details) {
-  let images: Record<string, string> = {};
-  let containers: Containers;
+  let images: Record<string, DockerImage> = {};
+  let containers: any;
   details.forEach((row) => {
     if (!row.content || !row.content.includes('undefined')) {
       let docker = {

@@ -2,7 +2,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import { logIn } from './logIn';
 import { authCookies } from '../auth';
-import { ServerMap } from './types';
+import { ServerMap } from 'models/server';
 
 export async function getImage(servers: ServerMap, res, path) {
   let serverAuth = JSON.parse(

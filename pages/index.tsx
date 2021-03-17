@@ -19,6 +19,29 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <LoginForm />
+      <GetServerDetails />
+    </Flex>
+  );
+}
+
+function GetServerDetails() {
+  const getDetails = async () => {
+    try {
+      const resp = await fetch('/api/servers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const body = await resp.json();
+      console.log(body);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  return (
+    <Flex>
+      <Button onClick={getDetails}>Go</Button>
     </Flex>
   );
 }

@@ -5,7 +5,7 @@
   "author": "Will",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "KeyStorage=secure next dev",
     "build": "next build",
     "start": "next start"
   },

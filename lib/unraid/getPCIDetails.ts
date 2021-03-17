@@ -1,5 +1,5 @@
+import { ServerMap } from 'models/server';
 import { updateFile } from '../storage/updateFile';
-import { ServerMap } from './types';
 
 export function getPCIDetails(servers: ServerMap, skipSave = false) {
   Object.keys(servers).forEach((ip) => {

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { ServerMap } from '../unraid/types';
+import { ServerMap } from 'models/server';
 
 export function updateFile(servers: ServerMap, ip: string, tag) {
   let oldServers = {};

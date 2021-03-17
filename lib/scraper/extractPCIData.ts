@@ -1,20 +1,20 @@
+import { PciDetail } from 'models/pci';
 import { extractValue } from './extractValue';
 
 export function extractPCIData(response) {
-  let pcis = [];
+  let pcis: PciDetail[] = [];
   while (response.data.includes(' name="pci[]" id')) {
     let row = extractValue(response.data, ' name="pci[]" id', '/>');
-    let device = {};
-    device.name = extractValue(
+
+    const name = extractValue(
       extractValue(response.data, ' name="pci[]" id', '/label>'),
       '>',
       '<',
     );
-    if (row.includes('checked')) {
-      device.checked = true;
-    }
-    device.id = extractValue(row, 'value="', '"');
-    pcis.push(device);
+    let checked = row.includes('checked');
+
+    const id = extractValue(row, 'value="', '"');
+    pcis.push({ id, name, checked });
 
     response.data = response.data.replace(' name="pci[]" id', '');
   }

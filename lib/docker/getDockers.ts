@@ -1,9 +1,9 @@
 import axios from 'axios';
+import { ServerMap } from 'models/server';
 import { callSucceeded, callFailed } from '../api';
 import { authCookies } from '../auth';
 import { parseHTML } from '../scraper';
 import { updateFile } from '../storage/updateFile';
-import { ServerMap } from '../unraid/types';
 import { processDockerResponse } from './processDockerResponse';
 
 export function getDockers(servers: ServerMap, serverAuth) {

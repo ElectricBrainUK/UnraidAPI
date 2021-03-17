@@ -5,7 +5,13 @@ import { callSucceeded } from './callSucceeded';
 import { buildForm } from './buildForm';
 import { authCookies } from '../auth';
 
-export async function requestChange(ip, id, auth, vmObject, create) {
+export async function requestChange(
+  ip: string,
+  id: string,
+  auth,
+  vmObject,
+  create,
+) {
   return axios({
     method: 'POST',
     url:

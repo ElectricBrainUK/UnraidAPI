@@ -13,7 +13,7 @@ interface ServerMainDetails {
 
 export async function scrapeMainHTML(
   ip: string,
-  serverAuth,
+  serverAuth: Record<string, string>,
 ): Promise<ServerMainDetails | undefined> {
   try {
     const response = await axios({

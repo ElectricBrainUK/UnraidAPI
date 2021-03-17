@@ -1,7 +1,7 @@
 import FormData from 'form-data';
+import { ServerMap } from 'models/server';
 import { authCookies } from '../auth';
 import { logInToUrl } from '../auth/logInToUrl';
-import { ServerMap } from './types';
 
 export async function logIn(servers: ServerMap, serverAuth) {
   const ips = Object.keys(servers);

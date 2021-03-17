@@ -1,4 +1,4 @@
-import { Docker } from 'lib/unraid/types';
+import { Docker } from 'models/docker';
 import { PciDetail } from 'models/pci';
 import { UsbDetail } from 'models/usb';
 import { Vm } from 'models/vm';

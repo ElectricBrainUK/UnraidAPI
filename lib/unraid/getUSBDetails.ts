@@ -1,9 +1,9 @@
 import axios from 'axios';
+import { ServerMap } from 'models/server';
 import { callSucceeded, callFailed } from '../api';
 import { authCookies } from '../auth';
 import { extractValue } from '../scraper';
 import { updateFile } from '../storage/updateFile';
-import { ServerMap } from './types';
 
 export function getUSBDetails(servers: ServerMap, serverAuth) {
   Object.keys(servers).forEach((ip) => {
