@@ -36,6 +36,9 @@ function LoginForm() {
       const resp = await fetch('/api/auth', {
         method: 'POST',
         body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
       const body = await resp.json();
       console.log(body);
@@ -73,7 +76,9 @@ function LoginForm() {
             <Input type="text" onChange={(e) => setPassword(e.target.value)} />
           </FormControl>
           <FormControl display="flex" justifyContent="flex-end">
-            <Button colorScheme="blue">Login</Button>
+            <Button colorScheme="blue" type="submit">
+              Login
+            </Button>
           </FormControl>
         </VStack>
       </Flex>

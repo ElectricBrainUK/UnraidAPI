@@ -23,8 +23,12 @@ export interface ServerDetails {
 export interface Server {
   vm?: Vm;
   docker?: Docker;
-  serverDetails: ServerDetails;
+  serverDetails?: ServerDetails;
   pciDetails?: PciDetail[];
   status?: string;
-  usbDetails: UsbDetail[];
+  usbDetails?: UsbDetail[];
+}
+
+export interface ServerMap {
+  [key: string]: Server;
 }
