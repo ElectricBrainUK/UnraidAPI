@@ -6,7 +6,7 @@ import { authCookies } from '../auth';
 
 interface ServerMainDetails {
   arrayStatus: string;
-  arrayProtection: string;
+  arrayProtection?: string;
   moverRunning: boolean;
   parityCheckRunning: boolean;
 }
