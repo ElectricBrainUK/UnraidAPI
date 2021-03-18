@@ -17,7 +17,7 @@ export interface ServerDetails {
   arrayUsedSpace?: string;
   arrayTotalSpace?: string;
   arrayFreeSpace?: string;
-  on: boolean;
+  on?: boolean;
 }
 
 export interface Server {
