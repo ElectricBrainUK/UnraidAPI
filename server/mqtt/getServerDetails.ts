@@ -1,6 +1,7 @@
 import { MqttClient } from 'mqtt';
 import { sanitise } from './sanitise';
-import { getVMDetails, getDockerDetails } from './index';
+import { getDockerDetails } from "./getDockerDetails";
+import { getVMDetails } from "./getVMDetails";
 
 let updated: Record<string, any> = {};
 export function getServerDetails(
@@ -188,6 +189,7 @@ export function getServerDetails(
   if (
     server.docker &&
     server.docker.details &&
+    server.docker.details.containers &&
     !disabledDevices.includes(ip + '|Dockers')
   ) {
     Object.keys(server.docker.details.containers).forEach((dockerId) => {

@@ -6,7 +6,7 @@ import { processTags } from './processTags';
 
 export function parseTag(tag, remaining) {
   remaining = remaining.replace(tag, '');
-  let object = {};
+  let object: any = {};
   const open = processTags(tag, object);
 
   if (!isClosingTag(remaining, open) && isRemaining(remaining)) {

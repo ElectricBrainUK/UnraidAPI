@@ -87,6 +87,12 @@ export interface VmEditUsbs {
   connected: boolean;
 }
 
+export interface VmAttachUsbs {
+  usbId: string;
+  vmId: string;
+  vm: VmDetails;
+}
+
 export interface VmEditPciVnc {
   gpu: boolean;
   id: string;
