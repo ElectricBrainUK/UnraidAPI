@@ -3,7 +3,7 @@ import { authCookies } from './authCookies';
 import { callSucceeded, callFailed } from '../api';
 import { extractValue } from '../scraper';
 
-export async function getCSRFToken(server, auth) {
+export async function getCSRFToken(server: string, auth: string) {
   try {
     const response = await axios({
       method: 'get',
