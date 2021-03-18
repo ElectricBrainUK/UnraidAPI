@@ -1,10 +1,10 @@
-import axios from "axios";
-import { ServerMap } from "models/server";
-import { callSucceeded, callFailed } from "../api";
-import { authCookies } from "../auth";
-import { parseHTML } from "../scraper";
-import { updateFile } from "../storage/updateFile";
-import { processDockerResponse } from "./processDockerResponse";
+import axios from 'axios';
+import { ServerMap } from 'models/server';
+import { callSucceeded, callFailed } from '../api';
+import { authCookies } from '../auth';
+import { parseHTML } from '../scraper';
+import { updateFile } from '../storage/updateFile';
+import { processDockerResponse } from './processDockerResponse';
 
 export function getDockers(servers: ServerMap, serverAuth) {
   Object.keys(servers).forEach((ip) => {
@@ -12,13 +12,13 @@ export function getDockers(servers: ServerMap, serverAuth) {
       return;
     }
     axios({
-      method: "get",
+      method: 'get',
       url:
-        (ip.includes("http") ? ip : "http://" + ip) +
-        "/plugins/dynamix.docker.manager/include/DockerContainers.php",
+        (ip.includes('http') ? ip : 'http://' + ip) +
+        '/plugins/dynamix.docker.manager/include/DockerContainers.php',
       headers: {
-        Authorization: "Basic " + serverAuth[ip],
-        Cookie: authCookies[ip] ? authCookies[ip] : ""
+        Authorization: 'Basic ' + serverAuth[ip],
+        Cookie: authCookies[ip] ? authCookies[ip] : ''
       }
     })
       .then(async (response) => {
@@ -32,10 +32,10 @@ export function getDockers(servers: ServerMap, serverAuth) {
         } else {
           servers[ip].docker.details = processDockerResponse(details);
         }
-        updateFile(servers, ip, "docker");
+        updateFile(servers, ip, 'docker');
       })
       .catch((e) => {
-        console.log("Get Docker Details for ip: " + ip + " Failed");
+        console.log('Get Docker Details for ip: ' + ip + ' Failed');
         if (e.response && e.response.status) {
           callFailed(ip, e.response.status);
         } else {

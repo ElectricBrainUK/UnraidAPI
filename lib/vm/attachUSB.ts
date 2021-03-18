@@ -1,20 +1,20 @@
-import fs from "fs";
-import { gatherDetailsFromEditVM } from "./gatherDetailsFromEditVM";
-import { requestChange } from "../api/requestChange";
-import { VmAttachUsbs } from "../../models/vm";
+import fs from 'fs';
+import { gatherDetailsFromEditVM } from './gatherDetailsFromEditVM';
+import { requestChange } from '../api/requestChange';
+import { VmAttachUsbs } from '../../models/vm';
 
 export async function attachUSB(data) {
   let vmObject = await gatherDetailsFromEditVM(data.server, data.id, undefined, data.auth);
-  let rawdata = fs.readFileSync("config/servers.json").toString();
+  let rawdata = fs.readFileSync('config/servers.json').toString();
   let servers = JSON.parse(rawdata);
   let attached: VmAttachUsbs = undefined;
 
   Object.keys(servers[data.server].vm.details).forEach(vmId => {
     let vm = servers[data.server].vm.details[vmId];
-    if (vm.edit && vm.edit.usbs && vm.status === "started") {
+    if (vm.edit && vm.edit.usbs && vm.status === 'started') {
       vm.edit.usbs.forEach(usbDevice => {
         if (usbDevice.id === data.usbId && vmId !== data.id && usbDevice.checked) {
-          attached = {usbId: usbDevice.id, vmId, vm};
+          attached = { usbId: usbDevice.id, vmId, vm };
         }
       });
     }

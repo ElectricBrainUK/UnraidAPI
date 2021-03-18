@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { extractValue } from './extractValue';
-import { UsbDetail } from "../../models/usb";
+import { UsbDetail } from '../../models/usb';
 
 export function extractUSBData(response, vmObject, ip) {
   let usbs: UsbDetail[] = [];
