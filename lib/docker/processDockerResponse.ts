@@ -2,7 +2,7 @@ import { DockerImage } from 'models/docker';
 
 export function processDockerResponse(details) {
   let images: Record<string, DockerImage> = {};
-  let containers: any;
+  let containers: any = {};
   details.forEach((row) => {
     if (!row.content || !row.content.includes('undefined')) {
       let docker = {

@@ -1,14 +1,16 @@
 import { MqttClient } from 'mqtt';
 import { sanitise } from './sanitise';
-import { getVMDetails, getDockerDetails } from './index';
+import { getDockerDetails } from './getDockerDetails';
+import { getVMDetails } from './getVMDetails';
 
 let updated: Record<string, any> = {};
+
 export function getServerDetails(
   client: MqttClient,
   servers,
   disabledDevices,
   ip: string,
-  timer,
+  timer
 ) {
   let server = servers[ip];
   if (!server.serverDetails || disabledDevices.includes(ip)) {
@@ -25,13 +27,13 @@ export function getServerDetails(
       identifiers: [serverTitleSanitised],
       name: serverTitleSanitised + '_server',
       manufacturer: server.serverDetails.motherboard,
-      model: 'Unraid Server',
+      model: 'Unraid Server'
     };
     client.publish(
       process.env.MQTTBaseTopic +
-        '/binary_sensor/' +
-        serverTitleSanitised +
-        '/config',
+      '/binary_sensor/' +
+      serverTitleSanitised +
+      '/config',
       JSON.stringify({
         payload_on: true,
         payload_off: false,
@@ -41,8 +43,8 @@ export function getServerDetails(
           process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
         name: serverTitleSanitised + '_server',
         unique_id: serverTitleSanitised + ' unraid api server',
-        device: serverDevice,
-      }),
+        device: serverDevice
+      })
     );
     client.publish(
       process.env.MQTTBaseTopic + '/switch/' + serverTitleSanitised + '/config',
@@ -57,18 +59,18 @@ export function getServerDetails(
         unique_id: serverTitleSanitised + ' unraid api array',
         device: serverDevice,
         command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/array',
-      }),
+          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/array'
+      })
     );
     client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/array',
+      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/array'
     );
 
     client.publish(
       process.env.MQTTBaseTopic +
-        '/switch/' +
-        serverTitleSanitised +
-        '/powerOff/config',
+      '/switch/' +
+      serverTitleSanitised +
+      '/powerOff/config',
       JSON.stringify({
         payload_on: false,
         payload_off: true,
@@ -78,18 +80,18 @@ export function getServerDetails(
         unique_id: serverTitleSanitised + ' unraid server power off',
         device: serverDevice,
         command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff',
-      }),
+          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff'
+      })
     );
     client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff',
+      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff'
     );
 
     client.publish(
       process.env.MQTTBaseTopic +
-        '/switch/' +
-        serverTitleSanitised +
-        '/reboot/config',
+      '/switch/' +
+      serverTitleSanitised +
+      '/reboot/config',
       JSON.stringify({
         payload_on: false,
         payload_off: true,
@@ -99,18 +101,18 @@ export function getServerDetails(
         unique_id: serverTitleSanitised + ' unraid server reboot',
         device: serverDevice,
         command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot',
-      }),
+          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot'
+      })
     );
     client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot',
+      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot'
     );
 
     client.publish(
       process.env.MQTTBaseTopic +
-        '/switch/' +
-        serverTitleSanitised +
-        '/parityCheck/config',
+      '/switch/' +
+      serverTitleSanitised +
+      '/parityCheck/config',
       JSON.stringify({
         payload_on: true,
         payload_off: false,
@@ -120,18 +122,18 @@ export function getServerDetails(
         unique_id: serverTitleSanitised + ' unraid server parity check',
         device: serverDevice,
         command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/check',
-      }),
+          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/check'
+      })
     );
     client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/check',
+      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/check'
     );
 
     client.publish(
       process.env.MQTTBaseTopic +
-        '/switch/' +
-        serverTitleSanitised +
-        '/mover/config',
+      '/switch/' +
+      serverTitleSanitised +
+      '/mover/config',
       JSON.stringify({
         payload_on: true,
         payload_off: false,
@@ -141,19 +143,19 @@ export function getServerDetails(
         unique_id: serverTitleSanitised + ' unraid server mover',
         device: serverDevice,
         command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/move',
-      }),
+          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/move'
+      })
     );
     client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/move',
+      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/move'
     );
     client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/sleep',
+      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/sleep'
     );
 
     client.publish(
       process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-      JSON.stringify(server.serverDetails),
+      JSON.stringify(server.serverDetails)
     );
     updated[ip].details = JSON.stringify(server.serverDetails);
   }
@@ -174,20 +176,21 @@ export function getServerDetails(
         vmId,
         serverTitleSanitised,
         ip,
-        server,
+        server
       );
       timer =
         timer +
         (process.env.MQTTRefreshRate
           ? parseInt(process.env.MQTTRefreshRate) * 1000
           : 20000) /
-          20;
+        20;
     });
   }
 
   if (
     server.docker &&
     server.docker.details &&
+    server.docker.details.containers &&
     !disabledDevices.includes(ip + '|Dockers')
   ) {
     Object.keys(server.docker.details.containers).forEach((dockerId) => {
@@ -199,14 +202,14 @@ export function getServerDetails(
         disabledDevices,
         dockerId,
         ip,
-        server,
+        server
       );
       timer =
         timer +
         (process.env.MQTTRefreshRate
           ? parseInt(process.env.MQTTRefreshRate) * 1000
           : 20000) /
-          20;
+        20;
     });
   }
 }

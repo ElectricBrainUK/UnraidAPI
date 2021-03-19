@@ -1,30 +1,31 @@
 import mqtt, { Packet } from 'mqtt';
-import { getCSRFToken } from 'lib/auth/getCSRFToken';
-import { changeVMState } from 'lib/vm/changeVMState';
-import { changeArrayState } from 'lib/changeArrayState';
-import { changeDockerState } from 'lib/docker/changeDockerState';
-import { changeServerState } from 'lib/changeServerState';
+import { getCSRFToken } from '../../lib/auth/getCSRFToken';
+import { changeVMState } from '../../lib/vm/changeVMState';
+import { changeArrayState } from '../../lib/changeArrayState';
+import { changeDockerState } from '../../lib/docker/changeDockerState';
+import { changeServerState } from '../../lib/changeServerState';
 import fs from 'fs';
 import uniqid from 'uniqid';
 import { Server } from 'models/server';
 import { VmDetails } from 'models/vm';
 import { DockerContainer } from 'models/docker';
-import { attachUSB, detachUSB } from 'api/usbAttach';
 import { updateMQTT } from './updateMQTT';
 import { mqttRepeat } from './mqttRepeat';
 import { sanitise } from './sanitise';
 import { getServerDetails } from './getServerDetails';
 import { getDockerDetails } from './getDockerDetails';
 import { getVMDetails } from './getVMDetails';
+import { attachUSB, detachUSB } from '../../lib/vm/attachUSB';
+
 let retry;
 
 let updated = {};
 let repeater;
 
-export default function startMQTTClient() {
+export function startMQTTClient() {
   try {
     let haOptions = JSON.parse(
-      fs.readFileSync('/data/options.json').toString(),
+      fs.readFileSync('/data/options.json').toString()
     );
     Object.keys(haOptions).forEach((key) => {
       process.env[key] = haOptions[key];
@@ -46,13 +47,13 @@ export default function startMQTTClient() {
     password: process.env.MQTTPass,
     port: parseInt(process.env.MQTTPort),
     host: process.env.MQTTBroker,
-    rejectUnauthorized: process.env.MQTTSelfSigned !== 'true',
+    rejectUnauthorized: process.env.MQTTSelfSigned !== 'true'
   };
   const client = mqtt.connect(
     process.env.MQTTSecure === 'true'
       ? 'mqtts://'
       : 'mqtt://' + process.env.MQTTBroker,
-    options,
+    options
   );
 
   try {
@@ -66,7 +67,7 @@ export default function startMQTTClient() {
           repeater = clearTimeout(repeater);
         }
         mqttRepeat(client);
-      },
+      }
       // todo might need to use try/catch
       // (err) => {
       //   console.log(err);
@@ -77,11 +78,11 @@ export default function startMQTTClient() {
       let queryID = await uniqid.time('MQTT-R-', '');
       console.log(
         'Received MQTT Topic: ' +
-          topic +
-          ' and Message: ' +
-          message +
-          ' assigning ID: ' +
-          queryID,
+        topic +
+        ' and Message: ' +
+        message +
+        ' assigning ID: ' +
+        queryID
       );
 
       if (topic === process.env.MQTTBaseTopic + '/bridge/state') {
@@ -96,12 +97,12 @@ export default function startMQTTClient() {
           .readFileSync(
             (process.env.KeyStorage
               ? process.env.KeyStorage + '/'
-              : 'secure/') + 'mqttKeys',
+              : 'secure/') + 'mqttKeys'
           )
-          .toString(),
+          .toString()
       );
       let servers = JSON.parse(
-        fs.readFileSync('config/servers.json').toString(),
+        fs.readFileSync('config/servers.json').toString()
       );
 
       const topicParts = topic.split('/');
@@ -109,7 +110,7 @@ export default function startMQTTClient() {
       let serverDetails: Server = {
         // on: true,
         serverDetails: { on: false },
-        usbDetails: [],
+        usbDetails: []
       };
 
       let serverTitleSanitised;
@@ -128,8 +129,8 @@ export default function startMQTTClient() {
       if (ip === '') {
         console.log(
           'Failed to process ' +
-            queryID +
-            ', servers not loaded. If the API just started this should go away after a minute, otherwise log into servers in the UI',
+          queryID +
+          ', servers not loaded. If the API just started this should go away after a minute, otherwise log into servers in the UI'
         );
         return;
       }
@@ -159,7 +160,7 @@ export default function startMQTTClient() {
                 dockerIdentifier = dockerId;
                 dockerDetails = docker;
               }
-            },
+            }
           );
         }
       }
@@ -222,30 +223,30 @@ export default function startMQTTClient() {
             description: vmDetails.edit.description,
             mac: vmDetails.edit.nics[0]
               ? vmDetails.edit.nics[0].mac
-              : undefined,
+              : undefined
           };
           console.log('Updating MQTT for: ' + queryID);
           client.publish(
             process.env.MQTTBaseTopic +
-              '/' +
-              serverTitleSanitised +
-              '/' +
-              vmSanitisedName,
-            JSON.stringify(vmDetailsToSend),
+            '/' +
+            serverTitleSanitised +
+            '/' +
+            vmSanitisedName,
+            JSON.stringify(vmDetailsToSend)
           );
 
           responses.push(
-            await changeVMState(vmIdentifier, command, ip, keys[ip], token),
+            await changeVMState(vmIdentifier, command, ip, keys[ip], token)
           );
         } else {
           dockerDetails.status = message.toString();
           client.publish(
             process.env.MQTTBaseTopic +
-              '/' +
-              serverTitleSanitised +
-              '/' +
-              sanitise(dockerDetails.name),
-            JSON.stringify(dockerDetails),
+            '/' +
+            serverTitleSanitised +
+            '/' +
+            sanitise(dockerDetails.name),
+            JSON.stringify(dockerDetails)
           );
           responses.push(
             await changeDockerState(
@@ -253,8 +254,8 @@ export default function startMQTTClient() {
               command,
               ip,
               keys[ip],
-              token,
-            ),
+              token
+            )
           );
         }
       } else if (topic.includes('attach')) {
@@ -262,7 +263,7 @@ export default function startMQTTClient() {
           server: ip,
           id: vmIdentifier,
           auth: keys[ip],
-          usbId: topicParts[3].replace('_', ':'),
+          usbId: topicParts[3].replace('_', ':')
         };
 
         if (
@@ -275,22 +276,22 @@ export default function startMQTTClient() {
           responses.push(await detachUSB(data));
         }
         const usbDetails = vmDetails.edit.usbs.filter(
-          (usb) => sanitise(usb.id) === topicParts[3],
+          (usb) => sanitise(usb.id) === topicParts[3]
         )[0];
         client.publish(
           process.env.MQTTBaseTopic +
-            '/' +
-            serverTitleSanitised +
-            '/' +
-            vmSanitisedName +
-            '/' +
-            topicParts[3],
+          '/' +
+          serverTitleSanitised +
+          '/' +
+          vmSanitisedName +
+          '/' +
+          topicParts[3],
           JSON.stringify({
             id: topicParts[3],
             attached: message.toString().toLowerCase() !== 'false',
             name: sanitise(usbDetails.name),
-            connected: !!usbDetails.connected,
-          }),
+            connected: !!usbDetails.connected
+          })
         );
       } else if (topic.includes('array')) {
         let command = 'start';
@@ -300,23 +301,23 @@ export default function startMQTTClient() {
         serverDetails.serverDetails.arrayStatus = message.toString();
         client.publish(
           process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-          JSON.stringify(serverDetails),
+          JSON.stringify(serverDetails)
         );
         responses.push(await changeArrayState(command, ip, keys[ip], token));
       } else if (topic.includes('powerOff')) {
         serverDetails.serverDetails.on = false;
         client.publish(
           process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-          JSON.stringify(serverDetails),
+          JSON.stringify(serverDetails)
         );
         responses.push(
-          await changeServerState('shutdown', ip, keys[ip], token),
+          await changeServerState('shutdown', ip, keys[ip], token)
         );
       } else if (topic.includes('reboot')) {
         serverDetails.serverDetails.on = false;
         client.publish(
           process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-          JSON.stringify(serverDetails),
+          JSON.stringify(serverDetails)
         );
         responses.push(await changeServerState('reboot', ip, keys[ip], token));
       } else if (topic.includes('check')) {
@@ -324,31 +325,31 @@ export default function startMQTTClient() {
           serverDetails.serverDetails.parityCheckRunning = true;
           client.publish(
             process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-            JSON.stringify(serverDetails),
+            JSON.stringify(serverDetails)
           );
           responses.push(await changeServerState('check', ip, keys[ip], token));
         } else {
           serverDetails.serverDetails.parityCheckRunning = false;
           client.publish(
             process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-            JSON.stringify(serverDetails),
+            JSON.stringify(serverDetails)
           );
           responses.push(
-            await changeServerState('check-cancel', ip, keys[ip], token),
+            await changeServerState('check-cancel', ip, keys[ip], token)
           );
         }
       } else if (topic.includes('move')) {
         serverDetails.serverDetails.moverRunning = true;
         client.publish(
           process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-          JSON.stringify(serverDetails),
+          JSON.stringify(serverDetails)
         );
         responses.push(await changeServerState('move', ip, keys[ip], token));
       } else if (topic.includes('sleep')) {
         serverDetails.serverDetails.on = false;
         client.publish(
           process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-          JSON.stringify(serverDetails),
+          JSON.stringify(serverDetails)
         );
         responses.push(await changeServerState('sleep', ip, keys[ip], token));
       }
@@ -364,7 +365,7 @@ export default function startMQTTClient() {
         if (response && response.error) {
           success = false;
           console.log(
-            'Part of ' + queryID + ' failed with response: ' + response.error,
+            'Part of ' + queryID + ' failed with response: ' + response.error
           );
         }
       });
@@ -373,8 +374,8 @@ export default function startMQTTClient() {
       }
     });
 
-    client.on('error', function (error) {
-      console.log("Can't connect" + error);
+    client.on('error', function(error) {
+      console.log('Can\'t connect' + error);
     });
   } catch (e) {
     if (
@@ -382,7 +383,7 @@ export default function startMQTTClient() {
       e.toString().includes('mqttKeys')
     ) {
       console.log(
-        'Server details failed to load. Have you set up any servers in the UI?',
+        'Server details failed to load. Have you set up any servers in the UI?'
       );
     } else {
       console.log(e);

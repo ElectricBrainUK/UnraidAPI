@@ -18,14 +18,20 @@ export function getDockers(servers: ServerMap, serverAuth) {
         '/plugins/dynamix.docker.manager/include/DockerContainers.php',
       headers: {
         Authorization: 'Basic ' + serverAuth[ip],
-        Cookie: authCookies[ip] ? authCookies[ip] : '',
-      },
+        Cookie: authCookies[ip] ? authCookies[ip] : ''
+      }
     })
       .then(async (response) => {
         callSucceeded(ip);
         let htmlDetails = JSON.stringify(response.data);
         let details = parseHTML(htmlDetails);
-        servers[ip].docker.details = processDockerResponse(details);
+        if (!servers[ip].docker) {
+          servers[ip].docker = {
+            details: processDockerResponse(details)
+          };
+        } else {
+          servers[ip].docker.details = processDockerResponse(details);
+        }
         updateFile(servers, ip, 'docker');
       })
       .catch((e) => {

@@ -39,7 +39,7 @@ export function getUSBDetails(servers: ServerMap, serverAuth) {
             );
             servers[ip].usbDetails.push({
               id: extractValue(row, 'value="', '"'),
-              name: extractValue(row, '/> ', ' ('),
+              name: extractValue(row, '/> ', ' (')
             });
             response.data = response.data.replace('<label for="usb', '');
           }
