@@ -4,6 +4,7 @@ export interface MqttConfiguration {
   MQTTPass?: string;
   MQTTUser?: string;
   MQTTPort: number;
+  MQTTRefreshRate?: number;
 }
 
 /**
@@ -19,6 +20,7 @@ export function getMqttConfig(): MqttConfiguration {
     MQTTPass,
     MQTTUser,
     MQTTPort,
+    MQTTRefreshRate,
   } = process.env;
 
   const port = MQTTPort ? parseInt(MQTTPort) : 1883;
@@ -29,5 +31,6 @@ export function getMqttConfig(): MqttConfiguration {
     MQTTUser,
     MQTTBaseTopic: MQTTBaseTopic ?? 'homeassistant',
     MQTTPort: port,
+    MQTTRefreshRate,
   };
 }

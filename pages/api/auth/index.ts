@@ -11,6 +11,9 @@ export default async function (
   res.send(response);
 }
 
+// TODO this doesn't, strictly speaking, connect to any server, that happens
+// elsewhere. Should consider renaming function or changing how connections to
+// servers are handled.
 async function connectToServer({ ip, user, password }: LoginBody) {
   let response = { message: '' };
 
