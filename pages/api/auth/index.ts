@@ -1,8 +1,7 @@
-import fs from 'fs';
 import { NextApiResponse } from 'next';
 import { ApiBodyRequest, LoginBody } from 'models/api/';
-import { ServerMap } from 'models/server';
-import { MqttKeyMap } from 'models/mqtt';
+import { parseServers, writeServersJson } from 'lib/storage/servers';
+import { keyStorageChecker, writeMqttKeys } from 'lib/storage/secure';
 
 export default async function (
   req: ApiBodyRequest<LoginBody>,
@@ -12,66 +11,33 @@ export default async function (
   res.send(response);
 }
 
-const CONFIG_DIR = 'config/';
-const KEY_STORAGE = process.env.KeyStorage
-  ? process.env.KeyStorage + '/'
-  : 'secure/';
-
-const MQTT_KEYS_DIR = `${KEY_STORAGE}mqttKeys/`;
-
-function checkConfigDir(): ServerMap {
-  if (!fs.existsSync(CONFIG_DIR)) {
-    fs.mkdirSync(CONFIG_DIR);
-  } else {
-    const rawdata = fs.readFileSync(`${CONFIG_DIR}servers.json`);
-    const servers = JSON.parse(rawdata.toString());
-    return servers ?? {};
-  }
-}
-
-function checkKeyStorageDir() {
-  if (!fs.existsSync(KEY_STORAGE)) {
-    fs.mkdirSync(KEY_STORAGE);
-  }
-}
-
-function checkMqttKeysDir() {
-  if (!fs.existsSync(MQTT_KEYS_DIR)) {
-    fs.writeFileSync(MQTT_KEYS_DIR, JSON.stringify({}));
-  }
-}
-
 async function connectToServer({ ip, user, password }: LoginBody) {
-  let response = {
-    message: '',
-  };
-  let servers: ServerMap = {};
+  let response = { message: '' };
 
   try {
-    servers = checkConfigDir();
-    checkKeyStorageDir();
-    checkMqttKeysDir();
-  } catch (e) {
-    // console.log(e);
-  } finally {
-    let keys: MqttKeyMap = {};
-    try {
-      keys = JSON.parse(fs.readFileSync(`${KEY_STORAGE}mqttKeys`).toString());
-    } catch (e) {
-      // console.log(e);
-    } finally {
-      if (ip.length) {
-        servers[ip] = {};
-        console.log(servers);
-        const authToken = Buffer.from(`${user}:${password}`).toString();
-        keys[ip] = authToken;
+    const [servers, keys] = await Promise.all([
+      parseServers(),
+      keyStorageChecker(),
+    ]);
 
-        fs.writeFileSync(`${KEY_STORAGE}mqttKeys`, JSON.stringify(keys));
-
-        fs.writeFileSync('config/servers.json', JSON.stringify(servers));
-        response.message = 'Connected';
-      }
+    if (!ip.length) {
+      return response;
     }
+
+    // TODO this has changed such that, if the server already exists from the
+    // file that has been read in, it does not overwrite the entry. Is that
+    // desired behaviour?
+    const serverExists = servers[ip] !== undefined;
+    servers[ip] = serverExists ? servers[ip] : {};
+
+    const authToken = Buffer.from(`${user}:${password}`).toString();
+    keys[ip] = authToken;
+
+    await Promise.all([writeMqttKeys(keys), writeServersJson(servers)]);
+
+    response.message = 'Connected';
+  } catch (err) {
+    console.error(err);
   }
   return response;
 }
