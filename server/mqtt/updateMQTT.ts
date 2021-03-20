@@ -1,28 +1,38 @@
-import { getUnraidDetails } from '../../lib/getUnraidDetails';
-import { getServerDetails } from './getServerDetails';
-import * as fs from 'fs';
+import { keyStorageChecker } from '../../lib/storage/secure';
 import { MqttClient } from 'mqtt';
+import { getUnraidDetails } from '../../lib/getUnraidDetails';
+import { parseServers } from '../../lib/storage/servers';
+import { readDisabledDevices } from '../../lib/storage/devices';
+import { getServerDetails } from './getServerDetails';
+import { getMqttConfig } from 'lib/config';
 
-export function updateMQTT(client: MqttClient) {
+export async function updateMQTT(client: MqttClient) {
   try {
-    let keys = JSON.parse(fs.readFileSync((process.env.KeyStorage ? process.env.KeyStorage + '/' : 'secure/') + 'mqttKeys').toString());
-    let servers = JSON.parse(fs.readFileSync('config/servers.json').toString());
-    let disabledDevices = [];
-    try {
-      disabledDevices = JSON.parse(fs.readFileSync('config/mqttDisabledDevices.json').toString());
-    } catch (e) {
-
-    }
-
+    const { MQTTRefreshRate } = getMqttConfig();
+    const [servers, keys, disabledDevices] = await Promise.all([
+      parseServers(),
+      keyStorageChecker(),
+      readDisabledDevices(),
+    ]);
     getUnraidDetails(servers, keys);
 
     let timer = 1000;
-    Object.keys(servers).forEach(ip => {
-      setTimeout(getServerDetails, timer, client, servers, disabledDevices, ip, timer);
-      timer = timer + (process.env.MQTTRefreshRate ? +process.env.MQTTRefreshRate * 1000 : 20000) / 4;
+    Object.keys(servers).forEach((ip) => {
+      setTimeout(
+        getServerDetails,
+        timer,
+        client,
+        servers,
+        disabledDevices,
+        ip,
+        timer,
+      );
+      timer = timer + (MQTTRefreshRate ? +MQTTRefreshRate * 1000 : 20000) / 4;
     });
   } catch (e) {
+    console.log(
+      'The secure keys for mqtt may have not been generated, you need to make 1 authenticated request via the API first for this to work',
+    );
     console.log(e);
-    console.log('The secure keys for mqtt may have not been generated, you need to make 1 authenticated request via the API first for this to work');
   }
 }
