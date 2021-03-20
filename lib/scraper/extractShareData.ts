@@ -1,6 +1,6 @@
 import { extractValue } from './extractValue';
 
-export function extractShareData(response) {
+export function extractShareData(response: { data: string }) {
   let shares = [];
   response.data.replace(
     '<script type="text/html" id="tmplShare">\n' +

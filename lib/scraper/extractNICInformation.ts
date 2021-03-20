@@ -2,7 +2,7 @@ import { VmEditNic } from 'models/vm';
 import { extractReverseValue } from './extractReverseValue';
 import { extractValue } from './extractValue';
 
-export function extractNICInformation(response) {
+export function extractNICInformation(response: { data: string }) {
   let nicInfo = extractValue(
     response.data,
     '<table data-category="Network" data-multiple="true"',

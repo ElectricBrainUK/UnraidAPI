@@ -1,7 +1,7 @@
 import { SoundPciDetail } from 'models/pci';
 import { extractValue } from './extractValue';
 
-export function extractSoundData(response, vmObject) {
+export function extractSoundData(response: { data: string }, vmObject) {
   let soundInfo = extractValue(response.data, '<td>Sound Card:</td>', '</td>');
   while (soundInfo.includes("<option value='")) {
     let row = extractValue(soundInfo, "<option value='", '>');

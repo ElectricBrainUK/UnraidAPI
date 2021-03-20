@@ -9,11 +9,13 @@ import { getMqttConfig } from 'lib/config';
 export async function updateMQTT(client: MqttClient) {
   try {
     const { MQTTRefreshRate } = getMqttConfig();
+
     const [servers, keys, disabledDevices] = await Promise.all([
       parseServers(),
       keyStorageChecker(),
       readDisabledDevices(),
     ]);
+
     getUnraidDetails(servers, keys);
 
     let timer = 1000;

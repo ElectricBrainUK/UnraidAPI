@@ -2,7 +2,11 @@ import fs from 'fs';
 import { extractValue } from './extractValue';
 import { UsbDetail } from '../../models/usb';
 
-export function extractUSBData(response, vmObject, ip) {
+export function extractUSBData(
+  response: { data: string },
+  vmObject,
+  ip: string,
+) {
   let usbs: UsbDetail[] = [];
   let usbInfo = extractValue(response.data, '<td>USB Devices:</td>', '</td>');
   while (usbInfo.includes('value="')) {
@@ -11,7 +15,7 @@ export function extractUSBData(response, vmObject, ip) {
       checked: row.includes('checked'),
       id: row.substring(0, row.indexOf('"')),
       name: row.substring(row.indexOf('/') + 3),
-      connected: true
+      connected: true,
     };
     usbs.push(usb);
 

@@ -1,6 +1,6 @@
 import { hasContents } from './hasContents';
 
-export function checkContents(remaining, object) {
+export function checkContents(remaining: string, object) {
   if (hasContents(remaining)) {
     if (object.contents) {
       object.content += object.contents;

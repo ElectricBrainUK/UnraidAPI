@@ -1,7 +1,7 @@
 import { extractValue } from './extractValue';
 
-export function extractCPUDetails(response) {
-  let cpuDetails = [];
+export function extractCPUDetails(response: { data: string }) {
+  let cpuDetails: string[] = [];
   while (response.data.includes("for='vcpu")) {
     let row = extractValue(response.data, "<label for='vcpu", '</label>');
     if (row.includes('checked')) {

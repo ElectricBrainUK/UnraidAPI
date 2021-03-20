@@ -1,3 +1,3 @@
 export function isClosingTag(remaining, open) {
-  return remaining.indexOf('</' + open + '>') === 0;
+  return remaining.indexOf(`</${open}>`) === 0;
 }

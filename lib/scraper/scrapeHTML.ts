@@ -4,6 +4,7 @@ import { authCookies } from '../auth';
 import { extractValue } from './extractValue';
 import { extractReverseValue } from './extractReverseValue';
 import { callFailed, callSucceeded } from '../api';
+
 interface ServerCoreDetails {
   title: string;
   cpu: string;

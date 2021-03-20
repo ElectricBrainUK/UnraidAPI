@@ -9,7 +9,11 @@ import { extractGPUData } from './extractGPUData';
 import { extractSoundData } from './extractSoundData';
 import { extractNICInformation } from './extractNICInformation';
 
-export function extractVMDetails(vmObject, response, ip) {
+export function extractVMDetails(
+  vmObject,
+  response: { data: string },
+  ip: string,
+) {
   vmObject.xml = extractValue(
     response.data,
     '<textarea id="addcode" name="xmldesc" placeholder="Copy &amp; Paste Domain XML Configuration Here." autofocus>',

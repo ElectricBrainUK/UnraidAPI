@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <Flex p="1rem">
       <Head>
-        <title>Create Next App</title>
+        <title>Unraid API</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <LoginForm />

@@ -5,13 +5,15 @@ import { extractValue } from '../scraper';
 
 export async function getCSRFToken(server: string, auth: string) {
   try {
+    const baseUrl = server.includes('http') ? server : 'http://' + server;
+    const cookie = authCookies.get(server) ?? '';
+
     const response = await axios({
-      method: 'get',
-      url:
-        (server.includes('http') ? server : 'http://' + server) + '/Dashboard',
+      method: 'GET',
+      url: `${baseUrl}/Dashboard`,
       headers: {
-        Authorization: 'Basic ' + auth,
-        Cookie: authCookies[server] ? authCookies[server] : '',
+        Authorization: `Basic ${auth}`,
+        Cookie: cookie,
       },
     });
     callSucceeded(server);

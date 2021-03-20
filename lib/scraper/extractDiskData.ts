@@ -1,8 +1,9 @@
+import { VmEditDisk } from 'models/vm';
 import { extractReverseValue } from './extractReverseValue';
 import { extractValue } from './extractValue';
 
-export function extractDiskData(response) {
-  let disks = [];
+export function extractDiskData(response: { data: string }) {
+  let disks: VmEditDisk[] = [];
   while (response.data.includes('id="disk_')) {
     let row = extractValue(response.data, 'id="disk_', '>');
     let disk = extractValue(row, '', '"');

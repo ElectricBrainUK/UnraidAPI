@@ -1,17 +1,24 @@
 import { extractReverseValue } from './extractReverseValue';
 import { extractValue } from './extractValue';
 
-export function extractIndividualGPU(gpuInfo, gpuNo, vmObject, response) {
+export function extractIndividualGPU(
+  gpuInfo: string,
+  gpuNo,
+  vmObject,
+  response,
+) {
   while (gpuInfo.includes("<option value='")) {
     let row = extractValue(gpuInfo, "<option value='", '>');
-    let gpu: any = {};
-    gpu.gpu = true;
-    gpu.id = row.substring(0, row.indexOf("'"));
-    gpu.name = extractValue(
-      extractValue(gpuInfo, "<option value='", '/option>'),
-      '>',
-      '<',
-    );
+    let gpu: any = {
+      gpu: true,
+      id: row.substring(0, row.indexOf("'")),
+      name: extractValue(
+        extractValue(gpuInfo, "<option value='", '/option>'),
+        '>',
+        '<',
+      ),
+    };
+
     if (row.includes('selected')) {
       gpu.checked = true;
       gpu.position = gpuNo;

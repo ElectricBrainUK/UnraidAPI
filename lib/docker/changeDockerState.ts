@@ -5,30 +5,26 @@ import { authCookies } from '../auth';
 
 export async function changeDockerState(
   id: string,
-  action,
-  server,
-  auth,
-  token,
+  action: string,
+  server: string,
+  auth: string,
+  token: string,
 ) {
   try {
+    const urlBase = server.includes('http') ? server : 'http://' + server;
     const response = await axios({
       method: 'POST',
-      url:
-        (server.includes('http') ? server : 'http://' + server) +
-        '/plugins/dynamix.docker.manager/include/Events.php',
+      url: `${urlBase}/plugins/dynamix.docker.manager/include/Events.php`,
       headers: {
-        Authorization: 'Basic ' + auth,
+        Authorization: `Basic ${auth}`,
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'X-Requested-With': 'XMLHttpRequest',
-        Cookie: authCookies[server] ? authCookies[server] : '',
+        Cookie: authCookies.get(server) ?? '',
       },
-      data:
-        'container=' +
-        id +
-        '&action=' +
-        action.replace('domain-', '') +
-        '&csrf_token=' +
-        token,
+      data: `container=${id}&action=${action.replace(
+        'domain-',
+        '',
+      )}&csrf_token=${token}`,
       httpAgent: new http.Agent({ keepAlive: true }),
     });
     callSucceeded(server);

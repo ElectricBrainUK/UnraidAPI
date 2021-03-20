@@ -2,7 +2,7 @@ import { parseTag } from './parseTag';
 import { isAnyClosingTag } from './isAnyClosingTag';
 import { isRemaining } from './isRemaining';
 
-export function parseHTML(html) {
+export function parseHTML(html: string) {
   let parsedHtml = [];
   while (isRemaining(html)) {
     let result = parseTag(

@@ -4,7 +4,7 @@ export interface MqttConfiguration {
   MQTTPass?: string;
   MQTTUser?: string;
   MQTTPort: number;
-  MQTTRefreshRate?: number;
+  MQTTRefreshRate?: string;
 }
 
 /**

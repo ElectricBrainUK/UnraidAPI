@@ -6,7 +6,7 @@ import { logInToUrl } from '../auth/logInToUrl';
 export async function logIn(servers: ServerMap, serverAuth) {
   const ips = Object.keys(servers);
   const promises = ips.map((ip) => {
-    if (!serverAuth[ip] || (authCookies[ip] && authCookies[ip] !== undefined)) {
+    if (!serverAuth[ip] || authCookies.has(ip)) {
       if (!serverAuth[ip]) {
         servers[ip].status = 'offline';
       } else {

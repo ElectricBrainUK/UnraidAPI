@@ -1,7 +1,7 @@
 import { extractValue } from './extractValue';
 import { extractIndividualGPU } from './extractIndividualGPU';
 
-export function extractGPUData(response, vmObject) {
+export function extractGPUData(response: { data: string }, vmObject) {
   let gpuNo = 0;
   while (response.data.includes('<td>Graphics Card:</td>')) {
     let gpuInfo = extractValue(

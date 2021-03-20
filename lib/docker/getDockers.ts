@@ -7,19 +7,23 @@ import { updateFile } from '../storage/updateFile';
 import { processDockerResponse } from './processDockerResponse';
 
 export function getDockers(servers: ServerMap, serverAuth) {
+  // const serverIps = Object.keys(servers);
+
   Object.keys(servers).forEach((ip) => {
     if (!serverAuth[ip]) {
       return;
     }
+    const url = `${
+      ip.includes('http') ? ip : 'http://' + ip
+    }/plugins/dynamix.docker.manager/include/DockerContainers.php`;
+
     axios({
       method: 'get',
-      url:
-        (ip.includes('http') ? ip : 'http://' + ip) +
-        '/plugins/dynamix.docker.manager/include/DockerContainers.php',
+      url,
       headers: {
-        Authorization: 'Basic ' + serverAuth[ip],
-        Cookie: authCookies[ip] ? authCookies[ip] : ''
-      }
+        Authorization: `Basic ${serverAuth[ip]}`,
+        Cookie: authCookies.get(ip) ?? '',
+      },
     })
       .then(async (response) => {
         callSucceeded(ip);
@@ -27,7 +31,7 @@ export function getDockers(servers: ServerMap, serverAuth) {
         let details = parseHTML(htmlDetails);
         if (!servers[ip].docker) {
           servers[ip].docker = {
-            details: processDockerResponse(details)
+            details: processDockerResponse(details),
           };
         } else {
           servers[ip].docker.details = processDockerResponse(details);

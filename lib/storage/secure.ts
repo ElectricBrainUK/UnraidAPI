@@ -60,7 +60,7 @@ async function checkCreateMqttKeys() {
  * if error thrown.
  * @returns Mqtt Key Map
  */
-async function readMqttKeys(): Promise<MqttKeyMap> {
+export async function readMqttKeys(): Promise<MqttKeyMap> {
   const keyStorage = getKeyStorage();
 
   const location = path.join(keyStorage, MQTT_KEYS);
