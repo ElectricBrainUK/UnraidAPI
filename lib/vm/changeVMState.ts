@@ -3,22 +3,29 @@ import http from 'http';
 import { callSucceeded, callFailed } from '../api';
 import { authCookies } from '../auth';
 
-export async function changeVMState(id, action, server, auth, token) {
+export async function changeVMState(
+  id: string,
+  action: string,
+  server: string,
+  auth: string,
+  token: string,
+) {
   try {
+    const urlBase = server.includes('http') ? server : `http://${server}`;
+    const path = '/plugins/dynamix.vm.manager/include/VMajax.php';
     const response = await axios({
       method: 'POST',
-      url:
-        (server.includes('http') ? server : 'http://' + server) +
-        '/plugins/dynamix.vm.manager/include/VMajax.php',
+      url: urlBase + path,
       headers: {
-        Authorization: 'Basic ' + auth,
+        Authorization: `Basic ${auth}`,
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'X-Requested-With': 'XMLHttpRequest',
-        Cookie: authCookies[server] ? authCookies[server] : '',
+        Cookie: authCookies.get(server) ?? '',
       },
-      data: 'uuid=' + id + '&action=' + action + '&csrf_token=' + token,
+      data: `uuid=${id}&action=${action}&csrf_token=${token}`,
       httpAgent: new http.Agent({ keepAlive: true }),
     });
+
     callSucceeded(server);
     if (response.data.state === 'running') {
       response.data.state = 'started';

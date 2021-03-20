@@ -5,7 +5,10 @@ import { authCookies } from '../auth';
 import { extractValue } from '../scraper';
 import { updateFile } from '../storage/updateFile';
 
-export function getUSBDetails(servers: ServerMap, serverAuth) {
+export function getUSBDetails(
+  servers: ServerMap,
+  serverAuth: Record<string, string>,
+) {
   Object.keys(servers).forEach((ip) => {
     if (!serverAuth[ip]) {
       return;
@@ -15,15 +18,17 @@ export function getUSBDetails(servers: ServerMap, serverAuth) {
       servers[ip].vm.details &&
       Object.keys(servers[ip].vm.details).length > 0
     ) {
+      const urlBase = ip.includes('http') ? ip : `http://${ip}`;
+      const basePath = '/VMs/UpdateVM?uuid=';
       axios({
         method: 'get',
         url:
-          (ip.includes('http') ? ip : 'http://' + ip) +
-          '/VMs/UpdateVM?uuid=' +
+          urlBase +
+          basePath +
           servers[ip].vm.details[Object.keys(servers[ip].vm.details)[0]].id,
         headers: {
-          Authorization: 'Basic ' + serverAuth[ip],
-          Cookie: authCookies[ip] ? authCookies[ip] : '',
+          Authorization: `Basic ${serverAuth[ip]}`,
+          Cookie: authCookies.get(ip) ?? '',
         },
       })
         .then((response) => {
@@ -39,7 +44,7 @@ export function getUSBDetails(servers: ServerMap, serverAuth) {
             );
             servers[ip].usbDetails.push({
               id: extractValue(row, 'value="', '"'),
-              name: extractValue(row, '/> ', ' (')
+              name: extractValue(row, '/> ', ' ('),
             });
             response.data = response.data.replace('<label for="usb', '');
           }

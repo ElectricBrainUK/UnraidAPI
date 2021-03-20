@@ -5,19 +5,18 @@ import { parseHTML } from '../scraper';
 import { updateFile } from '../storage/updateFile';
 import { processVMResponse } from './processVMResponse';
 
-export function getVMs(servers, serverAuth) {
+export function getVMs(servers, serverAuth: Record<string, string>) {
   Object.keys(servers).forEach((ip) => {
     if (!serverAuth[ip]) {
       return;
     }
+    const urlBase = ip.includes('http') ? ip : 'http://' + ip;
     axios({
-      method: 'get',
-      url:
-        (ip.includes('http') ? ip : 'http://' + ip) +
-        '/plugins/dynamix.vm.manager/include/VMMachines.php',
+      method: 'GET',
+      url: `${urlBase}/plugins/dynamix.vm.manager/include/VMMachines.php`,
       headers: {
-        Authorization: 'Basic ' + serverAuth[ip],
-        Cookie: authCookies[ip] ? authCookies[ip] : '',
+        Authorization: `Basic ${serverAuth[ip]}`,
+        Cookie: authCookies.get(ip) ?? '',
       },
     })
       .then(async (response) => {

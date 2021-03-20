@@ -1,4 +1,4 @@
-export function getUSBPart(vmObject, form) {
+export function getUSBPart(vmObject, form: string) {
   if (vmObject.usbs && vmObject.usbs.length > 0) {
     vmObject.usbs.forEach((usbDevice) => {
       form +=

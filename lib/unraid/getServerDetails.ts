@@ -2,7 +2,10 @@ import { ServerMap } from 'models/server';
 import { scrapeHTML, scrapeMainHTML } from '../scraper';
 import { updateFile } from '../storage/updateFile';
 
-export function getServerDetails(servers: ServerMap, serverAuth) {
+export function getServerDetails(
+  servers: ServerMap,
+  serverAuth: Record<string, string>,
+) {
   Object.keys(servers).forEach(async (ip) => {
     if (!serverAuth[ip]) {
       servers[ip].serverDetails.on = false;

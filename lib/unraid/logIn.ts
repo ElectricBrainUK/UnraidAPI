@@ -3,7 +3,10 @@ import { ServerMap } from 'models/server';
 import { authCookies } from '../auth';
 import { logInToUrl } from '../auth/logInToUrl';
 
-export async function logIn(servers: ServerMap, serverAuth) {
+export async function logIn(
+  servers: ServerMap,
+  serverAuth: Record<string, string>,
+) {
   const ips = Object.keys(servers);
   const promises = ips.map((ip) => {
     if (!serverAuth[ip] || authCookies.has(ip)) {

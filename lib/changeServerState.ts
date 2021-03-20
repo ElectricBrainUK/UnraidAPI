@@ -16,21 +16,25 @@ export async function changeServerState(
   auth: string,
   token: string,
 ) {
+  const urlBase = server.includes('http') ? server : `http://${server}`;
+
+  const cookie = authCookies.get(server) ?? '';
+
+  const headers = {
+    Authorization: `Basic ${auth}`,
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'X-Requested-With': 'XMLHttpRequest',
+    Cookie: cookie,
+  };
+
   switch (action) {
     case 'shutdown':
       try {
         await axios({
           method: 'POST',
-          url:
-            (server.includes('http') ? server : 'http://' + server) +
-            '/webGui/include/Boot.php',
-          headers: {
-            Authorization: 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            Cookie: authCookies[server] ? authCookies[server] : '',
-          },
-          data: 'csrf_token=' + token + '&cmd=shutdown',
+          url: `${urlBase}/webGui/include/Boot.php`,
+          headers,
+          data: `csrf_token=${token}&cmd=shutdown`,
           httpAgent: new http.Agent({ keepAlive: true }),
         });
         return { success: true };
@@ -42,16 +46,9 @@ export async function changeServerState(
       try {
         await axios({
           method: 'POST',
-          url:
-            (server.includes('http') ? server : 'http://' + server) +
-            '/webGui/include/Boot.php',
-          headers: {
-            Authorization: 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            Cookie: authCookies[server] ? authCookies[server] : '',
-          },
-          data: 'csrf_token=' + token + '&cmd=reboot',
+          url: `${urlBase}/webGui/include/Boot.php`,
+          headers,
+          data: `csrf_token=${token}&cmd=reboot`,
           httpAgent: new http.Agent({ keepAlive: true }),
         });
         return { success: true };
@@ -63,16 +60,9 @@ export async function changeServerState(
       try {
         await axios({
           method: 'POST',
-          url:
-            (server.includes('http') ? server : 'http://' + server) +
-            '/update.htm',
-          headers: {
-            Authorization: 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            Cookie: authCookies[server] ? authCookies[server] : '',
-          },
-          data: 'cmdStartMover=Move&csrf_token=' + token,
+          url: `${urlBase}/update.htm`,
+          headers,
+          data: `cmdStartMover=Move&csrf_token=${token}`,
           httpAgent: new http.Agent({ keepAlive: true }),
         });
         return { success: true };
@@ -84,18 +74,9 @@ export async function changeServerState(
       try {
         await axios({
           method: 'POST',
-          url:
-            (server.includes('http') ? server : 'http://' + server) +
-            '/update.htm',
-          headers: {
-            Authorization: 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            Cookie: authCookies[server] ? authCookies[server] : '',
-          },
-          data:
-            'startState=STARTED&file=&cmdCheck=Check&optionCorrect=correct&csrf_token=' +
-            token,
+          url: `${urlBase}/update.htm`,
+          headers,
+          data: `startState=STARTED&file=&cmdCheck=Check&optionCorrect=correct&csrf_token=${token}`,
           httpAgent: new http.Agent({ keepAlive: true }),
         });
         return { success: true };
@@ -107,19 +88,9 @@ export async function changeServerState(
       try {
         await axios({
           method: 'POST',
-          url:
-            (server.includes('http') ? server : 'http://' + server) +
-            '/update.htm',
-          headers: {
-            Authorization: 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            Cookie: authCookies[server] ? authCookies[server] : '',
-          },
-          data:
-            'startState=STARTED&file=&csrf_token=' +
-            token +
-            '&cmdNoCheck=Cancel',
+          url: `${urlBase}/update.htm`,
+          headers,
+          data: `startState=STARTED&file=&csrf_token=${token}&cmdNoCheck=Cancel`,
           httpAgent: new http.Agent({ keepAlive: true }),
         });
         return { success: true };
@@ -131,15 +102,8 @@ export async function changeServerState(
       try {
         await axios({
           method: 'GET',
-          url:
-            (server.includes('http') ? server : 'http://' + server) +
-            '/plugins/dynamix.s3.sleep/include/SleepMode.php',
-          headers: {
-            Authorization: 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Requested-With': 'XMLHttpRequest',
-            Cookie: authCookies[server] ? authCookies[server] : '',
-          },
+          url: `${urlBase}/plugins/dynamix.s3.sleep/include/SleepMode.php`,
+          headers,
         });
         return { success: true };
       } catch (e_5) {

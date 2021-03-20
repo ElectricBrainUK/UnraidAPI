@@ -17,7 +17,7 @@ interface ServerCoreDetails {
 
 export async function scrapeHTML(
   ip: string,
-  serverAuth,
+  serverAuth: Record<string, string>,
 ): Promise<ServerCoreDetails | undefined> {
   try {
     const response = await axios({

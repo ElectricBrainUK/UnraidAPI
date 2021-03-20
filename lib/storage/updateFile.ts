@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { ServerMap } from 'models/server';
 
-export function updateFile(servers: ServerMap, ip: string, tag) {
+export function updateFile(servers: ServerMap, ip: string, tag: string) {
   let oldServers = {};
 
   try {

@@ -11,21 +11,19 @@ export async function gatherDetailsFromEditVM(ip: string, id, vmObject, auth) {
     vmObject = servers[ip].vm.details[id];
   }
   try {
+    const urlBase = ip.includes('http') ? ip : `http://${ip}`;
     const response = await axios({
-      method: 'get',
-      url:
-        (ip.includes('http') ? ip : 'http://' + ip) +
-        '/VMs/UpdateVM?uuid=' +
-        id,
+      method: 'GET',
+      url: `${urlBase}/VMs/UpdateVM?uuid=${id}`,
       headers: {
-        Authorization: 'Basic ' + auth,
+        Authorization: `Basic ${auth}`,
         Cookie: authCookies[ip] ? authCookies[ip] : '',
       },
     });
     callSucceeded(ip);
     return extractVMDetails(vmObject, response, ip);
   } catch (e) {
-    console.log('Get VM Edit details for ip: ' + ip + ' Failed');
+    console.log(`Get VM Edit details for ip: ${ip} Failed`);
     if (e.response && e.response.status) {
       callFailed(ip, e.response.status);
     } else {

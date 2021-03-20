@@ -5,17 +5,18 @@ export interface GpuPciDetail {
   model?: string;
   keymap?: string;
   bios?: string;
+  checked?: boolean;
 }
 
 export interface SoundPciDetail {
   id: string;
   sound?: boolean;
   name: string;
-  checked: boolean;
+  checked?: boolean;
 }
 
 export interface GpuVncDetail extends GpuPciDetail {
-  checked: boolean;
+  checked?: boolean;
   position?: number;
 }
 

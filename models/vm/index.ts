@@ -98,7 +98,7 @@ export interface VmEditPciVnc {
   id: string;
   name: string;
   checked: boolean;
-  position: 0;
+  position: number;
   model: string;
   keymap: string;
   bios: string;
