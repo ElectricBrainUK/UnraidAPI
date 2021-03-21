@@ -80,11 +80,10 @@ export async function readMqttKeys(): Promise<MqttKeyMap> {
  * @param keys Mqtt Key Map
  */
 export async function writeMqttKeys(keys: MqttKeyMap): Promise<void> {
+  const keyStorage = getKeyStorage();
+
+  const location = path.join(keyStorage, MQTT_KEYS);
   try {
-    const keyStorage = getKeyStorage();
-
-    const location = path.join(keyStorage, MQTT_KEYS);
-
     const data = JSON.stringify(keys);
 
     await fs.promises.writeFile(location, data);

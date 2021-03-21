@@ -53,8 +53,8 @@ async function checkCreateServersJson() {
  * Read in servers.json and parse into ServerMap object.
  */
 async function readServersJson() {
+  const location = path.join(CONFIG_DIR, SERVERS_JSON);
   try {
-    const location = path.join(CONFIG_DIR, SERVERS_JSON);
     const data = await fs.promises.readFile(location);
     const servers = JSON.parse(data.toString());
     return servers as ServerMap;
@@ -70,9 +70,8 @@ async function readServersJson() {
  * @param servers payload of servers to write
  */
 export async function writeServersJson(servers: ServerMap): Promise<void> {
+  const location = path.join(CONFIG_DIR, SERVERS_JSON);
   try {
-    const location = path.join(CONFIG_DIR, SERVERS_JSON);
-
     const data = JSON.stringify(servers);
 
     await fs.promises.writeFile(location, data);

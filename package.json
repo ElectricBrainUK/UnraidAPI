@@ -9,7 +9,7 @@
     "build": "npm run build:app && npm run build:server",
     "build:app": "next build",
     "build:server": "tsc --project tsconfig.server.json",
-    "start": "NODE_ENV=production node dist/server/index.js"
+    "start": "NODE_ENV=production node -r ./prod-paths.js dist/server/index.js"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.6",
@@ -19,13 +19,14 @@
     "@emotion/styled": "11.1.5",
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
-    "js-base64": "^3.6.0",
     "form-data": "^4.0.0",
     "framer-motion": "^3.10.3",
+    "js-base64": "^3.6.0",
     "mqtt": "^4.2.6",
     "next": "10.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "tsconfig-paths": "^3.9.0",
     "uniqid": "^5.3.0"
   },
   "devDependencies": {

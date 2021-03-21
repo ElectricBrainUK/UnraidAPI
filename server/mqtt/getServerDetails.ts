@@ -2,6 +2,7 @@ import { MqttClient } from 'mqtt';
 import { sanitise } from './sanitise';
 import { getDockerDetails } from './getDockerDetails';
 import { getVMDetails } from './getVMDetails';
+import { getMqttConfig } from 'lib/config';
 
 let updated: Record<string, any> = {};
 
@@ -10,12 +11,13 @@ export function getServerDetails(
   servers,
   disabledDevices,
   ip: string,
-  timer
+  timer,
 ) {
   let server = servers[ip];
   if (!server.serverDetails || disabledDevices.includes(ip)) {
     return;
   }
+  const { MQTTBaseTopic, MQTTRefreshRate } = getMqttConfig();
   const serverTitleSanitised = sanitise(server.serverDetails.title);
 
   if (!updated[ip]) {
@@ -27,135 +29,101 @@ export function getServerDetails(
       identifiers: [serverTitleSanitised],
       name: serverTitleSanitised + '_server',
       manufacturer: server.serverDetails.motherboard,
-      model: 'Unraid Server'
+      model: 'Unraid Server',
     };
     client.publish(
-      process.env.MQTTBaseTopic +
-      '/binary_sensor/' +
-      serverTitleSanitised +
-      '/config',
+      MQTTBaseTopic + '/binary_sensor/' + serverTitleSanitised + '/config',
       JSON.stringify({
         payload_on: true,
         payload_off: false,
         value_template: '{{ value_json.on }}',
-        state_topic: process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-        json_attributes_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
+        state_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
+        json_attributes_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
         name: serverTitleSanitised + '_server',
         unique_id: serverTitleSanitised + ' unraid api server',
-        device: serverDevice
-      })
+        device: serverDevice,
+      }),
     );
     client.publish(
-      process.env.MQTTBaseTopic + '/switch/' + serverTitleSanitised + '/config',
+      MQTTBaseTopic + '/switch/' + serverTitleSanitised + '/config',
       JSON.stringify({
         payload_on: 'Started',
         payload_off: 'Stopped',
         value_template: '{{ value_json.arrayStatus }}',
-        state_topic: process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-        json_attributes_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
+        state_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
+        json_attributes_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
         name: serverTitleSanitised + '_array',
         unique_id: serverTitleSanitised + ' unraid api array',
         device: serverDevice,
-        command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/array'
-      })
+        command_topic: MQTTBaseTopic + '/' + serverTitleSanitised + '/array',
+      }),
     );
-    client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/array'
-    );
+    client.subscribe(MQTTBaseTopic + '/' + serverTitleSanitised + '/array');
 
     client.publish(
-      process.env.MQTTBaseTopic +
-      '/switch/' +
-      serverTitleSanitised +
-      '/powerOff/config',
+      MQTTBaseTopic + '/switch/' + serverTitleSanitised + '/powerOff/config',
       JSON.stringify({
         payload_on: false,
         payload_off: true,
         value_template: '{{ value_json.on }}',
-        state_topic: process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
+        state_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
         name: serverTitleSanitised + '_power_off',
         unique_id: serverTitleSanitised + ' unraid server power off',
         device: serverDevice,
-        command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff'
-      })
+        command_topic: MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff',
+      }),
     );
-    client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff'
-    );
+    client.subscribe(MQTTBaseTopic + '/' + serverTitleSanitised + '/powerOff');
 
     client.publish(
-      process.env.MQTTBaseTopic +
-      '/switch/' +
-      serverTitleSanitised +
-      '/reboot/config',
+      MQTTBaseTopic + '/switch/' + serverTitleSanitised + '/reboot/config',
       JSON.stringify({
         payload_on: false,
         payload_off: true,
         value_template: '{{ value_json.on }}',
-        state_topic: process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
+        state_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
         name: serverTitleSanitised + '_reboot',
         unique_id: serverTitleSanitised + ' unraid server reboot',
         device: serverDevice,
-        command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot'
-      })
+        command_topic: MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot',
+      }),
     );
-    client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot'
-    );
+    client.subscribe(MQTTBaseTopic + '/' + serverTitleSanitised + '/reboot');
 
     client.publish(
-      process.env.MQTTBaseTopic +
-      '/switch/' +
-      serverTitleSanitised +
-      '/parityCheck/config',
+      MQTTBaseTopic + '/switch/' + serverTitleSanitised + '/parityCheck/config',
       JSON.stringify({
         payload_on: true,
         payload_off: false,
         value_template: '{{ value_json.parityCheckRunning }}',
-        state_topic: process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
+        state_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
         name: serverTitleSanitised + '_partityCheck',
         unique_id: serverTitleSanitised + ' unraid server parity check',
         device: serverDevice,
-        command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/check'
-      })
+        command_topic: MQTTBaseTopic + '/' + serverTitleSanitised + '/check',
+      }),
     );
-    client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/check'
-    );
+    client.subscribe(MQTTBaseTopic + '/' + serverTitleSanitised + '/check');
 
     client.publish(
-      process.env.MQTTBaseTopic +
-      '/switch/' +
-      serverTitleSanitised +
-      '/mover/config',
+      MQTTBaseTopic + '/switch/' + serverTitleSanitised + '/mover/config',
       JSON.stringify({
         payload_on: true,
         payload_off: false,
         value_template: '{{ value_json.moverRunning }}',
-        state_topic: process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
+        state_topic: MQTTBaseTopic + '/' + serverTitleSanitised,
         name: serverTitleSanitised + '_mover',
         unique_id: serverTitleSanitised + ' unraid server mover',
         device: serverDevice,
-        command_topic:
-          process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/move'
-      })
+        command_topic: MQTTBaseTopic + '/' + serverTitleSanitised + '/move',
+      }),
     );
-    client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/move'
-    );
-    client.subscribe(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised + '/sleep'
-    );
+    client.subscribe(MQTTBaseTopic + '/' + serverTitleSanitised + '/move');
+    client.subscribe(MQTTBaseTopic + '/' + serverTitleSanitised + '/sleep');
 
     client.publish(
-      process.env.MQTTBaseTopic + '/' + serverTitleSanitised,
-      JSON.stringify(server.serverDetails)
+      MQTTBaseTopic + '/' + serverTitleSanitised,
+      JSON.stringify(server.serverDetails),
     );
     updated[ip].details = JSON.stringify(server.serverDetails);
   }
@@ -176,14 +144,11 @@ export function getServerDetails(
         vmId,
         serverTitleSanitised,
         ip,
-        server
+        server,
       );
       timer =
         timer +
-        (process.env.MQTTRefreshRate
-          ? parseInt(process.env.MQTTRefreshRate) * 1000
-          : 20000) /
-        20;
+        (MQTTRefreshRate ? parseInt(MQTTRefreshRate) * 1000 : 20000) / 20;
     });
   }
 
@@ -202,14 +167,11 @@ export function getServerDetails(
         disabledDevices,
         dockerId,
         ip,
-        server
+        server,
       );
       timer =
         timer +
-        (process.env.MQTTRefreshRate
-          ? parseInt(process.env.MQTTRefreshRate) * 1000
-          : 20000) /
-        20;
+        (MQTTRefreshRate ? parseInt(MQTTRefreshRate) * 1000 : 20000) / 20;
     });
   }
 }

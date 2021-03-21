@@ -1,3 +1,4 @@
+import { getMqttConfig } from 'lib/config';
 import { MqttClient } from 'mqtt';
 import { updateMQTT } from './updateMQTT';
 
@@ -5,15 +6,14 @@ let repeater: NodeJS.Timeout;
 let count = 0;
 let updated = {};
 export function mqttRepeat(client: MqttClient) {
+  const { MQTTRefreshRate } = getMqttConfig();
+
   repeater = setTimeout(
     () => {
       count++;
       if (
         count >
-        (60 /
-          (process.env.MQTTRefreshRate
-            ? parseInt(process.env.MQTTRefreshRate)
-            : 20)) *
+        (60 / (MQTTRefreshRate ? parseInt(MQTTRefreshRate) : 20)) *
           (process.env.MQTTCacheTime ? parseInt(process.env.MQTTCacheTime) : 60)
       ) {
         count = 0;
@@ -22,8 +22,6 @@ export function mqttRepeat(client: MqttClient) {
       updateMQTT(client);
       mqttRepeat(client);
     },
-    process.env.MQTTRefreshRate
-      ? parseInt(process.env.MQTTRefreshRate) * 1000
-      : 20000,
+    MQTTRefreshRate ? parseInt(MQTTRefreshRate) * 1000 : 20000,
   );
 }

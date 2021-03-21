@@ -8,8 +8,8 @@ import path from 'path';
  * @param data TBA?
  */
 export async function writeDisabledDevices(data) {
+  const location = path.join(CONFIG_DIR, DISABLED_DEVICES);
   try {
-    const location = path.join(CONFIG_DIR, DISABLED_DEVICES);
     const payload = JSON.stringify(data);
     await fs.promises.writeFile(location, payload);
   } catch (err) {
