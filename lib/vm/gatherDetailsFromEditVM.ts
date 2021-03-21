@@ -1,12 +1,17 @@
 import axios from 'axios';
-import fs from 'fs';
+import { parseServers } from 'lib/storage/servers';
+import { VmDetails, VmEdit } from 'models/vm';
 import { callSucceeded, callFailed } from '../api';
 import { authCookies } from '../auth';
 import { extractVMDetails } from '../scraper/extractVMDetails';
 
-export async function gatherDetailsFromEditVM(ip: string, id, vmObject, auth) {
-  let rawdata = fs.readFileSync('config/servers.json').toString();
-  let servers = JSON.parse(rawdata);
+export async function gatherDetailsFromEditVM(
+  ip: string,
+  id: string | number,
+  vmObject: VmDetails | undefined,
+  auth: string,
+): Promise<VmDetails> {
+  let servers = await parseServers();
   if (!vmObject) {
     vmObject = servers[ip].vm.details[id];
   }
@@ -17,7 +22,7 @@ export async function gatherDetailsFromEditVM(ip: string, id, vmObject, auth) {
       url: `${urlBase}/VMs/UpdateVM?uuid=${id}`,
       headers: {
         Authorization: `Basic ${auth}`,
-        Cookie: authCookies[ip] ? authCookies[ip] : '',
+        Cookie: authCookies.get(ip) ?? '',
       },
     });
     callSucceeded(ip);

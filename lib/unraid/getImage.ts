@@ -10,14 +10,14 @@ export async function getImage(servers: ServerMap, res, path: string) {
   let sent = false;
 
   Object.keys(servers).forEach((server) => {
-    const urlBase = server.includes('http') ? server : 'http://' + server;
+    const urlBase = server.includes('http') ? server : `http://${server}`;
     const basePath = path.includes('plugins') ? '/state' : '/plugins';
     fetch(urlBase + basePath + path, {
       method: 'GET',
       headers: {
-        Authorization: 'Basic ' + serverAuth[server],
-        Cookie: authCookies[server] ? authCookies[server] : '',
-        'content-type': 'image/png',
+        Authorization: `Basic ${serverAuth[server]}`,
+        Cookie: authCookies.get(server) ?? '',
+        'Content-Type': 'image/png',
       },
     })
       .then((image) => image.buffer())

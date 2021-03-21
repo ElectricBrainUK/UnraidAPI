@@ -85,6 +85,7 @@ export interface VmEditUsbs {
   id: string;
   name: string;
   connected: boolean;
+  checked: boolean;
 }
 
 export interface VmAttachUsbs {

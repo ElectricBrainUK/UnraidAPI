@@ -4,20 +4,21 @@ import { callFailed } from './callFailed';
 import { callSucceeded } from './callSucceeded';
 import { buildForm } from './buildForm';
 import { authCookies } from '../auth';
+import { VmEdit } from 'models/vm';
 
 export async function requestChange(
   ip: string,
   id: string,
-  auth,
-  vmObject,
-  create,
-) {
-  const urlBase = ip.includes('http') ? ip : 'http://' + ip;
+  auth: string,
+  vmObject: VmEdit | undefined,
+  create: boolean,
+): Promise<any> {
+  const urlBase = ip.includes('http') ? ip : `http://${ip}`;
   return axios({
     method: 'POST',
     url: `${urlBase}/plugins/dynamix.vm.manager/templates/Custom.form.php`,
     headers: {
-      Authorization: 'Basic ' + auth,
+      Authorization: `Basic ${auth}`,
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       'X-Requested-With': 'XMLHttpRequest',
       Cookie: authCookies.get(ip) ?? '',

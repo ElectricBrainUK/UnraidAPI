@@ -7,7 +7,7 @@ import path from 'path';
  * Write disable devices data to disk
  * @param data TBA?
  */
-export async function writeDisabledDevices(data: string[]) {
+export async function writeDisabledDevices(data: string[]): Promise<void> {
   const location = path.join(CONFIG_DIR, DISABLED_DEVICES);
   try {
     const payload = JSON.stringify(data);
@@ -22,7 +22,7 @@ export async function writeDisabledDevices(data: string[]) {
  * Read in contents of mqttDisabledDevices.json
  * @returns TBA?
  */
-export async function readDisabledDevices() {
+export async function readDisabledDevices(): Promise<string[]> {
   const location = path.join(CONFIG_DIR, DISABLED_DEVICES);
   try {
     const data = await fs.promises.readFile(location);

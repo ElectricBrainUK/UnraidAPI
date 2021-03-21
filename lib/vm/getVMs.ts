@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { ServerMap } from 'models/server';
 import { callSucceeded, callFailed } from '../api';
 import { authCookies } from '../auth';
 import { parseHTML } from '../scraper';
 import { updateFile } from '../storage/updateFile';
 import { processVMResponse } from './processVMResponse';
 
-export function getVMs(servers, serverAuth: Record<string, string>) {
+export function getVMs(servers: ServerMap, serverAuth: Record<string, string>) {
   Object.keys(servers).forEach((ip) => {
     if (!serverAuth[ip]) {
       return;
@@ -21,7 +22,10 @@ export function getVMs(servers, serverAuth: Record<string, string>) {
     })
       .then(async (response) => {
         callSucceeded(ip);
-        servers[ip].vm = {};
+        servers[ip].vm = {
+          extras: '',
+          details: {},
+        };
         let htmlDetails;
         if (response.data.toString().includes('\u0000')) {
           let parts = response.data.toString().split('\u0000');

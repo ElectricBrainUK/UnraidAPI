@@ -6,7 +6,10 @@ import { parseHTML } from '../scraper';
 import { updateFile } from '../storage/updateFile';
 import { processDockerResponse } from './processDockerResponse';
 
-export function getDockers(servers: ServerMap, serverAuth) {
+export function getDockers(
+  servers: ServerMap,
+  serverAuth: Record<string, string>,
+) {
   // const serverIps = Object.keys(servers);
 
   Object.keys(servers).forEach((ip) => {
