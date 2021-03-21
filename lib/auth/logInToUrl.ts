@@ -23,7 +23,7 @@ export async function logInToUrl(url: string, data, ip: string) {
       error.response.headers['set-cookie'] &&
       error.response.headers['set-cookie'][0]
     ) {
-      authCookies[ip] = error.response.headers['set-cookie'][0];
+      authCookies.set(ip, error.response.headers['set-cookie'][0]);
     } else if (error.response && error.response.headers.location) {
       return logInToUrl(
         error.response.headers.location,

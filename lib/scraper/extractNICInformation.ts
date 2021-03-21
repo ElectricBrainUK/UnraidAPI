@@ -18,11 +18,11 @@ export function extractNICInformation(response: { data: string }) {
     };
     nic.mac = extractValue(
       nicInfo,
-      'name="nic[' + nicNo + '][mac]" class="narrow" value="',
+      `name="nic[${nicNo}][mac]" class="narrow" value="`,
       '"',
     );
     nic.network = extractReverseValue(
-      extractValue(nicInfo, 'name="nic[' + nicNo + '][network]"', 'selected>'),
+      extractValue(nicInfo, `name="nic[${nicNo}][network]"`, 'selected>'),
       "'",
       "value='",
     );

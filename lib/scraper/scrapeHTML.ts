@@ -24,8 +24,8 @@ export async function scrapeHTML(
       method: 'get',
       url: (ip.includes('http') ? ip : 'http://' + ip) + '/Dashboard',
       headers: {
-        Authorization: 'Basic ' + serverAuth[ip],
-        Cookie: authCookies[ip] ? authCookies[ip] : '',
+        Authorization: `Basic ${serverAuth[ip]}`,
+        Cookie: authCookies.get(ip) ?? '',
       },
     });
     callSucceeded(ip);
@@ -60,10 +60,7 @@ export async function scrapeHTML(
     return details;
   } catch (e) {
     console.log(
-      'Get Dashboard Details for ip: ' +
-        ip +
-        ' Failed with status code: ' +
-        e.response,
+      `Get Dashboard Details for ip: ${ip} Failed with status code: ${e.response}`,
     );
     if (e.response && e.response.status) {
       callFailed(ip, e.response.status);

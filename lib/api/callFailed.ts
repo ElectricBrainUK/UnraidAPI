@@ -1,11 +1,12 @@
 import { authCookies } from '../auth';
 import { failed } from './failed';
 
-export function callFailed(ip: string, status: number) {
-  if (!failed[ip]) {
-    failed[ip] = 1;
+export function callFailed(ip: string, status: number): void {
+  if (!failed.has(ip)) {
+    failed.set(ip, 1);
   } else {
-    failed[ip]++;
+    const current = failed.get(ip);
+    failed.set(ip, current + 1);
   }
 
   let threshold = 2;
@@ -13,8 +14,10 @@ export function callFailed(ip: string, status: number) {
     threshold = 5;
   }
 
-  if (failed[ip] > threshold) {
-    failed[ip] = 0;
-    authCookies[ip] = undefined;
+  const current = failed.get(ip);
+
+  if (current > threshold) {
+    failed.set(ip, 0);
+    authCookies.delete(ip);
   }
 }

@@ -7,7 +7,13 @@ import { getSharePart } from '../getSharePart';
 import { getStaticPart } from '../getStaticPart';
 import { getUSBPart } from '../getUSBPart';
 
-export async function buildForm(ip: string, auth, id, vmObject, create) {
+export async function buildForm(
+  ip: string,
+  auth: string,
+  id: string,
+  vmObject,
+  create,
+): Promise<string> {
   let form = getStaticPart(vmObject, id, create);
   form += '&csrf_token=' + (await getCSRFToken(ip, auth));
   form = getCPUPart(vmObject, form);

@@ -10,17 +10,17 @@ export function parseTag(tag, remaining) {
   const open = processTags(tag, object);
 
   if (!isClosingTag(remaining, open) && isRemaining(remaining)) {
-    let result = {
+    const result = {
       contains: [],
       remaining: 0,
     };
 
-    let contentCheck = checkContents(remaining, object);
+    const contentCheck = checkContents(remaining, object);
     remaining = contentCheck.remaining;
     object = contentCheck.object;
     while (hasChildren(remaining)) {
       if (remaining.indexOf('<img') === 0) {
-        let img = {};
+        const img = {};
         processTags(
           remaining.substring(
             remaining.indexOf('<'),
@@ -32,13 +32,13 @@ export function parseTag(tag, remaining) {
         remaining = remaining.substring(remaining.indexOf('>') + 1);
         continue;
       }
-      let child = parseTag(
+      const child = parseTag(
         remaining.substring(remaining.indexOf('<'), remaining.indexOf('>') + 1),
         remaining,
       );
       result.contains.push(child.contains);
       remaining = child.remaining;
-      let contentCheck = checkContents(remaining, object);
+      const contentCheck = checkContents(remaining, object);
       remaining = contentCheck.remaining;
       object = contentCheck.object;
     }
@@ -48,7 +48,7 @@ export function parseTag(tag, remaining) {
     object.children = result.contains;
   }
   if (isRemaining(remaining) && isClosingTag(remaining, open)) {
-    let contentCheck = checkContents(remaining, object);
+    const contentCheck = checkContents(remaining, object);
     remaining = contentCheck.remaining;
     object = contentCheck.object;
     remaining = remaining.substring(remaining.indexOf('>') + 1);

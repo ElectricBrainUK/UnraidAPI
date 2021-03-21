@@ -12,16 +12,15 @@ export async function requestChange(
   vmObject,
   create,
 ) {
+  const urlBase = ip.includes('http') ? ip : 'http://' + ip;
   return axios({
     method: 'POST',
-    url:
-      (ip.includes('http') ? ip : 'http://' + ip) +
-      '/plugins/dynamix.vm.manager/templates/Custom.form.php',
+    url: `${urlBase}/plugins/dynamix.vm.manager/templates/Custom.form.php`,
     headers: {
       Authorization: 'Basic ' + auth,
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       'X-Requested-With': 'XMLHttpRequest',
-      Cookie: authCookies[ip] ? authCookies[ip] : '',
+      Cookie: authCookies.get(ip) ?? '',
     },
     data: await buildForm(ip, auth, id, vmObject, create),
     httpAgent: new http.Agent({ keepAlive: true }),

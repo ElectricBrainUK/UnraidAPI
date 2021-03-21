@@ -1,3 +1,3 @@
-export function isAnyClosingTag(remaining: string) {
+export function isAnyClosingTag(remaining?: string): boolean {
   return remaining && remaining.indexOf('</') === 0;
 }

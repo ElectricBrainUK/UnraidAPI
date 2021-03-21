@@ -25,7 +25,7 @@ export async function scrapeMainHTML(
       },
     });
     callSucceeded(ip);
-    let protection = extractValue(
+    const protection = extractValue(
       response.data,
       '</td></tr>\n          <tr><td>',
       '</td><td>',

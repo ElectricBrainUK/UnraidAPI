@@ -11,7 +11,7 @@ export async function changeDockerState(
   token: string,
 ) {
   try {
-    const urlBase = server.includes('http') ? server : 'http://' + server;
+    const urlBase = server.includes('http') ? server : `http://${server}`;
     const response = await axios({
       method: 'POST',
       url: `${urlBase}/plugins/dynamix.docker.manager/include/Events.php`,

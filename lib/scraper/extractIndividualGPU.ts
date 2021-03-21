@@ -3,9 +3,9 @@ import { extractValue } from './extractValue';
 
 export function extractIndividualGPU(
   gpuInfo: string,
-  gpuNo,
+  gpuNo: number,
   vmObject,
-  response,
+  response: { data: string },
 ) {
   while (gpuInfo.includes("<option value='")) {
     let row = extractValue(gpuInfo, "<option value='", '>');

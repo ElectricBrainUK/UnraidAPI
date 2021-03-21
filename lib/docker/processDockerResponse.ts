@@ -1,11 +1,11 @@
 import { DockerImage } from 'models/docker';
 
 export function processDockerResponse(details) {
-  let images: Record<string, DockerImage> = {};
-  let containers: any = {};
+  const images: Record<string, DockerImage> = {};
+  const containers: any = {};
   details.forEach((row) => {
     if (!row.content || !row.content.includes('undefined')) {
-      let docker = {
+      const docker = {
         imageUrl: '',
         name: '',
         status: '',

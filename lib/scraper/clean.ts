@@ -1,3 +1,3 @@
-export function clean(value?: string) {
-  return value?.replace(/\'/g, '');
+export function clean(value?: string): string | undefined {
+  return value?.replace(/'/g, '');
 }

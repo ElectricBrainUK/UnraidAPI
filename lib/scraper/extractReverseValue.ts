@@ -4,7 +4,7 @@ export function extractReverseValue(
   data: string,
   value: string,
   terminator: string,
-) {
+): string {
   return extractValue(
     data.split('').reverse().join(''),
     value.split('').reverse().join(''),

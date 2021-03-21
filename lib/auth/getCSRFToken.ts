@@ -5,7 +5,7 @@ import { extractValue } from '../scraper';
 
 export async function getCSRFToken(server: string, auth: string) {
   try {
-    const baseUrl = server.includes('http') ? server : 'http://' + server;
+    const baseUrl = server.includes('http') ? server : `http://${server}`;
     const cookie = authCookies.get(server) ?? '';
 
     const response = await axios({

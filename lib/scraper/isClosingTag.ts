@@ -1,3 +1,3 @@
-export function isClosingTag(remaining, open) {
+export function isClosingTag(remaining: string, open: string): boolean {
   return remaining.indexOf(`</${open}>`) === 0;
 }

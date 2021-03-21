@@ -1,9 +1,9 @@
 import { extractValue } from './extractValue';
 
-export function extractCPUDetails(response: { data: string }) {
-  let cpuDetails: string[] = [];
+export function extractCPUDetails(response: { data: string }): string[] {
+  const cpuDetails: string[] = [];
   while (response.data.includes("for='vcpu")) {
-    let row = extractValue(response.data, "<label for='vcpu", '</label>');
+    const row = extractValue(response.data, "<label for='vcpu", '</label>');
     if (row.includes('checked')) {
       cpuDetails.push(extractValue(row, "value='", "'"));
     }
