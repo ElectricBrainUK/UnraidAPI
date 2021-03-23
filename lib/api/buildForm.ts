@@ -12,7 +12,7 @@ export async function buildForm(
   auth: string,
   id: string,
   vmObject,
-  create,
+  create: boolean,
 ): Promise<string> {
   let form = getStaticPart(vmObject, id, create);
   form += '&csrf_token=' + (await getCSRFToken(ip, auth));

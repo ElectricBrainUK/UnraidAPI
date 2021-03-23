@@ -2,7 +2,7 @@ import axios from 'axios';
 import http from 'http';
 import { authCookies } from './auth';
 
-type Action =
+export type Action =
   | 'shutdown'
   | 'reboot'
   | 'move'

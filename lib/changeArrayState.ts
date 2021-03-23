@@ -3,14 +3,19 @@ import http from 'http';
 import { callSucceeded, callFailed } from './api';
 import { authCookies } from './auth';
 
-export async function changeArrayState(action, server, auth, token) {
+export async function changeArrayState(
+  action: string,
+  server: string,
+  auth: string,
+  token: string,
+) {
   try {
     const baseUrl = server.includes('http') ? server : 'http://' + server;
     const cookie = authCookies.get(server) ?? '';
     const _action =
       action === 'start'
-        ? 'startState=STOPPED&file=&csrf_token=' + token + '&cmdStart=Start'
-        : 'startState=STARTED&file=&csrf_token=' + token + '&cmdStop=Stop';
+        ? `startState=STOPPED&file=&csrf_token=${token}&cmdStart=Start`
+        : `startState=STARTED&file=&csrf_token=${token}&cmdStop=Stop`;
 
     const response = await axios({
       method: 'POST',
@@ -27,7 +32,7 @@ export async function changeArrayState(action, server, auth, token) {
     callSucceeded(server);
     return response.data;
   } catch (e) {
-    console.log('Change Array State for ip: ' + server + ' Failed');
+    console.log(`Change Array State for ip: ${server} Failed`);
     if (e.response && e.response.status) {
       callFailed(server, e.response.status);
     } else {

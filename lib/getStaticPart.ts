@@ -1,4 +1,4 @@
-export function getStaticPart(vmObject, id, create) {
+export function getStaticPart(vmObject, id, create: boolean) {
   return (
     `template%5Bos%5D=${vmObject.template_os}` +
     `template%5Bname%5D=${vmObject.template_name}` +
