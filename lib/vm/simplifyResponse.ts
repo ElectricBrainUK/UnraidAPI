@@ -1,10 +1,11 @@
 import { gatherDetailsFromEditVM } from './gatherDetailsFromEditVM';
+import { VmDetails } from '../../models/vm';
 
 export async function simplifyResponse(object, ip, auth) {
   let temp = {};
   for (let i = 0; i < object.length; i++) {
     let vm = object[i];
-    let newVMObject = {
+    let newVMObject: VmDetails = {
       name: '',
       id: '',
       status: '',
