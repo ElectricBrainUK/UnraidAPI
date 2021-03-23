@@ -19,10 +19,10 @@ export interface VmDetails {
   status?: string;
   icon?: string;
   coreCount?: number;
-  ramAllocation?: string;
+  ramAllocation?: number;
   hddAllocation?: {
     all: VmHddAllocation[];
-    total: string;
+    total: number;
   };
   primaryGPU?: string;
   xml?: string;
