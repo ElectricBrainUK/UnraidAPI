@@ -78,11 +78,11 @@ export function startMQTTClient() {
       let queryID = await uniqid.time('MQTT-R-', '');
       console.log(
         'Received MQTT Topic: ' +
-          topic +
-          ' and Message: ' +
-          message +
-          ' assigning ID: ' +
-          queryID,
+        topic +
+        ' and Message: ' +
+        message +
+        ' assigning ID: ' +
+        queryID,
       );
 
       if (topic === process.env.MQTTBaseTopic + '/bridge/state') {
@@ -108,7 +108,6 @@ export function startMQTTClient() {
       const topicParts = topic.split('/');
       let ip = '';
       let serverDetails: Server = {
-        // on: true,
         serverDetails: { on: false },
         usbDetails: [],
       };
@@ -121,7 +120,7 @@ export function startMQTTClient() {
         ) {
           serverTitleSanitised = sanitise(server.serverDetails.title);
           ip = serverIp;
-          serverDetails.serverDetails = server.serverDetails;
+          serverDetails = server;
           break;
         }
       }
@@ -129,8 +128,8 @@ export function startMQTTClient() {
       if (ip === '') {
         console.log(
           'Failed to process ' +
-            queryID +
-            ', servers not loaded. If the API just started this should go away after a minute, otherwise log into servers in the UI',
+          queryID +
+          ', servers not loaded. If the API just started this should go away after a minute, otherwise log into servers in the UI',
         );
         return;
       }
@@ -228,10 +227,10 @@ export function startMQTTClient() {
           console.log('Updating MQTT for: ' + queryID);
           client.publish(
             process.env.MQTTBaseTopic +
-              '/' +
-              serverTitleSanitised +
-              '/' +
-              vmSanitisedName,
+            '/' +
+            serverTitleSanitised +
+            '/' +
+            vmSanitisedName,
             JSON.stringify(vmDetailsToSend),
           );
 
@@ -242,10 +241,10 @@ export function startMQTTClient() {
           dockerDetails.status = message.toString();
           client.publish(
             process.env.MQTTBaseTopic +
-              '/' +
-              serverTitleSanitised +
-              '/' +
-              sanitise(dockerDetails.name),
+            '/' +
+            serverTitleSanitised +
+            '/' +
+            sanitise(dockerDetails.name),
             JSON.stringify(dockerDetails),
           );
           responses.push(
@@ -280,12 +279,12 @@ export function startMQTTClient() {
         )[0];
         client.publish(
           process.env.MQTTBaseTopic +
-            '/' +
-            serverTitleSanitised +
-            '/' +
-            vmSanitisedName +
-            '/' +
-            topicParts[3],
+          '/' +
+          serverTitleSanitised +
+          '/' +
+          vmSanitisedName +
+          '/' +
+          topicParts[3],
           JSON.stringify({
             id: topicParts[3],
             attached: message.toString().toLowerCase() !== 'false',
@@ -374,8 +373,8 @@ export function startMQTTClient() {
       }
     });
 
-    client.on('error', function (error) {
-      console.log("Can't connect" + error);
+    client.on('error', function(error) {
+      console.log('Can\'t connect' + error);
     });
   } catch (e) {
     if (
