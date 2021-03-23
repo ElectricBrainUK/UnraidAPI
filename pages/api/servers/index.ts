@@ -34,7 +34,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     keyStorage === 'config' && (!authHeader || authHeader.length <= 2);
   const auth = loadAuth ? await readMqttKeys() : JSON.parse(authHeader);
 
-  getUnraidDetails(response.servers, JSON.parse(auth));
+  getUnraidDetails(response.servers, auth);
   response.status = 200;
   res.send(response);
 }
