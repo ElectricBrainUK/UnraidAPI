@@ -21,7 +21,7 @@
     "@nuxtjs/vuetify": "0.5.5",
     "axios": "^0.21.1",
     "cross-env": "^5.2.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "form-data": "^2.5.1",
     "fs": "0.0.1-security",
     "html-table-to-json": "^0.4.1",
