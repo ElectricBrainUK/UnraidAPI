@@ -62,6 +62,6 @@
     "prettier": "^1.19.1",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
-    "vue-jest": "^3.0.7"
+    "vue-jest": "^4.0.1"
   }
 }
